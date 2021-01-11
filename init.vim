@@ -5,7 +5,7 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 call MyFunctions#AlignAlacrittyBackground()
-source ~/.config/nvim/autocommands.vim
+" source ~/.config/nvim/autocommands.vim
 
 "=============================================================
 "							vim-plug
@@ -41,17 +41,7 @@ Plug 'mhinz/vim-signify'
 Plug 'voldikss/vim-floaterm'
 Plug 'kevinhwang91/rnvimr', {'branch': 'main'}
 Plug 'liuchengxu/vim-which-key'
-"sometimes nvim is finicky about treesitter resourcing init.vim seems to
-"satisfy it
 Plug 'nvim-treesitter/nvim-treesitter', has('nvim-0.5') ? {'do':':TSUpdate'} : {'on': []}
-:lua << EOF
-require'nvim-treesitter.configs'.setup {
-  ensure_installed = "maintained",
-  highlight = {
-    enable = true,
-  },
-}
-EOF
 "this needs to be called at the end to work correctly
 Plug 'ryanoasis/vim-devicons'
 call plug#end()
@@ -99,6 +89,7 @@ let g:python3_host_prog = '/bin/python3'
 "=============================================================
 "		Vim Mappings Only
 "=============================================================
+lua require'nvim-treesitter.configs'.setup { ensure_installed = "maintained", highlight = { enable = true }}
 inoremap jk <ESC>
 inoremap kj <ESC>
 
