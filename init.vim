@@ -5,7 +5,6 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 call MyFunctions#AlignAlacrittyBackground()
-" source ~/.config/nvim/autocommands.vim
 
 "=============================================================
 "							vim-plug
