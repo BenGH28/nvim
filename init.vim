@@ -89,7 +89,6 @@ let g:python3_host_prog = '/bin/python3'
 "=============================================================
 "		Vim Mappings Only
 "=============================================================
-lua require'nvim-treesitter.configs'.setup { ensure_installed = "maintained", highlight = { enable = true }}
 inoremap jk <ESC>
 inoremap kj <ESC>
 
