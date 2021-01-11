@@ -15,8 +15,9 @@ else
   set signcolumn=yes
 endif
 
-let g:coc_global_extensions = [ 
+let g:coc_global_extensions = [
 			\'coc-pyright',
+			\'coc-markdownlint',
 			\'coc-json',
 			\'coc-marketplace',
 			\'coc-pairs',
