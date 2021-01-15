@@ -4,18 +4,22 @@ call MyFunctions#AlignAlacrittyBackground()
 "							vim-plug
 "=============================================================
 call plug#begin('~/.vim/plugged')
-"Pretty
+"
+"Pretty {{{
 Plug 'sainnhe/edge'
 Plug 'mhinz/vim-startify'
-"Languages and Syntax
+"}}}
+
+"Languages and Syntax{{{
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'dense-analysis/ale'
 Plug 'rust-lang/rust.vim'
 Plug 'rhysd/vim-clang-format'
 Plug 'suan/vim-instant-markdown'
 Plug 'vim-scripts/DoxygenToolkit.vim'
+"}}}
 
-"Tools
+"Tools {{{
 let g:vimspector_enable_mappings = 'VISUAL_STUDIO'
 Plug 'puremourning/vimspector'
 Plug 'preservim/nerdtree'
@@ -37,11 +41,14 @@ Plug 'liuchengxu/vim-which-key'
 Plug 'nvim-treesitter/nvim-treesitter', has('nvim-0.5') ? {'do':':TSUpdate'} : {'on': []}
 "this needs to be called at the end to work correctly
 Plug 'ryanoasis/vim-devicons'
+"}}}
+
 call plug#end()
 
 "=======================
 "		Basics
 "=======================
+"{{{
 let mapleader = "\<Space>"
 set encoding=utf-8
 colorscheme edge
@@ -79,6 +86,8 @@ set autochdir
 set scrolloff=8
 set nolazyredraw      "don't show me the execution of macros"
 let g:python3_host_prog = '/bin/python3'
+"}}}
+
 "=============================================================
 "		Vim Mappings Only
 "=============================================================
@@ -104,29 +113,26 @@ nnoremap <silent> <Leader>ad :set background=dark<CR>
 "alacritty themes
 nnoremap <silent> <Leader>at :call MyFunctions#ToggleAlacrittyTheme()<CR>
 
+"windows {{{
 nnoremap <silent> <C-h> :wincmd h<CR>
 nnoremap <silent> <C-j> :wincmd j<CR>
 nnoremap <silent> <C-k> :wincmd k<CR>
 nnoremap <silent> <C-l> :wincmd l<CR>
-
-"show only the current window
 nmap <silent> <Leader>wo :on<CR>
+"}}}
 
-"resizing splits
+"resizing splits {{{
 nnoremap <silent> <Leader>wh :vertical resize -3<CR>
 nnoremap <silent> <Leader>wj :resize -3<CR>
 nnoremap <silent> <Leader>wk :resize +3<CR>
 nnoremap <silent> <Leader>wl :vertical resize +3<CR>
 nnoremap <silent> <Leader>w= <C-W>=
+"}}}
 
-"Go to the settings
-"_files -> _vim -> _dotfiles = fvd
+"to do with files {{{
 nnoremap <Leader>fv :e $MYVIMRC<CR>
-
-"_files -> _write
 nnoremap <Leader>fww :w<CR>
 nnoremap <Leader>fwq :wq<CR>
 nnoremap <Leader>fq :q<CR>
-
-"source vimrc
 nnoremap <Leader>v :source $MYVIMRC<CR>
+"}}}
