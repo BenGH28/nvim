@@ -5,15 +5,14 @@
 "Gets rid of the highlightswhen you leave commandline
 augroup vimrc-incsearch-highlight
 	au!
-  	au CmdlineEnter /,\? :set hlsearch
-	au CmdlineLeave /,\? :set nohlsearch
+  	au CmdlineEnter /,\? set hlsearch
+	au CmdlineLeave /,\? set nohlsearch
 augroup END
 
 "Set foldmethod based on filetype
 augroup foldmethod-on-filetype
 	au!
-	au BufEnter *.py,*.sh,*.vim set foldmethod=indent
-	au BufLeave *.py,*.sh,*.vim set foldmethod=expr
+	au BufEnter *.py,*.sh,*.vim setlocal foldmethod=indent
 augroup END
 
 augroup quick-scope-colours
@@ -24,8 +23,7 @@ augroup END
 
 augroup cpp
 	au!
-	au BufEnter *.h,*.hpp,*.cc,*.cpp set tabstop=2 | set shiftwidth=2 | nnoremap <buffer> <silent> <Leader>sh :CocCommand clangd.switchSourceHeader<CR>
-	au BufLeave *.h,*.hpp,*.cc,*.cpp set tabstop=4 | set shiftwidth=4 | nunmap <buffer> <Leader>sh
+	au BufEnter *.h,*.hpp,*.cc,*.cpp setlocal tabstop=2 | setlocal shiftwidth=2 | nnoremap <buffer> <silent> <Leader>sh :CocCommand clangd.switchSourceHeader<CR>
 augroup END
 
 "auto PlugInstall
