@@ -4,7 +4,9 @@ call MyFunctions#AlignAlacrittyBackground()
 "							vim-plug
 "=============================================================
 call plug#begin('~/.vim/plugged')
-"
+
+Plug 'BenGH28/neo-runner.nvim', {'do': ':UpdateRemotePlugins'}
+
 "Pretty {{{
 Plug 'sainnhe/edge'
 Plug 'mhinz/vim-startify'
@@ -14,7 +16,9 @@ Plug 'mhinz/vim-startify'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'dense-analysis/ale'
 Plug 'rust-lang/rust.vim'
+Plug 'vim-python/python-syntax'
 Plug 'rhysd/vim-clang-format'
+Plug 'bfrg/vim-cpp-modern', !has('nvim-0.5') ? {} : {'on': []}
 Plug 'suan/vim-instant-markdown'
 Plug 'vim-scripts/DoxygenToolkit.vim'
 "}}}
@@ -38,13 +42,13 @@ Plug 'mhinz/vim-signify'
 Plug 'voldikss/vim-floaterm'
 Plug 'kevinhwang91/rnvimr', {'branch': 'main'}
 Plug 'liuchengxu/vim-which-key'
+Plug 'rstacruz/vim-closer'
 Plug 'nvim-treesitter/nvim-treesitter', has('nvim-0.5') ? {'do':':TSUpdate'} : {'on': []}
 "this needs to be called at the end to work correctly
 Plug 'ryanoasis/vim-devicons'
 "}}}
 
 call plug#end()
-
 "=======================
 "		Basics
 "=======================
@@ -83,7 +87,7 @@ set noswapfile  "no more pesky .swp file warnings"
 set clipboard+=unnamedplus "the system clipboard is enabled"
 set inccommand=split
 set autochdir
-set scrolloff=8
+set scrolloff=4
 set nolazyredraw      "don't show me the execution of macros"
 let g:python3_host_prog = '/bin/python3'
 "}}}
@@ -131,8 +135,13 @@ nnoremap <silent> <Leader>w= <C-W>=
 
 "to do with files {{{
 nnoremap <Leader>fv :e $MYVIMRC<CR>
-nnoremap <Leader>fww :w<CR>
-nnoremap <Leader>fwq :wq<CR>
+nnoremap <Leader>fs :w<CR>
 nnoremap <Leader>fq :q<CR>
 nnoremap <Leader>v :source $MYVIMRC<CR>
 "}}}
+
+let g:runner_c_compiler = "clang"
+let g:runner_c_options = "-std=c99 -Wall"
+
+let g:runner_cpp_compiler = "clang++"
+let g:runner_cpp_options = "-std=c++11 -Wall"

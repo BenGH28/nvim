@@ -49,3 +49,8 @@ augroup white-space
 	au BufWritePre * %s/\s\+$//e
 augroup END
 "}}}
+
+augroup terminal-numbers
+	au!
+	au TermOpen,TermEnter * setlocal nornu nonu
+augroup END

@@ -45,15 +45,14 @@ let g:which_key_map.f = {
 			\'v' : 'open vimrc',
 			\'d' : 'fzf directory',
 			\'f' : 'fzf ~',
+			\'g' : ['GFiles', 'Git Files'],
+			\'h' : ['History', 'Recent file history'],
 			\'l' : 'list buffers',
 			\'r' : 'ranger',
 			\'n' : ['NERDTreeToggle', 'Open NerdTree'],
 			\'q' : 'quit',
-			\'w' : {
-				\'name' : '+write',
-				\'w': 'save',
-				\'q': 'save & quit',
-				\}
+			\'s' : 'save',
+			\'.' : [':source %', 'source current file']
 			\}
 
 let g:which_key_map.g = {
@@ -67,7 +66,7 @@ let g:which_key_map.g = {
 				\}
 			\}
 
-let g:which_key_map.l = { 
+let g:which_key_map.l = {
 			\'name' : '+lsp',
 			\'n' : 'rename',
 			\'f' : 'format selected',

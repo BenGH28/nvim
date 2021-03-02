@@ -13,7 +13,7 @@ function! MyFunctions#AlignAlacrittyBackground()
 endfunc
 
 " This function will toggle Alacritty's color scheme back and
-" forth between light and dark themes. 
+" forth between light and dark themes.
 function! MyFunctions#ToggleAlacrittyTheme()
 	if (system('alacritty-theme current') =~ "light")
 	  	call system('alacritty-theme change one_dark')

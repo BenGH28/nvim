@@ -56,6 +56,17 @@
 	//sh
 	"sh.enable": true,
 	"sh.highlightParsingErrors": true,
+	//rust
+	//"rust-analyzer.enable": true,
+	//"rust-analyzer.lens.enable": true,
+	//"rust-analyzer.lens.run": true,
+	//"rust-analyzer.lens.methodReferences": true,
+	//"rust-analyzer.trace.server": "messages",
+	//"rust-analyzer.cargo.allFeatures": true,
+	//"rust-analyzer.diagnostics.enable": true,
+	//"rust-analyzer.hoverActions.enable": true,
+	//"rust-analyzer.inlayHints.enable": true,
+	//"rust-analyzer.inlayHints.typeHints": true,
 	//coc
 	"coc.preferences.hoverTarget": "float",
 	"coc.preferences.colorSupport": true,
