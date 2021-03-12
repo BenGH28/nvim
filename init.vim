@@ -12,21 +12,25 @@ Plug 'sainnhe/edge'
 Plug 'mhinz/vim-startify'
 "}}}
 
+"LSP {{{
+Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/nvim-compe'
+Plug 'glepnir/lspsaga.nvim'
+"}}}
+
 "Languages and Syntax{{{
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'dense-analysis/ale'
 Plug 'rust-lang/rust.vim'
 Plug 'vim-python/python-syntax'
 Plug 'rhysd/vim-clang-format'
 Plug 'bfrg/vim-cpp-modern', !has('nvim-0.5') ? {} : {'on': []}
 Plug 'suan/vim-instant-markdown'
-Plug 'vim-scripts/DoxygenToolkit.vim'
 "}}}
 
 "Tools {{{
 let g:vimspector_enable_mappings = 'VISUAL_STUDIO'
 Plug 'puremourning/vimspector'
-Plug 'preservim/nerdtree'
+Plug 'vim-scripts/DoxygenToolkit.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'airblade/vim-rooter'
 Plug 'tpope/vim-commentary'
@@ -49,6 +53,20 @@ Plug 'ryanoasis/vim-devicons'
 "}}}
 
 call plug#end()
+
+"lua sources
+luafile $HOME/.config/nvim/lua/lsp/nvim-compe.lua
+luafile $HOME/.config/nvim/lua/lsp/lspsaga.lua
+
+" luafile $HOME/.config/nvim/lua/lsp/bashls-lsp.lua
+luafile $HOME/.config/nvim/lua/lsp/init.lua
+luafile $HOME/.config/nvim/lua/lsp/jsonls-lsp.lua
+luafile $HOME/.config/nvim/lua/lsp/ccls-lsp.lua
+luafile $HOME/.config/nvim/lua/lsp/pyls-lsp.lua
+luafile $HOME/.config/nvim/lua/lsp/rls-lsp.lua
+luafile $HOME/.config/nvim/lua/lsp/vimls-lsp.lua
+luafile $HOME/.config/nvim/lua/lsp/yamlls-lsp.lua
+
 "=======================
 "		Basics
 "=======================
@@ -90,6 +108,7 @@ set autochdir
 set scrolloff=4
 set nolazyredraw      "don't show me the execution of macros"
 let g:python3_host_prog = '/bin/python3'
+set completeopt=menuone,noselect
 "}}}
 
 "=============================================================
@@ -139,9 +158,3 @@ nnoremap <Leader>fs :w<CR>
 nnoremap <Leader>fq :q<CR>
 nnoremap <Leader>v :source $MYVIMRC<CR>
 "}}}
-
-let g:runner_c_compiler = "clang"
-let g:runner_c_options = "-std=c99 -Wall"
-
-let g:runner_cpp_compiler = "clang++"
-let g:runner_cpp_options = "-std=c++11 -Wall"
