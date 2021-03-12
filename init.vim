@@ -54,12 +54,13 @@ Plug 'ryanoasis/vim-devicons'
 
 call plug#end()
 
-"lua sources
-luafile $HOME/.config/nvim/lua/lsp/nvim-compe.lua
-luafile $HOME/.config/nvim/lua/lsp/lspsaga.lua
+"=======================
+"     luafiles
+"=======================
+luafile $HOME/.config/nvim/lua/plugin/nvim-compe.lua
+luafile $HOME/.config/nvim/lua/plugin/lspsaga.lua
 
-" luafile $HOME/.config/nvim/lua/lsp/bashls-lsp.lua
-luafile $HOME/.config/nvim/lua/lsp/init.lua
+luafile $HOME/.config/nvim/lua/lsp/bashls-lsp.lua
 luafile $HOME/.config/nvim/lua/lsp/jsonls-lsp.lua
 luafile $HOME/.config/nvim/lua/lsp/ccls-lsp.lua
 luafile $HOME/.config/nvim/lua/lsp/pyls-lsp.lua
