@@ -67,6 +67,8 @@ luafile $HOME/.config/nvim/lua/lsp/pyls-lsp.lua
 luafile $HOME/.config/nvim/lua/lsp/rls-lsp.lua
 luafile $HOME/.config/nvim/lua/lsp/vimls-lsp.lua
 luafile $HOME/.config/nvim/lua/lsp/yamlls-lsp.lua
+luafile $HOME/.config/nvim/lua/lsp/luals.lua
+luafile $HOME/.config/nvim/lua/lsp/efmls.lua
 
 "=======================
 "		Basics
