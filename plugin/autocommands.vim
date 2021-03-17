@@ -33,16 +33,6 @@ augroup cpp
 augroup END
 "}}}
 
-"auto PlugInstall {{{
-augroup vim-plug
-	au!
-	au VimEnter *
-			\ if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
-			\| PlugInstall --sync | q
-			\|endif
-augroup END
-"}}}
-
 "whitespace must die {{{
 augroup white-space
 	au!

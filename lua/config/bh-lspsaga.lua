@@ -20,7 +20,6 @@ saga.init_lsp_saga {
         scroll_down = '<C-f>',
         scroll_up = '<C-b>' -- quit can be a table
     },
-    code_action_keys = {quit = 'q', exec = '<CR>'},
     rename_action_keys = {
         quit = '<C-c>',
         exec = '<CR>' -- quit can be a table
