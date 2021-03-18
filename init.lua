@@ -10,7 +10,7 @@ require('lsp')
 -- =======================
 -- 		Basics
 -- =======================
-vim.g.mapleader = [[ ]]
+vim.g.mapleader = " "
 vim.cmd('colorscheme edge')
 vim.o.syntax = 'on'
 vim.o.compatible = false
@@ -26,7 +26,7 @@ vim.bo.shiftwidth = 2
 vim.bo.tabstop = 2
 vim.o.autoindent = true -- keeps indent from the line above
 vim.o.startofline = false -- stop certain movements from going to the first character of the line
-vim.o.confirm = true -- ask to save file before quit
+vim.o.confirm = false -- ask to save file before quit
 vim.o.laststatus = 2
 vim.o.showmode = false -- gets rid of the redundant --insert--
 vim.o.mouse = 'a' -- allow mouse use in all modes
