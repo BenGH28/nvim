@@ -1,27 +1,52 @@
-lspconfig = require('lspconfig')
+local lspconfig = require('lspconfig')
+local on_attach = function(client, bufnr)
+  -- Set autocommands conditional on server_capabilities
+  if client.resolved_capabilities.document_highlight then
+    vim.api.nvim_exec([[
+      hi LspReferenceRead cterm=bold ctermbg=red guibg=LightYellow
+      hi LspReferenceText cterm=bold ctermbg=red guibg=LightYellow
+      hi LspReferenceWrite cterm=bold ctermbg=red guibg=LightYellow
+      augroup lsp_document_highlight
+        autocmd! * <buffer>
+        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+      augroup END
+    ]], false)
+  end
+end
 
 lspconfig.bashls.setup {
   filetypes = {'shell'},
+  on_attach = on_attach,
   settings = {rootMarkers = {'.git/'}}
 }
 lspconfig.ccls.setup {
   filetypes = {'cpp', 'c'},
+  on_attach = on_attach,
   settings = {rootMarkers = {'.git/'}}
 }
 lspconfig.yamlls.setup {
   filetypes = {'yaml'},
+  on_attach = on_attach,
   settings = {rootMarkers = {'.git/'}}
 }
 lspconfig.pyls.setup {
   filetypes = {'python'},
+  on_attach = on_attach,
   settings = {rootMarkers = {'.git/'}}
 }
 lspconfig.vimls.setup {
   filetypes = {'vim'},
+  on_attach = on_attach,
   settings = {rootMarkers = {'.git/'}}
 }
-lspconfig.rls.setup {filetypes = {'rust'}, settings = {rootMarkers = {'.git/'}}}
+lspconfig.rls.setup {
+  filetypes = {'rust'},
+  on_attach = on_attach,
+  settings = {rootMarkers = {'.git/'}}
+}
 lspconfig.jsonls.setup {
+  on_attach = on_attach,
   filetypes = {'json'},
   settings = {rootMarkers = {'.git/'}}
 }

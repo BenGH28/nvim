@@ -65,7 +65,8 @@ setmap('n', '<Leader>ma', ':make<CR>', opt)
 setmap('n', '<Leader>mc', ':make clean<CR>', opt)
 
 -- substitute word under cursor
--- setmap('n', '<Leader>sw', ':%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>', opt)
+setmap('n', '<Leader>sw', [[:s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
+       opt)
 
 setmap('n', '<Leader>bn', ':bNext<CR>', silence)
 setmap('n', '<Leader>bp', ':bprevious<CR>', silence)
