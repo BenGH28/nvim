@@ -20,21 +20,6 @@ let g:which_key_map.b = {
 			\'p' : 'previous'
 			\}
 
-let g:which_key_map.c = {
-			\'name' : '+coc',
-			\'m' : 'marketplace',
-			\'c' : 'config',
-			\'l' : {
-				\'name' : '+List',
-				\'d' : 'diagnostics',
-				\'e' : 'extensions',
-				\'c' : 'commands',
-				\'o' : 'outline',
-				\'s' : 'symbols',
-				\'p' : 'resume',
-				\}
-			\}
-
 let g:which_key_map.d = 'doxygen'
 
 let g:which_key_map.e = 'execute'
@@ -43,27 +28,13 @@ let g:which_key_map.f = {
 			\'name' : '+files',
 			\'o' : 'format',
 			\'v' : 'open vimrc',
-			\'d' : 'fzf directory',
-			\'f' : 'fzf ~',
-			\'g' : ['GFiles', 'Git Files'],
-			\'h' : ['History', 'Recent file history'],
-			\'l' : 'list buffers',
-			\'r' : 'ranger',
-			\'n' : ['NERDTreeToggle', 'Open NerdTree'],
+			\'f' : [':Telescope find_files','Find files'],
+			\'g' : [':Telescope live_grep','Grep'],
+			\'l' : [':Telescope buffers','List Buffers'],
+			\'h' : [':Telescope help_tags','Help tags'],
 			\'q' : 'quit',
 			\'s' : 'save',
 			\'.' : [':source %', 'source current file']
-			\}
-
-let g:which_key_map.g = {
-			\'name' : '+git',
-			\'s' : 'stage',
-			\'m' : 'commit',
-			\'p' : {
-				\'name' : '+push/pull',
-				\'l' : 'pull',
-				\'s' : 'push'
-				\}
 			\}
 
 let g:which_key_map.l = {

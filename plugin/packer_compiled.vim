@@ -32,6 +32,10 @@ local function try_loadstring(s, component, name)
 end
 
 _G.packer_plugins = {
+  ["DoxygenToolkit.vim"] = {
+    loaded = true,
+    path = "/home/ben/.local/share/nvim/site/pack/packer/start/DoxygenToolkit.vim"
+  },
   ["astronauta.nvim"] = {
     loaded = true,
     path = "/home/ben/.local/share/nvim/site/pack/packer/start/astronauta.nvim"
@@ -43,6 +47,10 @@ _G.packer_plugins = {
   ["galaxyline.nvim"] = {
     loaded = true,
     path = "/home/ben/.local/share/nvim/site/pack/packer/start/galaxyline.nvim"
+  },
+  ["hop.nvim"] = {
+    loaded = true,
+    path = "/home/ben/.local/share/nvim/site/pack/packer/start/hop.nvim"
   },
   ["lspkind-nvim"] = {
     loaded = true,
@@ -56,9 +64,21 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/ben/.local/share/nvim/site/pack/packer/start/neo-runner.nvim"
   },
+  ["nvim-autopairs"] = {
+    loaded = true,
+    path = "/home/ben/.local/share/nvim/site/pack/packer/start/nvim-autopairs"
+  },
+  ["nvim-colorizer.lua"] = {
+    loaded = true,
+    path = "/home/ben/.local/share/nvim/site/pack/packer/start/nvim-colorizer.lua"
+  },
   ["nvim-compe"] = {
     loaded = true,
     path = "/home/ben/.local/share/nvim/site/pack/packer/start/nvim-compe"
+  },
+  ["nvim-hlslens"] = {
+    loaded = true,
+    path = "/home/ben/.local/share/nvim/site/pack/packer/start/nvim-hlslens"
   },
   ["nvim-lspconfig"] = {
     loaded = true,
@@ -72,6 +92,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/ben/.local/share/nvim/site/pack/packer/start/nvim-treesitter"
   },
+  ["nvim-ts-rainbow"] = {
+    loaded = true,
+    path = "/home/ben/.local/share/nvim/site/pack/packer/start/nvim-ts-rainbow"
+  },
   ["nvim-web-devicons"] = {
     loaded = true,
     path = "/home/ben/.local/share/nvim/site/pack/packer/start/nvim-web-devicons"
@@ -80,6 +104,50 @@ _G.packer_plugins = {
     loaded = false,
     needs_bufread = false,
     path = "/home/ben/.local/share/nvim/site/pack/packer/opt/packer.nvim"
+  },
+  ["plenary.nvim"] = {
+    loaded = true,
+    path = "/home/ben/.local/share/nvim/site/pack/packer/start/plenary.nvim"
+  },
+  ["popup.nvim"] = {
+    loaded = true,
+    path = "/home/ben/.local/share/nvim/site/pack/packer/start/popup.nvim"
+  },
+  ["quick-scope"] = {
+    loaded = true,
+    path = "/home/ben/.local/share/nvim/site/pack/packer/start/quick-scope"
+  },
+  rnvimr = {
+    loaded = true,
+    path = "/home/ben/.local/share/nvim/site/pack/packer/start/rnvimr"
+  },
+  ["telescope.nvim"] = {
+    loaded = true,
+    path = "/home/ben/.local/share/nvim/site/pack/packer/start/telescope.nvim"
+  },
+  ["vim-commentary"] = {
+    loaded = true,
+    path = "/home/ben/.local/share/nvim/site/pack/packer/start/vim-commentary"
+  },
+  ["vim-easy-align"] = {
+    loaded = true,
+    path = "/home/ben/.local/share/nvim/site/pack/packer/start/vim-easy-align"
+  },
+  ["vim-fugitive"] = {
+    loaded = true,
+    path = "/home/ben/.local/share/nvim/site/pack/packer/start/vim-fugitive"
+  },
+  ["vim-repeat"] = {
+    loaded = true,
+    path = "/home/ben/.local/share/nvim/site/pack/packer/start/vim-repeat"
+  },
+  ["vim-surround"] = {
+    loaded = true,
+    path = "/home/ben/.local/share/nvim/site/pack/packer/start/vim-surround"
+  },
+  ["vim-which-key"] = {
+    loaded = true,
+    path = "/home/ben/.local/share/nvim/site/pack/packer/start/vim-which-key"
   }
 }
 

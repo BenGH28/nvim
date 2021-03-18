@@ -1,11 +1,51 @@
-require('plugins')
-require('config')
-require('config.bh-galaxyline')
-require('config.bh-nvim-compe')
-require('config.bh-lspkind')
-require('config.bh-nvim-tree')
-require('config.bh-treesitter')
 require('lsp')
+
+vim.cmd [[packadd packer.nvim]]
+require('packer').startup(function(use)
+  -- #region nvim
+  use 'sainnhe/edge'
+  use {'wbthomason/packer.nvim', opt = true}
+  use {'BenGH28/neo-runner.nvim', run = ':UpdateRemotePlugins'}
+  use {
+    'neovim/nvim-lspconfig',
+    requires = {
+      {'hrsh7th/nvim-compe'}, {'glepnir/lspsaga.nvim'}, {'onsails/lspkind-nvim'}
+    }
+  }
+  use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
+  use {
+    'glepnir/galaxyline.nvim',
+    branch = 'main',
+    requires = {'kyazdani42/nvim-web-devicons', opt = true}
+  }
+  use {
+    'kyazdani42/nvim-tree.lua',
+    requires = {'kyazdani42/nvim-web-devicons', opt = true}
+  }
+  use 'tjdevries/astronauta.nvim'
+  use {
+    'nvim-lua/telescope.nvim',
+    requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
+  }
+  use 'windwp/nvim-autopairs'
+  use 'p00f/nvim-ts-rainbow'
+  use 'phaazon/hop.nvim'
+  use {'kevinhwang91/rnvimr', branch = 'main'}
+  use 'kevinhwang91/nvim-hlslens'
+  use 'norcalli/nvim-colorizer.lua'
+  -- #endregion
+
+  -- #region Vim
+  use 'tpope/vim-commentary'
+  use 'tpope/vim-fugitive'
+  use 'tpope/vim-surround'
+  use 'tpope/vim-repeat'
+  use 'unblevable/quick-scope'
+  use 'liuchengxu/vim-which-key'
+  use 'vim-scripts/DoxygenToolkit.vim'
+  use 'junegunn/vim-easy-align'
+  -- #endregion
+end)
 
 -- =======================
 -- 		Basics
@@ -47,6 +87,7 @@ vim.o.scrolloff = 4
 vim.o.lazyredraw = false -- don't show me the execution of macros--
 vim.g.python3_host_prog = '/bin/python3'
 vim.o.completeopt = 'menuone,noselect'
+vim.cmd(':set cpo-=C')
 
 -- =============================================================
 --		Vim Mappings Only
@@ -100,4 +141,4 @@ setmap('n', '<Leader>w=', '<C-W>=', silence)
 setmap('n', '<Leader>fv', ':e $MYVIMRC<CR>', silence)
 setmap('n', '<Leader>fs', ':w<CR>', opt)
 setmap('n', '<Leader>fq', ':q', opt)
-setmap('n', '<Leader>v', ':luafile $MYVIMRC<CR>', silence)
+setmap('n', '<Leader>v', ':luafile $MYVIMRC<CR>', opt)
