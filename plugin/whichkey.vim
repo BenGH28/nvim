@@ -28,14 +28,19 @@ let g:which_key_map.f = {
 			\'name' : '+files',
 			\'o' : 'format',
 			\'v' : 'open vimrc',
+			\'e' : [':Telescope file_browser','File Explorer'],
 			\'f' : [':Telescope find_files','Find files'],
-			\'g' : [':Telescope live_grep','Grep'],
+			\'g' : [':Telescope git_files','Git Files'],
+			\'/' : [':Telescope live_grep','Search'],
 			\'l' : [':Telescope buffers','List Buffers'],
-			\'h' : [':Telescope help_tags','Help tags'],
+			\'h' : [':Telescope oldfiles','History'],
 			\'q' : 'quit',
 			\'s' : 'save',
-			\'.' : [':source %', 'source current file']
+			\'r' : 'Ranger',
+			\'.' : [':call MyFunctions#mysource()', 'source current file']
 			\}
+
+let g:which_key_map['H'] = [':Telescope help_tags','Help']
 
 let g:which_key_map.l = {
 			\'name' : '+lsp',
@@ -66,11 +71,12 @@ let g:which_key_map.t = {
 			\}
 
 let g:which_key_map.p = {
-			\'name': '+plug',
-			\'i': 'install',
-			\'u': 'update',
-			\'c': 'clean',
-			\'g': 'upgrade'
+			\'name': '+packer',
+			\'i': [':call MyFunctions#mysource | :PackerInstall'],
+			\'u': [':call MyFunctions#mysource | :PackerUpdate'],
+			\'c': [':call MyFunctions#mysource | :PackerClean'],
+			\'C': [':call MyFunctions#mysource | :PackerCompile'],
+			\'s': [':call MyFunctions#mysource | :PackerSync']
 			\}
 
 let g:which_key_map.v = 'source vimrc'

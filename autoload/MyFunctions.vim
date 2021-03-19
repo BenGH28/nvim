@@ -1,6 +1,6 @@
-"=============================================================
-"							User Functions
-"=============================================================
+"============================================================
+"                         User Functions
+"============================================================
 
 "see https://lib.rs/crates/alacritty-theme
 "
@@ -23,3 +23,12 @@ function! MyFunctions#ToggleAlacrittyTheme()
 	call MyFunctions#AlignAlacrittyBackground()
 endfunc
 
+function MyFunctions#mysource()
+  if &filetype == 'lua'
+	  :luafile %
+  elseif &filetype == 'vim'
+	  :source %
+  else
+	  echo "you can't source this..."
+  endif
+endfunc

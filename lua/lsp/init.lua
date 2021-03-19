@@ -53,13 +53,19 @@ lspconfig.jsonls.setup {
 
 lspconfig.efm.setup {
   init_options = {documentFormatting = true},
-  filetypes = {"lua"},
+  filetypes = {"lua", "vim"},
   settings = {
     rootMarkers = {".git/"},
     languages = {
       lua = {
         {
           formatCommand = "lua-format -i --no-keep-simple-control-block-one-line --no-keep-simple-function-one-line --tab-width=2 --indent-width=2",
+          formatStdin = true
+        }
+      },
+      vim = {
+        {
+          formatCommand = "vint --color --style",
           formatStdin = true
         }
       }

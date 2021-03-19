@@ -1,4 +1,5 @@
 require('lsp')
+require('bh-packer')
 
 vim.cmd [[packadd packer.nvim]]
 require('packer').startup(function(use)
@@ -40,6 +41,7 @@ require('packer').startup(function(use)
   use 'tpope/vim-fugitive'
   use 'tpope/vim-surround'
   use 'tpope/vim-repeat'
+  use 'mhinz/vim-startify'
   use 'unblevable/quick-scope'
   use 'liuchengxu/vim-which-key'
   use 'vim-scripts/DoxygenToolkit.vim'
