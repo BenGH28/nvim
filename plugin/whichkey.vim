@@ -30,8 +30,6 @@ let g:which_key_map.b = {
 
 let g:which_key_map.d = 'doxygen'
 
-let g:which_key_map.e = 'execute'
-
 let g:which_key_map.f = {
 			\'name' : '+files',
 			\'o' : 'format',
