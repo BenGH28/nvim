@@ -1,4 +1,4 @@
-"autocmd! User vim-which-key call which_key#register('<Space>', "g:which_key_map")
+"autocmd! User vim-which-key call which_key#register('<Space>', 'g:which_key_map')
 nnoremap <silent> <Leader> :WhichKey '<Space>'<CR>
 
 let g:which_key_map = {}
@@ -16,6 +16,14 @@ let g:which_key_map.a = {
 
 let g:which_key_map.b = {
 			\'name' : '+buffers',
+			\'h': {
+				\'name': '+hop',
+				\'w': [':HopWord', 'word'],
+				\'l': [':HopLine', 'line'],
+				\'1': [':HopChar1', 'char1'],
+				\'2': [':HopChar2', 'char2'],
+				\'p': [':HopPattern', 'pattern'],
+				\},
 			\'n' : 'next',
 			\'p' : 'previous'
 			\}
@@ -40,15 +48,25 @@ let g:which_key_map.f = {
 			\'.' : [':call MyFunctions#mysource()', 'source current file']
 			\}
 
-let g:which_key_map['H'] = [':Telescope help_tags','Help']
+let g:which_key_map['H'] = [':Telescope help_tags','help']
 
 let g:which_key_map.l = {
 			\'name' : '+lsp',
-			\'n' : 'rename',
-			\'f' : 'format selected',
-			\'a' : 'Code Action Selected',
-			\'c' : 'Code Action',
-			\'q' : 'apply auto fix',
+			\'c': [':lua require("lspsaga.codeactions").code_action()', 'Code action'],
+			\'d': {
+				\'name': '+diagnostics',
+				\'s': [':lua require"lspsaga.diagnostic".show_line_diagnostics()<CR>', 'Show line diagnostics'],
+				\'n': [':lua require"lspsaga.diagnostic".lsp_jump_diagnostic_next()<CR>', 'Next diagnostic'],
+				\'p': [':lua require"lspsaga.diagnostic".lsp_jump_diagnostic_prev()<CR>', 'Prev diagnostic'],
+				\'q': [':lua vim.lsp.buf.diagnostic.set_loclist()', 'Loclist'],
+				\},
+			\'f' : {
+				\'name' : '+folder',
+				\'a': [':lua vim.lsp.buf.add_workspace_folder()', 'Add workspace folder'],
+				\'r':[':lua vim.lsp.buf.remove_workspace_folder()', 'Remove workspace folder'],
+				\'l':[':lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))', 'List workspace folders'],
+				\},
+			\'l' : [':LspInfo', 'info']
 			\}
 
 let g:which_key_map.m = {
@@ -72,11 +90,11 @@ let g:which_key_map.t = {
 
 let g:which_key_map.p = {
 			\'name': '+packer',
-			\'i': [':call MyFunctions#mysource | :PackerInstall'],
-			\'u': [':call MyFunctions#mysource | :PackerUpdate'],
-			\'c': [':call MyFunctions#mysource | :PackerClean'],
-			\'C': [':call MyFunctions#mysource | :PackerCompile'],
-			\'s': [':call MyFunctions#mysource | :PackerSync']
+			\'i': [':call MyFunctions#mysource()| PackerInstall', 'Install'],
+			\'u': [':call MyFunctions#mysource()| PackerUpdate', 'Update'],
+			\'c': [':call MyFunctions#mysource()| PackerClean', 'Clean'],
+			\'C': [':call MyFunctions#mysource()| PackerCompile', 'Compile'],
+			\'s': [':call MyFunctions#mysource()| PackerSync', 'Sync']
 			\}
 
 let g:which_key_map.v = 'source vimrc'
@@ -91,4 +109,4 @@ let g:which_key_map.w = {
 			\'o' : 'show only current window'
 			\}
 
-call which_key#register('<Space>', "g:which_key_map")
+call which_key#register('<Space>', 'g:which_key_map')

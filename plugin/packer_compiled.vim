@@ -36,6 +36,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/ben/.local/share/nvim/site/pack/packer/start/DoxygenToolkit.vim"
   },
+  ale = {
+    loaded = true,
+    path = "/home/ben/.local/share/nvim/site/pack/packer/start/ale"
+  },
   ["astronauta.nvim"] = {
     loaded = true,
     path = "/home/ben/.local/share/nvim/site/pack/packer/start/astronauta.nvim"
@@ -133,17 +137,21 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/ben/.local/share/nvim/site/pack/packer/start/vim-easy-align"
   },
-  ["vim-fugitive"] = {
-    loaded = true,
-    path = "/home/ben/.local/share/nvim/site/pack/packer/start/vim-fugitive"
-  },
   ["vim-repeat"] = {
     loaded = true,
     path = "/home/ben/.local/share/nvim/site/pack/packer/start/vim-repeat"
   },
+  ["vim-startify"] = {
+    loaded = true,
+    path = "/home/ben/.local/share/nvim/site/pack/packer/start/vim-startify"
+  },
   ["vim-surround"] = {
     loaded = true,
     path = "/home/ben/.local/share/nvim/site/pack/packer/start/vim-surround"
+  },
+  ["vim-vsnip"] = {
+    loaded = true,
+    path = "/home/ben/.local/share/nvim/site/pack/packer/start/vim-vsnip"
   },
   ["vim-which-key"] = {
     loaded = true,

@@ -5,8 +5,5 @@ nnoremap * *<Cmd>lua require('hlslens').start()<CR>
 nnoremap # #<Cmd>lua require('hlslens').start()<CR>
 nnoremap g* g*<Cmd>lua require('hlslens').start()<CR>
 nnoremap g# g#<Cmd>lua require('hlslens').start()<CR>
-
-" use : instead of <Cmd>
-nnoremap <silent> <leader>l :nohlsearch<CR>
 ]], false)
 

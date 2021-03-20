@@ -37,8 +37,8 @@ require('packer').startup(function(use)
   -- #endregion
 
   -- #region Vim
+  -- use {'dense-analysis/ale', disable = true}
   use 'tpope/vim-commentary'
-  use 'tpope/vim-fugitive'
   use 'tpope/vim-surround'
   use 'tpope/vim-repeat'
   use 'mhinz/vim-startify'
@@ -46,6 +46,7 @@ require('packer').startup(function(use)
   use 'liuchengxu/vim-which-key'
   use 'vim-scripts/DoxygenToolkit.vim'
   use 'junegunn/vim-easy-align'
+  use 'hrsh7th/vim-vsnip'
   -- #endregion
 end)
 
@@ -53,20 +54,26 @@ end)
 -- 		Basics
 -- =======================
 vim.g.mapleader = " "
+vim.g.python3_host_prog = '/bin/python3'
 vim.cmd('colorscheme edge')
-vim.o.syntax = 'on'
-vim.o.compatible = false
+vim.cmd(':set cpo-=C')
+vim.bo.shiftwidth = 4
+vim.bo.softtabstop = 4
+vim.bo.expandtab = true
 vim.wo.number = true
 vim.wo.relativenumber = true
+vim.wo.wrap = false
+vim.wo.signcolumn = 'yes'
+vim.o.syntax = 'on'
+vim.o.compatible = false
 vim.o.ignorecase = true
 vim.o.smartcase = true
 vim.o.termguicolors = true -- for accurate colors
 vim.o.hidden = true -- allows you to save buffers that you might still want to jump to
 vim.o.wildmenu = true -- statusline command completion
 vim.o.backspace = 'indent,eol,start' -- allow backspacing over autoindent, line breaks and start of insert action
-vim.bo.shiftwidth = 2
-vim.bo.tabstop = 2
 vim.o.autoindent = true -- keeps indent from the line above
+vim.o.smartindent = true
 vim.o.startofline = false -- stop certain movements from going to the first character of the line
 vim.o.confirm = false -- ask to save file before quit
 vim.o.laststatus = 2
@@ -80,17 +87,13 @@ vim.o.splitright = true
 vim.o.foldmethod = 'syntax'
 vim.o.foldnestmax = 10
 vim.o.foldenable = false
-vim.wo.wrap = false
 vim.o.swapfile = false -- no more pesky .swp file warnings--
-vim.cmd('set clipboard+=unnamedplus') -- the system clipboard is enabled--
+vim.o.clipboard = 'unnamedplus' -- the system clipboard is enabled--
 vim.o.inccommand = 'split'
 vim.o.autochdir = true
 vim.o.scrolloff = 4
 vim.o.lazyredraw = false -- don't show me the execution of macros--
-vim.g.python3_host_prog = '/bin/python3'
 vim.o.completeopt = 'menuone,noselect'
-vim.cmd(':set cpo-=C')
-
 -- =============================================================
 --		Vim Mappings Only
 -- =============================================================
