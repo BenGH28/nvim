@@ -26,17 +26,7 @@ lspconfig.bashls.setup {
   on_attach = on_attach,
   settings = {rootMarkers = {'.git/'}}
 }
-lspconfig.ccls.setup {
-  filetypes = {'cpp', 'c'},
-  capabilities = capabilities,
-  on_attach = on_attach,
-  init_options = {
-    compilationDatabaseDirectory = "build",
-    index = {threads = 0},
-    clang = {excludeArgs = {"-frounding-math"}}
-  },
-  settings = {rootMarkers = {'.git/'}}
-}
+lspconfig.clangd.setup {on_attach = on_attach}
 lspconfig.yamlls.setup {
   filetypes = {'yaml'},
   capabilities = capabilities,
@@ -87,7 +77,13 @@ local vint = {lintCommand = 'vint -', formatStdin = true}
 -- local isort = {formatCommand = 'isort --queit -', formatStdin = true}
 lspconfig.efm.setup {
   capabilities = capabilities,
-  init_options = {documentFormatting = true},
+  init_options = {
+    documentFormatting = true,
+    hover = true,
+    documentSymbol = true,
+    codeAction = true,
+    completion = true
+  },
   filetypes = {"lua", "python", "vim", 'cpp', 'c'},
   settings = {languages = {lua = {luaFormat}, vim = {vint}}}
 }

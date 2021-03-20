@@ -36,10 +36,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/ben/.local/share/nvim/site/pack/packer/start/DoxygenToolkit.vim"
   },
-  ale = {
-    loaded = true,
-    path = "/home/ben/.local/share/nvim/site/pack/packer/start/ale"
-  },
   ["astronauta.nvim"] = {
     loaded = true,
     path = "/home/ben/.local/share/nvim/site/pack/packer/start/astronauta.nvim"
