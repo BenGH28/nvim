@@ -1,6 +1,4 @@
-require('lsp')
 require('bh-packer')
-
 vim.cmd [[packadd packer.nvim]]
 require('packer').startup(function(use)
   -- #region nvim
@@ -34,6 +32,7 @@ require('packer').startup(function(use)
   use {'kevinhwang91/rnvimr', branch = 'main'}
   use 'kevinhwang91/nvim-hlslens'
   use 'norcalli/nvim-colorizer.lua'
+  use 'akinsho/nvim-toggleterm.lua'
   -- #endregion
 
   -- #region Vim
@@ -50,6 +49,7 @@ require('packer').startup(function(use)
   -- #endregion
 end)
 
+require('lsp')
 -- =======================
 -- 		Basics
 -- =======================
@@ -59,6 +59,7 @@ vim.cmd('colorscheme edge')
 vim.cmd(':set cpo-=C')
 vim.bo.shiftwidth = 4
 vim.bo.softtabstop = 4
+vim.bo.tabstop = 4
 vim.bo.expandtab = true
 vim.wo.number = true
 vim.wo.relativenumber = true
