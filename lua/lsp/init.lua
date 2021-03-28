@@ -21,7 +21,6 @@ local on_attach = function(client, bufnr)
 end
 
 lspconfig.bashls.setup {
-  filetypes = {'shell'},
   capabilities = capabilities,
   on_attach = on_attach,
   settings = {rootMarkers = {'.git/'}}
@@ -65,16 +64,15 @@ local luaFormat = {
   formatStdin = true
 }
 
-local vint = {lintCommand = 'vint -', formatStdin = true}
+local vint = {lintCommand = 'vint -', lintStdin = true}
 
--- local flake8 = {
---   lintCommand = "flake8 --max-line-length 160 --stdin-display-name ${INPUT} -",
---   lintIgnoreExitCode = true,
---   lintStdin = true,
---   lintFormats = {"%f:%l:%c: %m"}
--- }
--- local autopep8 = {formatCommand = 'autopep8 -', formatStdin = true}
--- local isort = {formatCommand = 'isort --queit -', formatStdin = true}
+local shfmt = {formatCommand = 'shfmt -ci -i 4 -s -bn', formatStdin = true}
+
+local shellcheck = {
+  lintCommand = 'shellcheck -f gcc -x',
+  lintSource = 'shellcheck',
+  lintStdin = true
+}
 lspconfig.efm.setup {
   capabilities = capabilities,
   init_options = {
@@ -84,8 +82,10 @@ lspconfig.efm.setup {
     codeAction = true,
     completion = true
   },
-  filetypes = {"lua", "python", "vim", 'cpp', 'c'},
-  settings = {languages = {lua = {luaFormat}, vim = {vint}}}
+  filetypes = {"lua", "python", "vim", 'cpp', 'c', 'sh', 'shell'},
+  settings = {
+    languages = {lua = {luaFormat}, vim = {vint}, sh = {shfmt, shellcheck}}
+  }
 }
 
 -- ]]
