@@ -110,6 +110,7 @@ setmap('i', 'kj', '<ESC>', opt)
 
 setmap('n', '<Leader>ma', ':make<CR>', opt)
 setmap('n', '<Leader>mc', ':make clean<CR>', opt)
+setmap('n', 'Y', 'y$', opt)
 
 -- substitute word under cursor
 setmap('n', '<Leader>sw', [[:s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
