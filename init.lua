@@ -33,6 +33,20 @@ require('packer').startup(function(use)
   use {'kevinhwang91/rnvimr', branch = 'main'}
   use 'norcalli/nvim-colorizer.lua'
   use 'akinsho/nvim-toggleterm.lua'
+  use {
+    'yamatsum/nvim-cursorline',
+    config = function()
+      vim.g.cursorword_highlight = true
+    end
+  }
+  use {
+    'lewis6991/gitsigns.nvim',
+    requires = {'nvim-lua/plenary.nvim'},
+    config = function()
+      require('gitsigns').setup()
+    end
+  }
+  use 'kdheepak/lazygit.nvim'
   -- #endregion
 
   -- #region Vim

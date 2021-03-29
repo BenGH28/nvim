@@ -78,12 +78,9 @@ let g:which_key_map.s = {
 			\'w' : 'word'}
 
 let g:which_key_map.t = {
-			\'name' : '+floaterm',
-			\'p' : 'previous',
-			\'n' : 'new',
-			\'x' : 'next',
-			\'h' : 'hide',
-			\'k' : 'kill',
+			\'name' : '+terminal',
+			\'t': 'toggle',
+            \'g': [':LazyGit', 'LazyGit']
 			\}
 
 let g:which_key_map.p = {

@@ -3,55 +3,33 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-local on_attach = function(client, bufnr)
-  if client.resolved_capabilities.document_highlight then
-    vim.api.nvim_exec([[
-      hi LspReferenceRead cterm=bold ctermbg=red guibg=#464646
-      hi LspReferenceText cterm=bold ctermbg=red guibg=#464646
-      hi LspReferenceWrite cterm=bold ctermbg=red guibg=#464646
-      augroup lsp_document_highlight
-        autocmd! * <buffer>
-        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-      augroup END
-    ]], false)
-  else
-    print("no highlight")
-  end
-end
-
 lspconfig.bashls.setup {
   capabilities = capabilities,
-  on_attach = on_attach,
+
   settings = {rootMarkers = {'.git/'}}
 }
 lspconfig.clangd.setup {on_attach = on_attach}
 lspconfig.yamlls.setup {
   filetypes = {'yaml'},
   capabilities = capabilities,
-  on_attach = on_attach,
   settings = {rootMarkers = {'.git/'}}
 }
 lspconfig.pyls.setup {
   filetypes = {'python'},
   capabilities = capabilities,
-  on_attach = on_attach,
   settings = {rootMarkers = {'.git/'}}
 }
 lspconfig.vimls.setup {
   filetypes = {'vim'},
   capabilities = capabilities,
-  on_attach = on_attach,
   settings = {rootMarkers = {'.git/'}}
 }
 lspconfig.rls.setup {
   filetypes = {'rust'},
   capabilities = capabilities,
-  on_attach = on_attach,
   settings = {rootMarkers = {'.git/'}}
 }
 lspconfig.jsonls.setup {
-  on_attach = on_attach,
   capabilities = capabilities,
   filetypes = {'json'},
   settings = {rootMarkers = {'.git/'}}
