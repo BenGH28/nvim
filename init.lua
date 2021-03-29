@@ -34,12 +34,6 @@ require('packer').startup(function(use)
   use 'norcalli/nvim-colorizer.lua'
   use 'akinsho/nvim-toggleterm.lua'
   use {
-    'yamatsum/nvim-cursorline',
-    config = function()
-      vim.g.cursorword_highlight = true
-    end
-  }
-  use {
     'lewis6991/gitsigns.nvim',
     requires = {'nvim-lua/plenary.nvim'},
     config = function()
