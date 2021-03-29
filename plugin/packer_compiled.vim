@@ -44,6 +44,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/ben/.local/share/nvim/site/pack/packer/start/edge"
   },
+  ["friendly-snippets"] = {
+    loaded = true,
+    path = "/home/ben/.local/share/nvim/site/pack/packer/start/friendly-snippets"
+  },
   ["galaxyline.nvim"] = {
     loaded = true,
     path = "/home/ben/.local/share/nvim/site/pack/packer/start/galaxyline.nvim"
@@ -75,10 +79,6 @@ _G.packer_plugins = {
   ["nvim-compe"] = {
     loaded = true,
     path = "/home/ben/.local/share/nvim/site/pack/packer/start/nvim-compe"
-  },
-  ["nvim-hlslens"] = {
-    loaded = true,
-    path = "/home/ben/.local/share/nvim/site/pack/packer/start/nvim-hlslens"
   },
   ["nvim-lspconfig"] = {
     loaded = true,
@@ -152,6 +152,10 @@ _G.packer_plugins = {
   ["vim-vsnip"] = {
     loaded = true,
     path = "/home/ben/.local/share/nvim/site/pack/packer/start/vim-vsnip"
+  },
+  ["vim-vsnip-integ"] = {
+    loaded = true,
+    path = "/home/ben/.local/share/nvim/site/pack/packer/start/vim-vsnip-integ"
   },
   ["vim-which-key"] = {
     loaded = true,

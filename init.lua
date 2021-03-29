@@ -21,6 +21,7 @@ require('packer').startup(function(use)
     'kyazdani42/nvim-tree.lua',
     requires = {'kyazdani42/nvim-web-devicons', opt = true}
   }
+  -- sources all the files in lua/plugin/
   use 'tjdevries/astronauta.nvim'
   use {
     'nvim-lua/telescope.nvim',
@@ -30,7 +31,6 @@ require('packer').startup(function(use)
   use 'p00f/nvim-ts-rainbow'
   use 'phaazon/hop.nvim'
   use {'kevinhwang91/rnvimr', branch = 'main'}
-  use 'kevinhwang91/nvim-hlslens'
   use 'norcalli/nvim-colorizer.lua'
   use 'akinsho/nvim-toggleterm.lua'
   -- #endregion
@@ -46,6 +46,8 @@ require('packer').startup(function(use)
   use 'vim-scripts/DoxygenToolkit.vim'
   use 'junegunn/vim-easy-align'
   use 'hrsh7th/vim-vsnip'
+  use 'hrsh7th/vim-vsnip-integ'
+  use 'rafamadriz/friendly-snippets'
   -- #endregion
 end)
 
