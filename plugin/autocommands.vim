@@ -33,15 +33,11 @@ augroup white-space
 augroup END
 "}}}
 
-" augroup save-py-file
-"         autocmd!
-"         au BufWritePre *.py :!isort --quiet %
-" augroup END
 
-augroup format-on-save
-        autocmd!
-        au BufWritePre * :lua vim.lsp.buf.formatting()
-augroup END
+" augroup format-on-save
+"         autocmd!
+"         au BufWritePre * :lua vim.lsp.buf.formatting()
+" augroup END
 
 augroup terminal-numbers
 	au!
