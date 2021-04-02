@@ -1,4 +1,4 @@
-"autocmd! User vim-which-key call which_key#register('<Space>', "g:which_key_map")
+"autocmd! User vim-which-key call which_key#register('<Space>', 'g:which_key_map')
 nnoremap <silent> <Leader> :WhichKey '<Space>'<CR>
 
 let g:which_key_map = {}
@@ -16,63 +16,55 @@ let g:which_key_map.a = {
 
 let g:which_key_map.b = {
 			\'name' : '+buffers',
+			\'h': {
+				\'name': '+hop',
+				\'w': [':HopWord', 'word'],
+				\'l': [':HopLine', 'line'],
+				\'1': [':HopChar1', 'char1'],
+				\'2': [':HopChar2', 'char2'],
+				\'p': [':HopPattern', 'pattern'],
+				\},
 			\'n' : 'next',
 			\'p' : 'previous'
 			\}
 
-let g:which_key_map.c = {
-			\'name' : '+coc',
-			\'m' : 'marketplace',
-			\'c' : 'config',
-			\'l' : {
-				\'name' : '+List',
-				\'d' : 'diagnostics',
-				\'e' : 'extensions',
-				\'c' : 'commands',
-				\'o' : 'outline',
-				\'s' : 'symbols',
-				\'p' : 'resume',
-				\}
-			\}
-
 let g:which_key_map.d = 'doxygen'
-
-let g:which_key_map.e = 'execute'
 
 let g:which_key_map.f = {
 			\'name' : '+files',
 			\'o' : 'format',
 			\'v' : 'open vimrc',
-			\'d' : 'fzf directory',
-			\'f' : 'fzf ~',
-			\'g' : ['GFiles', 'Git Files'],
-			\'h' : ['History', 'Recent file history'],
-			\'l' : 'list buffers',
-			\'r' : 'ranger',
-			\'n' : ['NERDTreeToggle', 'Open NerdTree'],
+			\'e' : [':Telescope file_browser','File Explorer'],
+			\'f' : [':Telescope find_files','Find files'],
+			\'g' : [':Telescope git_files','Git Files'],
+			\'/' : [':Telescope live_grep','Search'],
+			\'l' : [':Telescope buffers','List Buffers'],
+			\'h' : [':Telescope oldfiles','History'],
 			\'q' : 'quit',
 			\'s' : 'save',
-			\'.' : [':source %', 'source current file']
+			\'r' : 'Ranger',
+			\'.' : [':call MyFunctions#mysource()', 'source current file']
 			\}
 
-let g:which_key_map.g = {
-			\'name' : '+git',
-			\'s' : 'stage',
-			\'m' : 'commit',
-			\'p' : {
-				\'name' : '+push/pull',
-				\'l' : 'pull',
-				\'s' : 'push'
-				\}
-			\}
+let g:which_key_map['H'] = [':Telescope help_tags','help']
 
 let g:which_key_map.l = {
 			\'name' : '+lsp',
-			\'n' : 'rename',
-			\'f' : 'format selected',
-			\'a' : 'Code Action Selected',
-			\'c' : 'Code Action',
-			\'q' : 'apply auto fix',
+			\'c': [':lua require("lspsaga.codeactions").code_action()', 'Code action'],
+			\'d': {
+				\'name': '+diagnostics',
+				\'s': [':lua require"lspsaga.diagnostic".show_line_diagnostics()<CR>', 'Show line diagnostics'],
+				\'n': [':lua require"lspsaga.diagnostic".lsp_jump_diagnostic_next()<CR>', 'Next diagnostic'],
+				\'p': [':lua require"lspsaga.diagnostic".lsp_jump_diagnostic_prev()<CR>', 'Prev diagnostic'],
+				\'q': [':lua vim.lsp.buf.diagnostic.set_loclist()', 'Loclist'],
+				\},
+			\'f' : {
+				\'name' : '+folder',
+				\'a': [':lua vim.lsp.buf.add_workspace_folder()', 'Add workspace folder'],
+				\'r':[':lua vim.lsp.buf.remove_workspace_folder()', 'Remove workspace folder'],
+				\'l':[':lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))', 'List workspace folders'],
+				\},
+			\'l' : [':LspInfo', 'info']
 			\}
 
 let g:which_key_map.m = {
@@ -86,20 +78,18 @@ let g:which_key_map.s = {
 			\'w' : 'word'}
 
 let g:which_key_map.t = {
-			\'name' : '+floaterm',
-			\'p' : 'previous',
-			\'n' : 'new',
-			\'x' : 'next',
-			\'h' : 'hide',
-			\'k' : 'kill',
+			\'name' : '+terminal',
+			\'t': 'toggle',
+            \'g': [':LazyGit', 'LazyGit']
 			\}
 
 let g:which_key_map.p = {
-			\'name': '+plug',
-			\'i': 'install',
-			\'u': 'update',
-			\'c': 'clean',
-			\'g': 'upgrade'
+			\'name': '+packer',
+			\'i': [':call MyFunctions#mysource()| PackerInstall', 'Install'],
+			\'u': [':call MyFunctions#mysource()| PackerUpdate', 'Update'],
+			\'c': [':call MyFunctions#mysource()| PackerClean', 'Clean'],
+			\'C': [':call MyFunctions#mysource()| PackerCompile', 'Compile'],
+			\'s': [':call MyFunctions#mysource()| PackerSync', 'Sync']
 			\}
 
 let g:which_key_map.v = 'source vimrc'
@@ -114,4 +104,4 @@ let g:which_key_map.w = {
 			\'o' : 'show only current window'
 			\}
 
-call which_key#register('<Space>', "g:which_key_map")
+call which_key#register('<Space>', 'g:which_key_map')

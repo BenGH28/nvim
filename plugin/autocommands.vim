@@ -26,29 +26,18 @@ augroup quick-scope-colours
 augroup END
 "}}}
 
-"when ever I enter C/C++ files set some local settings {{{
-augroup cpp
-	au!
-	au BufEnter *.h,*.hpp,*.cc,*.cpp setlocal tabstop=2 | setlocal shiftwidth=2 | nnoremap <buffer> <silent> <Leader>sh :CocCommand clangd.switchSourceHeader<CR>
-augroup END
-"}}}
-
-"auto PlugInstall {{{
-augroup vim-plug
-	au!
-	au VimEnter *
-			\ if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
-			\| PlugInstall --sync | q
-			\|endif
-augroup END
-"}}}
-
 "whitespace must die {{{
 augroup white-space
 	au!
 	au BufWritePre * %s/\s\+$//e
 augroup END
 "}}}
+
+
+" augroup format-on-save
+"         autocmd!
+"         au BufWritePre * :lua vim.lsp.buf.formatting()
+" augroup END
 
 augroup terminal-numbers
 	au!
