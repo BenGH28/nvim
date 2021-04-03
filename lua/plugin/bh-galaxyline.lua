@@ -1,4 +1,4 @@
--- evil line by https://github.com/glepnir
+-- evil line by https://github.com/glepnir with some modifications of my own
 local gl = require('galaxyline')
 local colors = require('galaxyline.theme').default
 local condition = require('galaxyline.condition')
@@ -153,7 +153,7 @@ gls.right[3] = {
     end,
     separator = '  ',
     separator_highlight = {'NONE', colors.bg},
-    icon = ':',
+    icon = '',
     highlight = {colors.red, colors.bg, 'bold'}
   }
 }

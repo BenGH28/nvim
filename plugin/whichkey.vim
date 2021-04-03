@@ -28,7 +28,7 @@ let g:which_key_map.b = {
 			\'p' : 'previous'
 			\}
 
-let g:which_key_map.d = 'doxygen'
+let g:which_key_map.d = [':Dox', 'Doxygen']
 
 let g:which_key_map.f = {
 			\'name' : '+files',
@@ -42,7 +42,7 @@ let g:which_key_map.f = {
 			\'h' : [':Telescope oldfiles','History'],
 			\'q' : 'quit',
 			\'s' : 'save',
-			\'r' : 'Ranger',
+			\'r' : [':RnvimrToggle', 'Ranger'],
 			\'.' : [':call MyFunctions#mysource()', 'source current file']
 			\}
 

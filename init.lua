@@ -30,7 +30,13 @@ require('packer').startup(function(use)
   use 'windwp/nvim-autopairs'
   use 'p00f/nvim-ts-rainbow'
   use 'phaazon/hop.nvim'
-  use {'kevinhwang91/rnvimr', branch = 'main'}
+  use {
+    'kevinhwang91/rnvimr',
+    branch = 'main',
+    config = function()
+      vim.g.rnvimr_ex_enable = 1
+    end
+  }
   use 'norcalli/nvim-colorizer.lua'
   use 'akinsho/nvim-toggleterm.lua'
   use {
@@ -44,7 +50,6 @@ require('packer').startup(function(use)
   -- #endregion
 
   -- #region Vim
-  -- use {'dense-analysis/ale', disable = true}
   use 'tpope/vim-commentary'
   use 'tpope/vim-surround'
   use 'tpope/vim-repeat'
