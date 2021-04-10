@@ -74,7 +74,8 @@ vim.cmd('colorscheme edge')
 vim.cmd(':set cpo-=C')
 vim.bo.shiftwidth = 4
 vim.bo.softtabstop = 4
-vim.bo.tabstop = 4
+-- vim.bo.tabstop = 4
+vim.cmd[[set tabstop=4]]
 vim.bo.expandtab = true
 vim.wo.number = true
 vim.wo.relativenumber = true
@@ -84,7 +85,8 @@ vim.o.syntax = 'on'
 vim.o.compatible = false
 vim.o.ignorecase = true
 vim.o.smartcase = true
-vim.o.termguicolors = true -- for accurate colors
+-- vim.o.termguicolors = true -- for accurate colors
+vim.cmd[[set termguicolors]]
 vim.o.hidden = true -- allows you to save buffers that you might still want to jump to
 vim.o.wildmenu = true -- statusline command completion
 vim.o.backspace = 'indent,eol,start' -- allow backspacing over autoindent, line breaks and start of insert action
@@ -128,7 +130,8 @@ setmap('n', '<Leader>mc', ':make clean<CR>', opt)
 setmap('n', 'Y', 'y$', opt)
 
 -- substitute word under cursor
-setmap('n', '<Leader>sw', [[:s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
+-- :%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>
+setmap('n', '<Leader>sw', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
        opt)
 
 setmap('n', '<Leader>bn', ':bNext<CR>', silence)

@@ -33,12 +33,6 @@ augroup white-space
 augroup END
 "}}}
 
-
-" augroup format-on-save
-"         autocmd!
-"         au BufWritePre * :lua vim.lsp.buf.formatting()
-" augroup END
-
 augroup terminal-numbers
 	au!
 	au TermOpen,TermEnter * setlocal nornu nonu

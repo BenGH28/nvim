@@ -109,7 +109,7 @@ gls.left[10] = {
   DiagnosticHint = {
     provider = 'DiagnosticHint',
     icon = '  ',
-    highlight = {colors.cyan, colors.bg}
+    highlight = {'#98c379', colors.bg}
   }
 }
 
@@ -153,7 +153,7 @@ gls.right[3] = {
     end,
     separator = '  ',
     separator_highlight = {'NONE', colors.bg},
-    icon = '',
+    icon = '  ',
     highlight = {colors.red, colors.bg, 'bold'}
   }
 }
@@ -190,7 +190,7 @@ gls.right[7] = {
   DiffModified = {
     provider = 'DiffModified',
     condition = condition.hide_in_width,
-    icon = ' 柳',
+    icon = '🞕 ',
     highlight = {colors.orange, colors.bg}
   }
 }
