@@ -4,10 +4,11 @@ require('packer').startup(function(use)
   -- #region nvim
   use 'sainnhe/edge'
   use {'wbthomason/packer.nvim', opt = true}
+  use 'tjdevries/astronauta.nvim'
   use {'BenGH28/neo-runner.nvim', run = ':UpdateRemotePlugins'}
   use {
-    'neovim/nvim-lspconfig',
-    requires = {
+   'neovim/nvim-lspconfig',
+   requires = {
       {'hrsh7th/nvim-compe'}, {'glepnir/lspsaga.nvim'}, {'onsails/lspkind-nvim'}
     }
   }
@@ -22,7 +23,6 @@ require('packer').startup(function(use)
     requires = {'kyazdani42/nvim-web-devicons', opt = true}
   }
   -- sources all the files in lua/plugin/
-  use 'tjdevries/astronauta.nvim'
   use {
     'nvim-lua/telescope.nvim',
     requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
@@ -128,6 +128,7 @@ setmap('i', 'kj', '<ESC>', opt)
 setmap('n', '<Leader>ma', ':make<CR>', opt)
 setmap('n', '<Leader>mc', ':make clean<CR>', opt)
 setmap('n', 'Y', 'y$', opt)
+setmap('n', '0', '^', opt)
 
 -- substitute word under cursor
 -- :%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>
@@ -164,6 +165,6 @@ setmap('n', '<Leader>w=', '<C-W>=', silence)
 
 -- to do with files
 setmap('n', '<Leader>fv', ':e $MYVIMRC<CR>', silence)
-setmap('n', '<Leader>fs', ':w<CR>', opt)
+setmap('n', '<Leader>fj', ':w<CR>', opt)
 setmap('n', '<Leader>fq', ':q', opt)
 setmap('n', '<Leader>v', ':luafile $MYVIMRC<CR>', opt)

@@ -41,7 +41,7 @@ let g:which_key_map.f = {
 			\'l' : [':Telescope buffers','List Buffers'],
 			\'h' : [':Telescope oldfiles','History'],
 			\'q' : 'quit',
-			\'s' : 'save',
+			\'j' : 'save',
 			\'r' : [':RnvimrToggle', 'Ranger'],
 			\'.' : [':call MyFunctions#mysource()', 'source current file']
 			\}
