@@ -15,7 +15,7 @@ My old config is under the vimscript branch which keeps the CoC lsp implementati
 ## Install
 
 Compile Neovim from source to get the latest and greatest.
-Neovim 0.5 is **REQUIRED**.
+[Neovim 0.5](https://github.com/neovim/neovim) is **REQUIRED**.
 
 ```
 git clone https://github.com/neovim/neovim.git

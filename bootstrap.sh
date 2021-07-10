@@ -87,5 +87,5 @@ install_all_lsps() {
 
 ###call the functions
 
-install_all_lsps
+#install_all_lsps
 clone_my_nvim_repo
