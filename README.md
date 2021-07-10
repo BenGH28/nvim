@@ -24,7 +24,7 @@ make CMAKE_BUILD_TYPE=Release
 sudo make install
 ```
 
-The current bootstrap script should install a couple lsp's to get you started and then clone this config into `$HOME/.config/nvim`
+Bootstrap.sh will clone this config into `$HOME/.config/nvim`
 backing up any pre-existing config to `$HOME/.config/nvim.bak`.
 
 ```sh
