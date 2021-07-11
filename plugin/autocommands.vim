@@ -37,3 +37,8 @@ augroup terminal-numbers
 	au!
 	au TermOpen,TermEnter * setlocal nornu nonu
 augroup END
+
+augroup tabstops
+	au!
+	au FileType * set tabstop=4 shiftwidth=4
+augroup END

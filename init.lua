@@ -3,33 +3,48 @@ vim.cmd [[packadd packer.nvim]]
 require('packer').startup(function(use)
   -- #region nvim
   use 'sainnhe/edge'
+  -- plugin to the outlet
   use {'wbthomason/packer.nvim', opt = true}
+  -- sources all the files in lua/plugin/
   use 'tjdevries/astronauta.nvim'
+  -- Oh hey its me
   use {'BenGH28/neo-runner.nvim', run = ':UpdateRemotePlugins'}
+  -- How can it be? Great scott we have an lsp!!
   use {
    'neovim/nvim-lspconfig',
    requires = {
       {'hrsh7th/nvim-compe'}, {'glepnir/lspsaga.nvim'}, {'onsails/lspkind-nvim'}
     }
   }
+  -- "...I am the captain now"
+  use { 'kabouzeid/nvim-lspinstall' }
+  -- format
+  use 'mhartington/formatter.nvim'
+  -- colours to make unicorns vomit
   use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
+  -- I walk the line
   use {
     'glepnir/galaxyline.nvim',
     branch = 'main',
     requires = {'kyazdani42/nvim-web-devicons', opt = true}
   }
+  -- file tree
   use {
     'kyazdani42/nvim-tree.lua',
     requires = {'kyazdani42/nvim-web-devicons', opt = true}
   }
-  -- sources all the files in lua/plugin/
+  -- file finder
   use {
     'nvim-lua/telescope.nvim',
     requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
   }
+  -- quotes, brackets and easy times ahead
   use 'windwp/nvim-autopairs'
+  -- which bracket is this again?
   use 'p00f/nvim-ts-rainbow'
+  -- jump around, jump around
   use 'phaazon/hop.nvim'
+  -- the Lone Ranger
   use {
     'kevinhwang91/rnvimr',
     branch = 'main',
@@ -37,8 +52,11 @@ require('packer').startup(function(use)
       vim.g.rnvimr_ex_enable = 1
     end
   }
+  -- wait that hex code is a colour?
   use 'norcalli/nvim-colorizer.lua'
+  -- a terminal within a terminal... trippy
   use 'akinsho/nvim-toggleterm.lua'
+  -- I changed something didn't I?
   use {
     'lewis6991/gitsigns.nvim',
     requires = {'nvim-lua/plenary.nvim'},
@@ -46,18 +64,28 @@ require('packer').startup(function(use)
       require('gitsigns').setup()
     end
   }
+  -- lets git kraken... oh wait wrong git app
   use 'kdheepak/lazygit.nvim'
   -- #endregion
 
   -- #region Vim
+  -- comments are easy
   use 'tpope/vim-commentary'
+  -- 'I have you completely surrounded'
   use 'tpope/vim-surround'
+  -- do it again
   use 'tpope/vim-repeat'
+  -- start screen for the vimified
   use 'mhinz/vim-startify'
+  -- 360 no scope
   use 'unblevable/quick-scope'
+  -- what was that shortcut again?
   use 'liuchengxu/vim-which-key'
+  -- documentation for the enlightend
   use 'vim-scripts/DoxygenToolkit.vim'
+  -- OCD and me
   use 'junegunn/vim-easy-align'
+  -- snippets are my friend
   use 'hrsh7th/vim-vsnip'
   use 'hrsh7th/vim-vsnip-integ'
   use 'rafamadriz/friendly-snippets'
@@ -72,11 +100,6 @@ vim.g.mapleader = " "
 vim.g.python3_host_prog = '/bin/python3'
 vim.cmd('colorscheme edge')
 vim.cmd(':set cpo-=C')
-vim.bo.shiftwidth = 4
-vim.bo.softtabstop = 4
--- vim.bo.tabstop = 4
-vim.cmd[[set tabstop=4]]
-vim.bo.expandtab = true
 vim.wo.number = true
 vim.wo.relativenumber = true
 vim.wo.wrap = false
@@ -85,8 +108,7 @@ vim.o.syntax = 'on'
 vim.o.compatible = false
 vim.o.ignorecase = true
 vim.o.smartcase = true
--- vim.o.termguicolors = true -- for accurate colors
-vim.cmd[[set termguicolors]]
+vim.o.termguicolors = true -- for accurate colors
 vim.o.hidden = true -- allows you to save buffers that you might still want to jump to
 vim.o.wildmenu = true -- statusline command completion
 vim.o.backspace = 'indent,eol,start' -- allow backspacing over autoindent, line breaks and start of insert action
