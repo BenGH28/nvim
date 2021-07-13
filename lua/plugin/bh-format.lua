@@ -17,8 +17,27 @@ require("formatter").setup(
         function()
           return {
             exe = "yapf",
-            args = {vim.fn.expand('%')},
-			stdin = true
+            args = {
+              "-i",
+              "--style",
+              "pep8",
+              vim.api.nvim_buf_get_name(0)
+            },
+            stdin = false
+          }
+        end
+      },
+      cpp = {
+        function()
+          return {
+            exe = "clang-format",
+            args = {
+              "-i",
+              "--style=Google",
+			  "--sort-includes",
+			  vim.api.nvim_buf_get_name(0)
+            },
+            stdin = false
           }
         end
       },
