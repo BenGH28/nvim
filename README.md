@@ -31,7 +31,29 @@ backing up any pre-existing config to `$HOME/.config/nvim.bak`.
 curl https://raw.githubusercontent.com/BenGH28/nvim/main/bootstrap.sh | sh
 ```
 
-## Dependencies/Life Improvements
+Install the plugins on first startup.
+
+```sh
+nvim +PackerSync
+```
+
+## Language Servers
+
+Ensure you have the following tools available for automatic installation of some language servers.
+- go
+- npm
+- yarn
+
+Language supported:
+- python
+- lua
+- c++
+- json
+- yaml
+- bash
+- rust
+
+## Fonts
 
 - This config benefits from [nerd fonts](https://github.com/ryanoasis/nerd-fonts.git), to please your eyes,
 I recommend downloading one of those.
