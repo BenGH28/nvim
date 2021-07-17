@@ -193,3 +193,6 @@ setmap("n", "<Leader>fv", ":e $MYVIMRC<CR>", silence)
 setmap("n", "<Leader>fj", ":w<CR>", opt)
 setmap("n", "<Leader>fq", ":q", opt)
 setmap("n", "<Leader>v", ":luafile $MYVIMRC<CR>", opt)
+
+-- Ctrl-b deletes a word behind it
+setmap("i", "<C-b>", "<C-O>b<C-O>dw", opt)
