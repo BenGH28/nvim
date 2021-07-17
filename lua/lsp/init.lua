@@ -60,7 +60,7 @@ local function has_value(tab, val)
 end
 
 local function auto_install_lsp()
-  local desired_lsps = {"python", "lua", "cpp", "json", "yaml", "bash", "rust", "efm"}
+  local desired_lsps = {"python", "lua", "cpp", "json", "yaml", "bash", "rust"}
   lspinstall.setup()
   local installed_servers = lspinstall.installed_servers()
 
