@@ -32,7 +32,7 @@ let g:which_key_map.d = [':Dox', 'Doxygen']
 
 let g:which_key_map.f = {
 			\'name' : '+files',
-			\'o' : 'format',
+			\'o' : [':Format', 'Format'],
 			\'v' : 'open vimrc',
 			\'e' : [':Telescope file_browser','File Explorer'],
 			\'f' : [':Telescope find_files','Find files'],

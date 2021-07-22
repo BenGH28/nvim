@@ -2,6 +2,22 @@ local lspinstall = require "lspinstall"
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
+local setmap = vim.api.nvim_set_keymap
+local silence = {noremap = true, silent = true}
+
+setmap("n", "gd", ":lua vim.lsp.buf.definition()<CR>", silence)
+setmap("n", "gi", ":lua vim.lsp.buf.implementation()<CR>", silence)
+setmap("n", "gr", ":lua vim.lsp.buf.references()<CR>", silence)
+setmap("n", "gh", ':lua require"lspsaga.provider".lsp_finder()<CR>', silence)
+
+-- "hover doc
+setmap("n", "K", ':lua require"lspsaga.hover".render_hover_doc()<CR>', silence)
+setmap("n", "C-j", ':lua require"lspsaga.provider".smart_scroll_with_saga(1)<CR>', silence)
+setmap("n", "C-K", ':lua require"lspsaga.provider".smart_scroll_with_saga(-1)<CR>', silence)
+
+-- "rename
+setmap("n", "gn", ':lua require"lspsaga.rename".rename()<CR>', silence)
+
 local function documentHighlight(client, bufnr)
   if client.resolved_capabilities.document_highlight then
     vim.api.nvim_exec(
@@ -51,24 +67,24 @@ local function my_setup()
 end
 
 local function has_value(tab, val)
-	for _, v in pairs(tab) do
-		if v == val then
-			return true
-		end
-	end
-	return false
+  for _, v in pairs(tab) do
+    if v == val then
+      return true
+    end
+  end
+  return false
 end
 
 local function auto_install_lsp()
-  local desired_lsps = {"python", "lua", "cpp", "json", "yaml", "bash", "rust"}
+  local desired_lsps = {"python", "lua", "cpp", "json", "yaml", "bash", "rust", "vim"}
   lspinstall.setup()
   local installed_servers = lspinstall.installed_servers()
 
   for _, lsp in pairs(desired_lsps) do
-	  -- install things
-	  if has_value(installed_servers, lsp) == false then
-		  lspinstall.install_server(lsp)
-	  end
+    -- install things
+    if has_value(installed_servers, lsp) == false then
+      lspinstall.install_server(lsp)
+    end
   end
 end
 

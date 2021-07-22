@@ -1,15 +1,15 @@
-require("bh-packer")
+require"bh-packer"
 vim.cmd [[packadd packer.nvim]]
-require("packer").startup(
+require "packer".startup(
   function(use)
     -- #region nvim
     use "sainnhe/edge"
     -- plugin to the outlet
     use {"wbthomason/packer.nvim", opt = true}
-    -- sources all the files in lua/plugin/
-    use "tjdevries/astronauta.nvim"
     -- Oh hey its me
     use {"BenGH28/neo-runner.nvim", run = ":UpdateRemotePlugins"}
+    -- lua, lua, load
+    use { "tjdevries/astronauta.nvim" }
     -- How can it be? Great scott we have an lsp!!
     use {
       "neovim/nvim-lspconfig",
