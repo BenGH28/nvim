@@ -75,7 +75,11 @@ let g:which_key_map.m = {
 
 let g:which_key_map.s = {
 			\'name' : '+substitute',
-			\'w' : 'word'}
+			\'w' : {
+				\ 'g' : 'global',
+				\ 'l' :'local',
+				\},
+			\}
 
 let g:which_key_map.t = {
 			\'name' : '+terminal',

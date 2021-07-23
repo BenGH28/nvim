@@ -1,4 +1,4 @@
-require"bh-packer"
+require "bh-packer"
 vim.cmd [[packadd packer.nvim]]
 require "packer".startup(
   function(use)
@@ -9,7 +9,7 @@ require "packer".startup(
     -- Oh hey its me
     use {"BenGH28/neo-runner.nvim", run = ":UpdateRemotePlugins"}
     -- lua, lua, load
-    use { "tjdevries/astronauta.nvim" }
+    -- use {"tjdevries/astronauta.nvim"}
     -- How can it be? Great scott we have an lsp!!
     use {
       "neovim/nvim-lspconfig",
@@ -139,6 +139,8 @@ vim.o.scrolloff = 4
 vim.o.lazyredraw = false -- don't show me the execution of macros--
 vim.o.completeopt = "menuone,noselect"
 vim.o.list = true
+vim.o.undodir = ".undo/"
+vim.o.undofile = true
 -- =============================================================
 --		Vim Mappings Only
 -- =============================================================
@@ -158,8 +160,8 @@ setmap("n", "Y", "y$", opt)
 setmap("n", "0", "^", opt)
 
 -- substitute word under cursor
--- :%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>
-setmap("n", "<Leader>sw", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], opt)
+setmap("n", "<Leader>swg", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], opt)
+setmap("n", "<Leader>swl", [[:s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], opt)
 
 setmap("n", "<Leader>bn", ":bNext<CR>", silence)
 setmap("n", "<Leader>bp", ":bprevious<CR>", silence)
@@ -190,7 +192,7 @@ setmap("n", "<Leader>w=", "<C-W>=", silence)
 
 -- to do with files
 setmap("n", "<Leader>fv", ":e $MYVIMRC<CR>", silence)
-setmap("n", "<Leader>fj", ":w<CR>", opt)
+setmap("n", "<Leader>fj", ":w!<CR>", opt)
 setmap("n", "<Leader>fq", ":q", opt)
 setmap("n", "<Leader>v", ":luafile $MYVIMRC<CR>", opt)
 
