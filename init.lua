@@ -8,8 +8,6 @@ require "packer".startup(
     use {"wbthomason/packer.nvim", opt = true}
     -- Oh hey its me
     use {"BenGH28/neo-runner.nvim", run = ":UpdateRemotePlugins"}
-    -- lua, lua, load
-    -- use {"tjdevries/astronauta.nvim"}
     -- How can it be? Great scott we have an lsp!!
     use {
       "neovim/nvim-lspconfig",
@@ -104,10 +102,10 @@ vim.g.mapleader = " "
 vim.g.python3_host_prog = "/bin/python3"
 vim.cmd("colorscheme edge")
 vim.cmd(":set cpo-=C")
-vim.wo.number = true
-vim.wo.relativenumber = true
-vim.wo.wrap = false
-vim.wo.signcolumn = "yes"
+vim.o.number = true
+vim.o.relativenumber = true
+vim.o.wrap = false
+vim.o.signcolumn = "yes"
 vim.o.syntax = "on"
 vim.o.compatible = false
 vim.o.ignorecase = true
@@ -139,6 +137,10 @@ vim.o.scrolloff = 4
 vim.o.lazyredraw = false -- don't show me the execution of macros--
 vim.o.completeopt = "menuone,noselect"
 vim.o.list = true
+vim.opt.listchars = {
+	tab = '│ ',
+	eol = '⤶',
+}
 vim.o.undodir = ".undo/"
 vim.o.undofile = true
 -- =============================================================
