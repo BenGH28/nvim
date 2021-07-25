@@ -1,22 +1,9 @@
+require "keymap"
+
 local lspinstall = require "lspinstall"
+local signature_config = require "signature"
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
-
-local setmap = vim.api.nvim_set_keymap
-local silence = {noremap = true, silent = true}
-
-setmap("n", "gd", ":lua vim.lsp.buf.definition()<CR>", silence)
-setmap("n", "gi", ":lua vim.lsp.buf.implementation()<CR>", silence)
-setmap("n", "gr", ":lua vim.lsp.buf.references()<CR>", silence)
-setmap("n", "gh", ':lua require"lspsaga.provider".lsp_finder()<CR>', silence)
-
--- "hover doc
-setmap("n", "K", ':lua require"lspsaga.hover".render_hover_doc()<CR>', silence)
-setmap("n", "C-j", ':lua require"lspsaga.provider".smart_scroll_with_saga(1)<CR>', silence)
-setmap("n", "C-K", ':lua require"lspsaga.provider".smart_scroll_with_saga(-1)<CR>', silence)
-
--- "rename
-setmap("n", "gn", ':lua require"lspsaga.rename".rename()<CR>', silence)
 
 local function documentHighlight(client, bufnr)
   if client.resolved_capabilities.document_highlight then
@@ -35,6 +22,11 @@ local function documentHighlight(client, bufnr)
       false
     )
   end
+end
+
+local function on_attach(client, bufnr)
+  documentHighlight(client, bufnr)
+  require "lsp_signature".on_attach(signature_config)
 end
 
 local lua_settings = {
@@ -62,7 +54,7 @@ local lua_settings = {
 local function my_setup()
   return {
     capabilities = capabilities,
-    on_attach = documentHighlight
+    on_attach = on_attach
   }
 end
 

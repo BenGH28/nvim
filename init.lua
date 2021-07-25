@@ -17,6 +17,7 @@ require "packer".startup(
         {"onsails/lspkind-nvim"}
       }
     }
+    use "ray-x/lsp_signature.nvim"
     -- "...I am the captain now"
     use {"kabouzeid/nvim-lspinstall"}
     -- format
@@ -67,6 +68,14 @@ require "packer".startup(
     }
     -- lets git kraken... oh wait wrong git app
     use "kdheepak/lazygit.nvim"
+    -- I'm pretty buff
+    use {
+      "akinsho/nvim-bufferline.lua",
+      requires = "kyazdani42/nvim-web-devicons",
+      config = function()
+        require "bufferline".setup()
+      end
+    }
     -- #endregion
 
     -- #region Vim
@@ -100,7 +109,7 @@ require("lsp")
 -- =======================
 vim.g.mapleader = " "
 vim.g.python3_host_prog = "/bin/python3"
-vim.cmd("colorscheme edge")
+vim.cmd [[colorscheme edge]]
 vim.cmd(":set cpo-=C")
 vim.o.number = true
 vim.o.relativenumber = true
@@ -116,6 +125,7 @@ vim.o.wildmenu = true -- statusline command completion
 vim.o.backspace = "indent,eol,start" -- allow backspacing over autoindent, line breaks and start of insert action
 vim.o.autoindent = true -- keeps indent from the line above
 vim.o.smartindent = true
+vim.o.expandtab = true
 vim.o.startofline = false -- stop certain movements from going to the first character of the line
 vim.o.confirm = false -- ask to save file before quit
 vim.o.laststatus = 2
@@ -138,11 +148,15 @@ vim.o.lazyredraw = false -- don't show me the execution of macros--
 vim.o.completeopt = "menuone,noselect"
 vim.o.list = true
 vim.opt.listchars = {
-	tab = '│ ',
-	eol = '⤶',
+  tab = "| ",
+  lead = ".",
+  eol = "⤶",
+  precedes = "«",
+  extends = "»"
 }
 vim.o.undodir = ".undo/"
 vim.o.undofile = true
+
 -- =============================================================
 --		Vim Mappings Only
 -- =============================================================
@@ -198,5 +212,5 @@ setmap("n", "<Leader>fj", ":w!<CR>", opt)
 setmap("n", "<Leader>fq", ":q", opt)
 setmap("n", "<Leader>v", ":luafile $MYVIMRC<CR>", opt)
 
--- Ctrl-b deletes a word behind it
-setmap("i", "<C-b>", "<C-O>b<C-O>dw", opt)
+--Ctrl-Backspace will delete the word behind the cursor in --INSERT--
+setmap("i", "<C-h>", "<C-O>b<C-O>dw", opt)

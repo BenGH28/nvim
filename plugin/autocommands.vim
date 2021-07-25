@@ -5,16 +5,8 @@
 "Gets rid of the highlightswhen you leave commandline {{{
 augroup vimrc-incsearch-highlight
 	au!
-  	au CmdlineEnter /,\? set hlsearch
+    au CmdlineEnter /,\? set hlsearch
 	au CmdlineLeave /,\? set nohlsearch
-augroup END
-"}}}
-
-"Set foldmethod based on filetype {{{
-augroup foldmethod-on-filetype
-	au!
-	au FileType sh,python setlocal foldmethod=indent
-	au FileType vim setlocal foldmethod=marker
 augroup END
 "}}}
 
