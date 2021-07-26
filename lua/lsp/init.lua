@@ -1,7 +1,7 @@
-require "keymap"
+require "lsp.keymap"
 
 local lspinstall = require "lspinstall"
-local signature_config = require "signature"
+local signature_config = require "lsp.signature"
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 

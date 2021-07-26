@@ -55,7 +55,7 @@ require "packer".startup(
       end
     }
     -- wait that hex code is a colour?
-    use "norcalli/nvim-colorizer.lua"
+    use { "norcalli/nvim-colorizer.lua" }
     -- a terminal within a terminal... trippy
     use "akinsho/nvim-toggleterm.lua"
     -- I changed something didn't I?
