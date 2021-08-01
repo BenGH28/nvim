@@ -1,4 +1,4 @@
-require "bh-packer"
+require "packer-config"
 vim.cmd [[packadd packer.nvim]]
 require "packer".startup(
 	function(use)
@@ -140,7 +140,7 @@ vim.o.confirm = false -- ask to save file before quit
 vim.o.laststatus = 2
 vim.o.showmode = false -- gets rid of the redundant --insert--
 vim.o.mouse = "a" -- allow mouse use in all modes
-vim.o.cmdheight = 2 -- command window height to 2 lines
+vim.o.cmdheight = 1 -- command window height to 2 lines
 vim.o.timeoutlen = 500
 vim.o.cursorline = true
 vim.o.splitbelow = true

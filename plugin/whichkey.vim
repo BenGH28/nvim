@@ -25,7 +25,8 @@ let g:which_key_map.b = {
 				\'p': [':HopPattern', 'pattern'],
 				\},
 			\'n' : 'next',
-			\'p' : 'previous'
+			\'p' : 'previous',
+			\'d' : [':bdelete', 'delete']
 			\}
 
 let g:which_key_map.d = [':Dox', 'Doxygen']
@@ -37,9 +38,10 @@ let g:which_key_map.f = {
 			\'e' : [':Telescope file_browser','File Explorer'],
 			\'f' : [':Telescope find_files','Find files'],
 			\'g' : [':Telescope git_files','Git Files'],
-			\'/' : [':Telescope live_grep','Search'],
+			\'/' : [':Telescope live_grep','Search Project'],
 			\'l' : [':Telescope buffers','List Buffers'],
 			\'h' : [':Telescope oldfiles','History'],
+			\'m' : [': Telescope man_pages', 'Man Pages'],
 			\'q' : 'quit',
 			\'j' : 'save',
 			\'r' : [':RnvimrToggle', 'Ranger'],

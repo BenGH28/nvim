@@ -30,7 +30,7 @@ augroup terminal-numbers
 	au TermOpen,TermEnter * setlocal nornu nonu
 augroup END
 
-" augroup tabstops
-" 	au!
-" 	au FileType * setlocal tabstop=4 shiftwidth=4
-" augroup END
+augroup tabstops
+	au!
+	au BufEnter * lua require"common".set_default_tab(vim.api.nvim_buf_get_option(0, 'filetype'))
+augroup END
