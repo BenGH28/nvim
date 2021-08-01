@@ -5,7 +5,7 @@
 "Gets rid of the highlightswhen you leave commandline {{{
 augroup vimrc-incsearch-highlight
 	au!
-    au CmdlineEnter /,\? set hlsearch
+	au CmdlineEnter /,\? set hlsearch
 	au CmdlineLeave /,\? set nohlsearch
 augroup END
 "}}}
@@ -30,7 +30,7 @@ augroup terminal-numbers
 	au TermOpen,TermEnter * setlocal nornu nonu
 augroup END
 
-augroup tabstops
-	au!
-	au FileType * set tabstop=4 shiftwidth=4
-augroup END
+" augroup tabstops
+" 	au!
+" 	au FileType * setlocal tabstop=4 shiftwidth=4
+" augroup END
