@@ -41,6 +41,38 @@ require("formatter").setup(
 					}
 				end
 			},
+			zsh = {
+				function()
+					return {
+						exe = "shfmt",
+						args = {
+							"-ln",
+							"bash",
+							"-i",
+							"0",
+							"-ci",
+							"-filename",
+							vim.api.nvim_buf_get_name(0)
+						},
+						stdin = true
+					}
+				end
+			},
+			bash = {
+				function()
+					return {
+						exe = "shfmt",
+						args = {
+							"-ln",
+							"bash",
+							"-ci",
+							"-filename",
+							vim.api.nvim_buf_get_name(0)
+						},
+						stdin = true
+					}
+				end
+			},
 			lua = {
 				-- luafmt
 				function()

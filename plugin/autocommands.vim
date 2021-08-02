@@ -19,9 +19,10 @@ augroup END
 "}}}
 
 "whitespace must die {{{
-augroup white-space
+augroup white-space-and-format
 	au!
 	au BufWritePre * %s/\s\+$//e
+	au BufWritePost *.py,*.rs,*.cpp,*.cc,*.sh,*.zsh,*.lua :FormatWrite
 augroup END
 "}}}
 
