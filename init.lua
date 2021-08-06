@@ -17,10 +17,11 @@ require "packer".startup(
 				{"onsails/lspkind-nvim"}
 			}
 		}
+		-- if you could just sign right there
 		use "ray-x/lsp_signature.nvim"
 		-- "...I am the captain now"
 		use {"kabouzeid/nvim-lspinstall"}
-		-- format
+		-- I'm really liking this format
 		use "mhartington/formatter.nvim"
 		-- colours to make unicorns vomit
 		use {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"}
@@ -30,12 +31,12 @@ require "packer".startup(
 			branch = "main",
 			requires = {"kyazdani42/nvim-web-devicons", opt = true}
 		}
-		-- file tree
+		-- files, files, files
 		use {
 			"kyazdani42/nvim-tree.lua",
 			requires = {"kyazdani42/nvim-web-devicons", opt = true}
 		}
-		-- file finder
+		-- see all the files on the moon
 		use {
 			"nvim-lua/telescope.nvim",
 			requires = {{"nvim-lua/popup.nvim"}, {"nvim-lua/plenary.nvim"}}

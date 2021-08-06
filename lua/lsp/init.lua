@@ -9,16 +9,16 @@ local function documentHighlight(client, bufnr)
 	if client.resolved_capabilities.document_highlight then
 		vim.api.nvim_exec(
 			[[
-      hi LspDiagnosticsVirtualTextInformation term=bold guifg='#51afef' guibg='#202328'
-      hi LspDiagnosticsVirtualTextWarning term=bold guifg='#ecbe7b' guibg='#202328'
-      hi LspDiagnosticsVirtualTextHint term=bold guifg='#98c379' guibg='#202328'
-      hi LspDiagnosticsVirtualTextError term=bold guifg='#ec5f67' guibg='#202328'
-      augroup lsp_document_highlight
-        autocmd! * <buffer>
-        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-      augroup END
-    ]],
+			hi LspDiagnosticsVirtualTextInformation term=bold guifg='#51afef' guibg='#202328'
+			hi LspDiagnosticsVirtualTextWarning term=bold guifg='#ecbe7b' guibg='#202328'
+			hi LspDiagnosticsVirtualTextHint term=bold guifg='#98c379' guibg='#202328'
+			hi LspDiagnosticsVirtualTextError term=bold guifg='#ec5f67' guibg='#202328'
+			augroup lsp_document_highlight
+				autocmd! * <buffer>
+				autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+				autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+			augroup END
+			]],
 			false
 		)
 	end
