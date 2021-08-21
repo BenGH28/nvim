@@ -7,7 +7,11 @@ require "packer".startup(
 		-- plugin to the outlet
 		use {"wbthomason/packer.nvim", opt = true}
 		-- Oh hey its me
-		use {"BenGH28/neo-runner.nvim", run = ":UpdateRemotePlugins"}
+		use {
+			"BenGH28/neo-runner.nvim",
+			cmd = "NeoRunner",
+			run = ":UpdateRemotePlugins"
+		}
 		-- How can it be? Great scott we have an lsp!!
 		use {
 			"neovim/nvim-lspconfig",
@@ -20,7 +24,9 @@ require "packer".startup(
 		-- if you could just sign right there
 		use "ray-x/lsp_signature.nvim"
 		-- "...I am the captain now"
-		use {"kabouzeid/nvim-lspinstall"}
+		use {
+			"kabouzeid/nvim-lspinstall"
+		}
 		-- I'm really liking this format
 		use "mhartington/formatter.nvim"
 		-- colours to make unicorns vomit
@@ -46,7 +52,13 @@ require "packer".startup(
 		-- which bracket is this again?
 		use "p00f/nvim-ts-rainbow"
 		-- jump around, jump around
-		use "phaazon/hop.nvim"
+		use {
+			"phaazon/hop.nvim",
+			opt = true,
+			config = function()
+				require "hop".setup {keys = "etovxqpdygfblzhckisuran", term_seq_bias = 1.5}
+			end
+		}
 		-- the Lone Ranger
 		use {
 			"kevinhwang91/rnvimr",
@@ -56,9 +68,29 @@ require "packer".startup(
 			end
 		}
 		-- wait that hex code is a colour?
-		use {"norcalli/nvim-colorizer.lua"}
+		use {
+			"norcalli/nvim-colorizer.lua",
+			config = function()
+				require("colorizer").setup()
+			end
+		}
 		-- a terminal within a terminal... trippy
-		use "akinsho/nvim-toggleterm.lua"
+		use {
+			"akinsho/nvim-toggleterm.lua",
+			opt = true,
+			config = function()
+				require "toggleterm".setup {
+					size = 10,
+					shade_filetypes = {},
+					open_mapping = [[<leader>tt]],
+					shade_terminals = true,
+					shading_factor = "1", -- the degree by which to darken to terminal colour, default: 1 for dark backgrounds, 3 for light
+					start_in_insert = true,
+					persist_size = true,
+					direction = "horizontal"
+				}
+			end
+		}
 		-- I changed something didn't I?
 		use {
 			"lewis6991/gitsigns.nvim",
@@ -80,6 +112,7 @@ require "packer".startup(
 		-- emacs can eat my dust
 		use {
 			"kristijanhusak/orgmode.nvim",
+			ft = "org",
 			config = function()
 				require("orgmode").setup {
 					org_default_notes_file = "~/Documents/org/file.org"
@@ -102,7 +135,7 @@ require "packer".startup(
 		-- what was that shortcut again?
 		use "liuchengxu/vim-which-key"
 		-- documentation for the enlightend
-		use "vim-scripts/DoxygenToolkit.vim"
+		use {"vim-scripts/DoxygenToolkit.vim", ft = {"cpp", "c"}}
 		-- OCD and me
 		use "junegunn/vim-easy-align"
 		-- snippets are my friend

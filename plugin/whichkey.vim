@@ -85,7 +85,7 @@ let g:which_key_map.s = {
 
 let g:which_key_map.t = {
 			\'name' : '+terminal',
-			\'t': 'toggle',
+			\'t': 'ToggleTerm',
             \'g': [':LazyGit', 'LazyGit']
 			\}
 
