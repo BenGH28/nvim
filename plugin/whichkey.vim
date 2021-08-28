@@ -7,6 +7,16 @@ let g:which_key_display_names = {'<CR>': '↵', '<TAB>': '⇆'}
 let g:which_key_map['.'] = 'next tab'
 let g:which_key_map[','] = 'previous tab'
 
+let g:which_key_map['1'] = [':BufferLineGoToBuffer 1', "Goto buffer 1"]
+let g:which_key_map['2'] = [':BufferLineGoToBuffer 2', "Goto buffer 2"]
+let g:which_key_map['3'] = [':BufferLineGoToBuffer 3', "Goto buffer 3"]
+let g:which_key_map['4'] = [':BufferLineGoToBuffer 4', "Goto buffer 4"]
+let g:which_key_map['5'] = [':BufferLineGoToBuffer 5', "Goto buffer 5"]
+let g:which_key_map['6'] = [':BufferLineGoToBuffer 6', "Goto buffer 6"]
+let g:which_key_map['7'] = [':BufferLineGoToBuffer 7', "Goto buffer 7"]
+let g:which_key_map['8'] = [':BufferLineGoToBuffer 8', "Goto buffer 8"]
+let g:which_key_map['9'] = [':BufferLineGoToBuffer 9', "Goto buffer 9"]
+
 let g:which_key_map.a = {
 			\'name' : '+theme',
 			\'l' : 'light background',
