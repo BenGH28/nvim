@@ -187,20 +187,20 @@ vim.o.undofile = true
 -- alias the long function
 local setmap = vim.api.nvim_set_keymap
 
-local opt = {noremap = true}
+local noremap = {noremap = true}
 local silence = {noremap = true, silent = true}
 
-setmap("i", "jk", "<ESC>", opt)
-setmap("i", "kj", "<ESC>", opt)
+setmap("i", "jk", "<ESC>", noremap)
+setmap("i", "kj", "<ESC>", noremap)
 
-setmap("n", "<Leader>ma", ":make<CR>", opt)
-setmap("n", "<Leader>mc", ":make clean<CR>", opt)
-setmap("n", "Y", "y$", opt)
-setmap("n", "0", "^", opt)
+setmap("n", "<Leader>ma", ":make<CR>", noremap)
+setmap("n", "<Leader>mc", ":make clean<CR>", noremap)
+setmap("n", "Y", "y$", noremap)
+setmap("n", "0", "^", noremap)
 
 -- substitute word under cursor
-setmap("n", "<Leader>swg", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], opt)
-setmap("n", "<Leader>swl", [[:s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], opt)
+setmap("n", "<Leader>swg", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], noremap)
+setmap("n", "<Leader>swl", [[:s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], noremap)
 
 setmap("n", "<Leader>bn", ":bNext<CR>", silence)
 setmap("n", "<Leader>bp", ":bprevious<CR>", silence)
@@ -231,9 +231,9 @@ setmap("n", "<Leader>w=", "<C-W>=", silence)
 
 -- to do with files
 setmap("n", "<Leader>fv", ":e $MYVIMRC<CR>", silence)
-setmap("n", "<Leader>fj", ":w!<CR>", opt)
-setmap("n", "<Leader>fq", ":q", opt)
-setmap("n", "<Leader>v", ":luafile $MYVIMRC<CR>", opt)
+setmap("n", "<Leader>fj", ":w!<CR>", noremap)
+setmap("n", "<Leader>fq", ":q", noremap)
+setmap("n", "<Leader>v", ":luafile $MYVIMRC<CR>", noremap)
 
 --Ctrl-Backspace will delete the word behind the cursor in --INSERT--
-setmap("i", "<C-h>", "<C-O>b<C-O>dw", opt)
+setmap("i", "<C-h>", "<C-O>b<C-O>dw", noremap)
