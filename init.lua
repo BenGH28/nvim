@@ -2,6 +2,25 @@ require "packer-config"
 vim.cmd [[packadd packer.nvim]]
 require "packer".startup(
   function(use)
+    --#region Dependencies
+    use {
+      "hrsh7th/nvim-compe",
+      ft = {"yaml", "cpp", "c", "python", "json", "lua", "rust", "bash"}
+    }
+    use {
+      "onsails/lspkind-nvim",
+      ft = {"yaml", "cpp", "c", "python", "json", "lua", "rust", "bash"}
+    }
+    use {
+      "glepnir/lspsaga.nvim",
+      ft = {"yaml", "cpp", "c", "python", "json", "lua", "rust", "bash"}
+    }
+
+    use {"nvim-lua/popup.nvim"}
+    use {"nvim-lua/plenary.nvim"}
+    use {"kyazdani42/nvim-web-devicons"}
+    --#endregion
+
     -- #region nvim
     use "sainnhe/edge"
     -- plugin to the outlet
@@ -15,11 +34,10 @@ require "packer".startup(
     -- How can it be? Great scott we have an lsp!!
     use {
       "neovim/nvim-lspconfig",
-      requires = {
-        {"hrsh7th/nvim-compe"},
-        {"glepnir/lspsaga.nvim"},
-        {"onsails/lspkind-nvim"}
-      }
+      ft = {"yaml", "cpp", "c", "python", "json", "lua", "rust", "bash"},
+      config = function()
+        require("lsp")
+      end
     }
     -- if you could just sign right there
     use "ray-x/lsp_signature.nvim"
@@ -40,19 +58,12 @@ require "packer".startup(
     -- I walk the line
     use {
       "glepnir/galaxyline.nvim",
-      branch = "main",
-      requires = {"kyazdani42/nvim-web-devicons", opt = true}
+      branch = "main"
     }
     -- files, files, files
-    use {
-      "kyazdani42/nvim-tree.lua",
-      requires = {"kyazdani42/nvim-web-devicons", opt = true}
-    }
+    use {"kyazdani42/nvim-tree.lua"}
     -- see all the files on the moon
-    use {
-      "nvim-lua/telescope.nvim",
-      requires = {{"nvim-lua/popup.nvim"}, {"nvim-lua/plenary.nvim"}}
-    }
+    use {"nvim-lua/telescope.nvim"}
     -- quotes, brackets and easy times ahead
     use "windwp/nvim-autopairs"
     -- which bracket is this again?
@@ -68,6 +79,7 @@ require "packer".startup(
     -- the Lone Ranger
     use {
       "kevinhwang91/rnvimr",
+      opt = true,
       branch = "main",
       config = function()
         vim.g.rnvimr_ex_enable = 1
@@ -83,7 +95,7 @@ require "packer".startup(
     -- I changed something didn't I?
     use {
       "lewis6991/gitsigns.nvim",
-      requires = {"nvim-lua/plenary.nvim"},
+      disable = true,
       config = function()
         require("gitsigns").setup()
       end
@@ -93,9 +105,17 @@ require "packer".startup(
     -- I'm pretty buff
     use {
       "akinsho/nvim-bufferline.lua",
-      requires = "kyazdani42/nvim-web-devicons",
       config = function()
         require "bufferline".setup()
+      end
+    }
+    use {
+      "henriquehbr/nvim-startup.lua",
+      config = function()
+        require "nvim-startup".setup {
+          startup_file = "/tmp/nvim-startuptime",
+          message = "startup time in ... {}"
+        }
       end
     }
     -- #endregion
@@ -116,7 +136,10 @@ require "packer".startup(
     -- documentation for the enlightend
     use {"vim-scripts/DoxygenToolkit.vim", ft = {"cpp", "c"}}
     -- OCD and me
-    use "junegunn/vim-easy-align"
+    use {
+      "junegunn/vim-easy-align",
+      opt = true
+    }
     -- snippets are my friend
     use "hrsh7th/vim-vsnip"
     use "hrsh7th/vim-vsnip-integ"
@@ -125,7 +148,7 @@ require "packer".startup(
   end
 )
 
-require("lsp")
+-- require("lsp")
 -- =======================
 -- 		Basics
 -- =======================
