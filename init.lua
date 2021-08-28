@@ -1,149 +1,128 @@
 require "packer-config"
 vim.cmd [[packadd packer.nvim]]
 require "packer".startup(
-	function(use)
-		-- #region nvim
-		use "sainnhe/edge"
-		-- plugin to the outlet
-		use {"wbthomason/packer.nvim", opt = true}
-		-- Oh hey its me
-		use {
-			"BenGH28/neo-runner.nvim",
-			cmd = "NeoRunner",
-			run = ":UpdateRemotePlugins"
-		}
-		-- How can it be? Great scott we have an lsp!!
-		use {
-			"neovim/nvim-lspconfig",
-			requires = {
-				{"hrsh7th/nvim-compe"},
-				{"glepnir/lspsaga.nvim"},
-				{"onsails/lspkind-nvim"}
-			}
-		}
-		-- if you could just sign right there
-		use "ray-x/lsp_signature.nvim"
-		-- "...I am the captain now"
-		use {
-			"kabouzeid/nvim-lspinstall"
-		}
-		-- I'm really liking this format
-		use "mhartington/formatter.nvim"
-		-- colours to make unicorns vomit
-		use {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"}
-		-- I walk the line
-		use {
-			"glepnir/galaxyline.nvim",
-			branch = "main",
-			requires = {"kyazdani42/nvim-web-devicons", opt = true}
-		}
-		-- files, files, files
-		use {
-			"kyazdani42/nvim-tree.lua",
-			requires = {"kyazdani42/nvim-web-devicons", opt = true}
-		}
-		-- see all the files on the moon
-		use {
-			"nvim-lua/telescope.nvim",
-			requires = {{"nvim-lua/popup.nvim"}, {"nvim-lua/plenary.nvim"}}
-		}
-		-- quotes, brackets and easy times ahead
-		use "windwp/nvim-autopairs"
-		-- which bracket is this again?
-		use "p00f/nvim-ts-rainbow"
-		-- jump around, jump around
-		use {
-			"phaazon/hop.nvim",
-			opt = true,
-			config = function()
-				require "hop".setup {keys = "etovxqpdygfblzhckisuran", term_seq_bias = 1.5}
-			end
-		}
-		-- the Lone Ranger
-		use {
-			"kevinhwang91/rnvimr",
-			branch = "main",
-			config = function()
-				vim.g.rnvimr_ex_enable = 1
-			end
-		}
-		-- wait that hex code is a colour?
-		use {
-			"norcalli/nvim-colorizer.lua",
-			config = function()
-				require("colorizer").setup()
-			end
-		}
-		-- a terminal within a terminal... trippy
-		use {
-			"akinsho/nvim-toggleterm.lua",
-			opt = true,
-			config = function()
-				require "toggleterm".setup {
-					size = 10,
-					shade_filetypes = {},
-					open_mapping = [[<leader>tt]],
-					shade_terminals = true,
-					shading_factor = "1", -- the degree by which to darken to terminal colour, default: 1 for dark backgrounds, 3 for light
-					start_in_insert = true,
-					persist_size = true,
-					direction = "horizontal"
-				}
-			end
-		}
-		-- I changed something didn't I?
-		use {
-			"lewis6991/gitsigns.nvim",
-			requires = {"nvim-lua/plenary.nvim"},
-			config = function()
-				require("gitsigns").setup()
-			end
-		}
-		-- lets git kraken... oh wait wrong git app
-		use "kdheepak/lazygit.nvim"
-		-- I'm pretty buff
-		use {
-			"akinsho/nvim-bufferline.lua",
-			requires = "kyazdani42/nvim-web-devicons",
-			config = function()
-				require "bufferline".setup()
-			end
-		}
-		-- emacs can eat my dust
-		use {
-			"kristijanhusak/orgmode.nvim",
-			ft = "org",
-			config = function()
-				require("orgmode").setup {
-					org_default_notes_file = "~/Documents/org/file.org"
-				}
-			end
-		}
-		-- #endregion
+  function(use)
+    -- #region nvim
+    use "sainnhe/edge"
+    -- plugin to the outlet
+    use {"wbthomason/packer.nvim", opt = true}
+    -- Oh hey its me
+    use {
+      "BenGH28/neo-runner.nvim",
+      cmd = "NeoRunner",
+      run = ":UpdateRemotePlugins"
+    }
+    -- How can it be? Great scott we have an lsp!!
+    use {
+      "neovim/nvim-lspconfig",
+      requires = {
+        {"hrsh7th/nvim-compe"},
+        {"glepnir/lspsaga.nvim"},
+        {"onsails/lspkind-nvim"}
+      }
+    }
+    -- if you could just sign right there
+    use "ray-x/lsp_signature.nvim"
+    -- "...I am the captain now"
+    use {
+      "kabouzeid/nvim-lspinstall"
+    }
+    -- I'm really liking this format
+    use {
+      "mhartington/formatter.nvim",
+      ft = {"rust", "bash", "sh", "zsh", "lua", "cpp", "python"},
+      config = function()
+        require("formatter-conf")
+      end
+    }
+    -- colours to make unicorns vomit
+    use {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"}
+    -- I walk the line
+    use {
+      "glepnir/galaxyline.nvim",
+      branch = "main",
+      requires = {"kyazdani42/nvim-web-devicons", opt = true}
+    }
+    -- files, files, files
+    use {
+      "kyazdani42/nvim-tree.lua",
+      requires = {"kyazdani42/nvim-web-devicons", opt = true}
+    }
+    -- see all the files on the moon
+    use {
+      "nvim-lua/telescope.nvim",
+      requires = {{"nvim-lua/popup.nvim"}, {"nvim-lua/plenary.nvim"}}
+    }
+    -- quotes, brackets and easy times ahead
+    use "windwp/nvim-autopairs"
+    -- which bracket is this again?
+    use "p00f/nvim-ts-rainbow"
+    -- jump around, jump around
+    use {
+      "phaazon/hop.nvim",
+      opt = true,
+      config = function()
+        require "hop".setup {keys = "etovxqpdygfblzhckisuran", term_seq_bias = 1.5}
+      end
+    }
+    -- the Lone Ranger
+    use {
+      "kevinhwang91/rnvimr",
+      branch = "main",
+      config = function()
+        vim.g.rnvimr_ex_enable = 1
+      end
+    }
+    -- wait that hex code is a colour?
+    use {
+      "norcalli/nvim-colorizer.lua",
+      config = function()
+        require("colorizer").setup()
+      end
+    }
+    -- I changed something didn't I?
+    use {
+      "lewis6991/gitsigns.nvim",
+      requires = {"nvim-lua/plenary.nvim"},
+      config = function()
+        require("gitsigns").setup()
+      end
+    }
+    -- lets git kraken... oh wait wrong git app
+    use "kdheepak/lazygit.nvim"
+    -- I'm pretty buff
+    use {
+      "akinsho/nvim-bufferline.lua",
+      requires = "kyazdani42/nvim-web-devicons",
+      config = function()
+        require "bufferline".setup()
+      end
+    }
+    -- #endregion
 
-		-- #region Vim
-		-- comments are easy
-		use "tpope/vim-commentary"
-		-- 'I have you completely surrounded'
-		use "tpope/vim-surround"
-		-- do it again
-		use "tpope/vim-repeat"
-		-- start screen for the vimified
-		use "mhinz/vim-startify"
-		-- 360 no scope
-		use "unblevable/quick-scope"
-		-- what was that shortcut again?
-		use "liuchengxu/vim-which-key"
-		-- documentation for the enlightend
-		use {"vim-scripts/DoxygenToolkit.vim", ft = {"cpp", "c"}}
-		-- OCD and me
-		use "junegunn/vim-easy-align"
-		-- snippets are my friend
-		use "hrsh7th/vim-vsnip"
-		use "hrsh7th/vim-vsnip-integ"
-		use "rafamadriz/friendly-snippets"
-		-- #endregion
-	end
+    -- #region Vim
+    -- comments are easy
+    use "tpope/vim-commentary"
+    -- 'I have you completely surrounded'
+    use "tpope/vim-surround"
+    -- do it again
+    use "tpope/vim-repeat"
+    -- start screen for the vimified
+    use "mhinz/vim-startify"
+    -- 360 no scope
+    use "unblevable/quick-scope"
+    -- what was that shortcut again?
+    use "liuchengxu/vim-which-key"
+    -- documentation for the enlightend
+    use {"vim-scripts/DoxygenToolkit.vim", ft = {"cpp", "c"}}
+    -- OCD and me
+    use "junegunn/vim-easy-align"
+    -- snippets are my friend
+    use "hrsh7th/vim-vsnip"
+    use "hrsh7th/vim-vsnip-integ"
+    use "rafamadriz/friendly-snippets"
+    -- #endregion
+  end
 )
 
 require("lsp")
@@ -169,6 +148,7 @@ vim.o.wildmenu = true -- statusline command completion
 vim.o.backspace = "indent,eol,start" -- allow backspacing over autoindent, line breaks and start of insert action
 vim.o.autoindent = true -- keeps indent from the line above
 vim.o.smartindent = true
+vim.o.expandtab = true
 vim.o.startofline = false -- stop certain movements from going to the first character of the line
 vim.o.confirm = false -- ask to save file before quit
 vim.o.laststatus = 2
@@ -191,11 +171,11 @@ vim.o.lazyredraw = false -- don't show me the execution of macros--
 vim.o.completeopt = "menuone,noselect"
 vim.o.list = true
 vim.opt.listchars = {
-	tab = "| ",
-	lead = ".",
-	eol = "⤶",
-	precedes = "«",
-	extends = "»"
+  tab = "| ",
+  -- lead = ".",
+  eol = "⤶",
+  precedes = "«",
+  extends = "»"
 }
 vim.o.undodir = ".undo/"
 vim.o.undofile = true
