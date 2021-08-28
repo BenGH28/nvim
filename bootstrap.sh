@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 clone_my_nvim_repo() {
     if [ -d $HOME/.config/nvim ]; then
