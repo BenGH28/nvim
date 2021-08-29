@@ -2,26 +2,48 @@ require "packer-config"
 vim.cmd [[packadd packer.nvim]]
 require "packer".startup(
   function(use)
-    --#region Dependencies
-    use {
-      "hrsh7th/nvim-compe",
-      ft = {"yaml", "cpp", "c", "python", "json", "lua", "rust", "bash"}
-    }
-    use {
-      "onsails/lspkind-nvim",
-      ft = {"yaml", "cpp", "c", "python", "json", "lua", "rust", "bash"}
-    }
-    use {
-      "glepnir/lspsaga.nvim",
-      ft = {"yaml", "cpp", "c", "python", "json", "lua", "rust", "bash"}
-    }
-
+    local lsp_file_list = {"yaml", "cpp", "c", "python", "json", "lua", "rust", "bash"}
+    --#region General Dependencies
     use {"nvim-lua/popup.nvim"}
     use {"nvim-lua/plenary.nvim"}
     use {"kyazdani42/nvim-web-devicons"}
     --#endregion
 
-    -- #region nvim
+    --#region Lsp
+    use {
+      "hrsh7th/nvim-compe",
+      ft = lsp_file_list
+    }
+    use {
+      "onsails/lspkind-nvim",
+      ft = lsp_file_list
+    }
+    use {
+      "glepnir/lspsaga.nvim",
+      ft = lsp_file_list
+    }
+    -- How can it be? Great scott we have an lsp!!
+    use {
+      "neovim/nvim-lspconfig",
+      after = {"lspsaga.nvim", "nvim-compe", "lspkind-nvim"},
+      config = function()
+        require("lsp")
+      end
+    }
+    -- if you could just sign right there
+    use {
+      "ray-x/lsp_signature.nvim",
+      ft = lsp_file_list
+    }
+    -- "...I am the captain now"
+    use {
+      "kabouzeid/nvim-lspinstall"
+    }
+    use {"hrsh7th/vim-vsnip", after = "nvim-lspconfig"}
+    use {"hrsh7th/vim-vsnip-integ", after = "nvim-lspconfig"}
+    use {"rafamadriz/friendly-snippets", after = "nvim-lspconfig"}
+    --#endregion
+
     use "sainnhe/edge"
     -- plugin to the outlet
     use {"wbthomason/packer.nvim", opt = true}
@@ -30,20 +52,6 @@ require "packer".startup(
       "BenGH28/neo-runner.nvim",
       cmd = "NeoRunner",
       run = ":UpdateRemotePlugins"
-    }
-    -- How can it be? Great scott we have an lsp!!
-    use {
-      "neovim/nvim-lspconfig",
-      ft = {"yaml", "cpp", "c", "python", "json", "lua", "rust", "bash"},
-      config = function()
-        require("lsp")
-      end
-    }
-    -- if you could just sign right there
-    use "ray-x/lsp_signature.nvim"
-    -- "...I am the captain now"
-    use {
-      "kabouzeid/nvim-lspinstall"
     }
     -- I'm really liking this format
     use {
@@ -54,20 +62,46 @@ require "packer".startup(
       end
     }
     -- colours to make unicorns vomit
-    use {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"}
+    use {
+      "nvim-treesitter/nvim-treesitter",
+      event = "VimEnter",
+      run = ":TSUpdate",
+      config = function()
+        require "treesitter-conf"
+      end
+    }
+    -- quotes, brackets and easy times ahead
+    use "windwp/nvim-autopairs"
+    -- which bracket is this again?
+    use {
+      "p00f/nvim-ts-rainbow",
+      after = "nvim-treesitter",
+      config = function()
+        require "nvim-treesitter.configs".setup {
+          rainbow = {enable = true}
+        }
+      end
+    }
     -- I walk the line
     use {
       "glepnir/galaxyline.nvim",
       branch = "main"
     }
     -- files, files, files
-    use {"kyazdani42/nvim-tree.lua"}
+    use {
+      "kyazdani42/nvim-tree.lua",
+      config = function()
+        require "tree-conf"
+      end
+    }
     -- see all the files on the moon
-    use {"nvim-lua/telescope.nvim"}
-    -- quotes, brackets and easy times ahead
-    use "windwp/nvim-autopairs"
-    -- which bracket is this again?
-    use "p00f/nvim-ts-rainbow"
+    use {
+      "nvim-lua/telescope.nvim",
+      event = "VimEnter",
+      config = function()
+        require "telescope-conf"
+      end
+    }
     -- jump around, jump around
     use {
       "phaazon/hop.nvim",
@@ -101,7 +135,13 @@ require "packer".startup(
       end
     }
     -- lets git kraken... oh wait wrong git app
-    use "kdheepak/lazygit.nvim"
+    use {
+      "kdheepak/lazygit.nvim",
+      event = "VimEnter",
+      config = function()
+        require "lazygit-conf"
+      end
+    }
     -- I'm pretty buff
     use {
       "akinsho/nvim-bufferline.lua",
@@ -118,9 +158,7 @@ require "packer".startup(
         }
       end
     }
-    -- #endregion
 
-    -- #region Vim
     -- comments are easy
     use "tpope/vim-commentary"
     -- 'I have you completely surrounded'
@@ -141,10 +179,9 @@ require "packer".startup(
       opt = true
     }
     -- snippets are my friend
-    use "hrsh7th/vim-vsnip"
-    use "hrsh7th/vim-vsnip-integ"
-    use "rafamadriz/friendly-snippets"
-    -- #endregion
+    -- use {"hrsh7th/vim-vsnip"}
+    -- use {"hrsh7th/vim-vsnip-integ"}
+    -- use {"rafamadriz/friendly-snippets"}
   end
 )
 
