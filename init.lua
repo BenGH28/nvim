@@ -129,7 +129,7 @@ require "packer".startup(
     -- I changed something didn't I?
     use {
       "lewis6991/gitsigns.nvim",
-      disable = true,
+      -- disable = true,
       config = function()
         require("gitsigns").setup()
       end
