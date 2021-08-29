@@ -22,18 +22,18 @@ require "packer".startup(
       "glepnir/lspsaga.nvim",
       ft = lsp_file_list
     }
-    -- How can it be? Great scott we have an lsp!!
-    use {
-      "neovim/nvim-lspconfig",
-      after = {"lspsaga.nvim", "nvim-compe", "lspkind-nvim"},
-      config = function()
-        require("lsp")
-      end
-    }
     -- if you could just sign right there
     use {
       "ray-x/lsp_signature.nvim",
       ft = lsp_file_list
+    }
+    -- How can it be? Great scott we have an lsp!!
+    use {
+      "neovim/nvim-lspconfig",
+      after = {"lspsaga.nvim", "nvim-compe", "lspkind-nvim", "lsp_signature.nvim"},
+      config = function()
+        require("lsp")
+      end
     }
     -- "...I am the captain now"
     use {
@@ -178,10 +178,6 @@ require "packer".startup(
       "junegunn/vim-easy-align",
       opt = true
     }
-    -- snippets are my friend
-    -- use {"hrsh7th/vim-vsnip"}
-    -- use {"hrsh7th/vim-vsnip-integ"}
-    -- use {"rafamadriz/friendly-snippets"}
   end
 )
 
