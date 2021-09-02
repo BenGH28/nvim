@@ -71,7 +71,13 @@ require "packer".startup(
       end
     }
     -- quotes, brackets and easy times ahead
-    use "windwp/nvim-autopairs"
+    use {
+      "windwp/nvim-autopairs",
+      event = "InsertEnter",
+      config = function()
+        require "autopairs"
+      end
+    }
     -- which bracket is this again?
     use {
       "p00f/nvim-ts-rainbow",
@@ -90,6 +96,7 @@ require "packer".startup(
     -- files, files, files
     use {
       "kyazdani42/nvim-tree.lua",
+      event = "VimEnter",
       config = function()
         require "tree-conf"
       end
@@ -105,7 +112,7 @@ require "packer".startup(
     -- jump around, jump around
     use {
       "phaazon/hop.nvim",
-      opt = true,
+      event = "BufEnter",
       config = function()
         require "hop".setup {keys = "etovxqpdygfblzhckisuran", term_seq_bias = 1.5}
       end
@@ -129,7 +136,6 @@ require "packer".startup(
     -- I changed something didn't I?
     use {
       "lewis6991/gitsigns.nvim",
-      -- disable = true,
       config = function()
         require("gitsigns").setup()
       end
@@ -160,9 +166,13 @@ require "packer".startup(
     }
 
     -- comments are easy
-    use "tpope/vim-commentary"
+    use {
+      "tpope/vim-commentary"
+    }
     -- 'I have you completely surrounded'
-    use "tpope/vim-surround"
+    use {
+      "tpope/vim-surround"
+    }
     -- do it again
     use "tpope/vim-repeat"
     -- start screen for the vimified
@@ -228,7 +238,6 @@ vim.o.completeopt = "menuone,noselect"
 vim.o.list = true
 vim.opt.listchars = {
   tab = "| ",
-  -- lead = ".",
   eol = "⤶",
   precedes = "«",
   extends = "»"
