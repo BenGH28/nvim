@@ -7,7 +7,7 @@ require("formatter").setup(
         function()
           return {
             exe = "rustfmt",
-            args = {"--emit=stdout", "--config", "--edition", "2018"},
+            args = {"--emit=stdout", "--edition", "2018"},
             stdin = true
           }
         end
