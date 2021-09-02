@@ -22,7 +22,7 @@ augroup END
 augroup white-space-and-format
 	au!
 	au BufWritePre * %s/\s\+$//e
-	au BufWritePost *.py,*.rs,*.cpp,*.cc,*.sh,*.zsh,*.lua :FormatWrite
+	au BufWritePost *.py,*.rs,*.cpp,*.cc,*.sh,*.zsh,*.lua,*.md :FormatWrite
 augroup END
 "}}}
 

@@ -92,6 +92,20 @@ require("formatter").setup(
           }
         end
       },
+      markdown = {
+        function()
+          return {
+            exe = "prettier",
+            args = {
+              "--tab-width",
+              "4",
+              "--stdin-filepath",
+              vim.api.nvim_buf_get_name(0)
+            },
+            stdin = true
+          }
+        end
+      },
       lua = {
         -- luafmt
         function()

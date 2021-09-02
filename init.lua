@@ -56,7 +56,7 @@ require "packer".startup(
     -- I'm really liking this format
     use {
       "mhartington/formatter.nvim",
-      ft = {"rust", "bash", "sh", "zsh", "lua", "cpp", "python"},
+      ft = {"rust", "bash", "sh", "zsh", "lua", "cpp", "python", "markdown"},
       config = function()
         require("formatter-conf")
       end
@@ -166,13 +166,9 @@ require "packer".startup(
     }
 
     -- comments are easy
-    use {
-      "tpope/vim-commentary"
-    }
+    use {"tpope/vim-commentary"}
     -- 'I have you completely surrounded'
-    use {
-      "tpope/vim-surround"
-    }
+    use {"tpope/vim-surround"}
     -- do it again
     use "tpope/vim-repeat"
     -- start screen for the vimified
