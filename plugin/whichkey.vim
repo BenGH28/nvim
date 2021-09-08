@@ -18,9 +18,7 @@ let g:which_key_map['8'] = [':BufferLineGoToBuffer 8', "Goto buffer 8"]
 let g:which_key_map['9'] = [':BufferLineGoToBuffer 9', "Goto buffer 9"]
 
 let g:which_key_map.a = {
-			\'name' : '+theme',
-			\'l' : 'light background',
-			\'d' : 'dark background',
+			\'name' : '+alacritty',
 			\'t' : 'match alacritty theme',
 			\}
 
@@ -39,6 +37,12 @@ let g:which_key_map.b = {
 			\'d' : [':bdelete', 'delete']
 			\}
 
+let g:which_key_map.c = {
+			\'name' : '+colours',
+			\'l' : 'light background',
+			\'d' : 'dark background',
+            \'c' : [':Telescope colorscheme', 'colorscheme']
+			\}
 let g:which_key_map.d = [':Dox', 'Doxygen']
 
 let g:which_key_map.f = {
