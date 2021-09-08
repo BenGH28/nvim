@@ -96,7 +96,7 @@ local function setup_servers()
   end
 end
 
-auto_install_lsp()
+-- auto_install_lsp()
 setup_servers()
 
 -- Automatically reload after `:LspInstall <server>` so we don't have to restart neovim
