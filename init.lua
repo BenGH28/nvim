@@ -155,15 +155,6 @@ require "packer".startup(
         require "bufferline".setup()
       end
     }
-    use {
-      "henriquehbr/nvim-startup.lua",
-      config = function()
-        require "nvim-startup".setup {
-          startup_file = "/tmp/nvim-startuptime",
-          message = "startup time in ... {}"
-        }
-      end
-    }
 
     -- comments are easy
     use {"tpope/vim-commentary"}
@@ -270,8 +261,8 @@ setmap("n", "<Leader>.", ":tabn<CR>", silence)
 setmap("n", "<Leader>,", ":tabp<CR>", silence)
 
 -- set background quickly if I'm not using alacritty
-setmap("n", "<Leader>al", ":set background=light<CR>", silence)
-setmap("n", "<Leader>ad", ":set background=dark<CR>", silence)
+setmap("n", "<Leader>cl", ":set background=light<CR>", silence)
+setmap("n", "<Leader>cd", ":set background=dark<CR>", silence)
 
 -- alacritty themes
 setmap("n", "<Leader>at", ":call MyFunctions#ToggleAlacrittyTheme()<CR>", silence)
