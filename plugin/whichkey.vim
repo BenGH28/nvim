@@ -66,21 +66,22 @@ let g:which_key_map['H'] = [':Telescope help_tags','help']
 
 let g:which_key_map.l = {
 			\'name' : '+lsp',
-			\'c': [':lua require("lspsaga.codeactions").code_action()', 'Code action'],
+			\'c': [':Lspsaga code_action', 'Code action'],
 			\'d': {
 				\'name': '+diagnostics',
-				\'s': [':lua require"lspsaga.diagnostic".show_line_diagnostics()<CR>', 'Show line diagnostics'],
-				\'n': [':lua require"lspsaga.diagnostic".lsp_jump_diagnostic_next()<CR>', 'Next diagnostic'],
-				\'p': [':lua require"lspsaga.diagnostic".lsp_jump_diagnostic_prev()<CR>', 'Prev diagnostic'],
+				\'l': [':Lspsaga show_line_diagnostics', 'Show line diagnostics'],
+				\'c': [':Lspsaga show_cursor_diagnostics', 'Show cursor diagnostics'],
+				\'n': [':Lspsaga diagnostic_jump_next', 'Next diagnostic'],
+				\'p': [':Lspsaga diagnostic_jump_prev', 'Prev diagnostic'],
 				\'q': [':lua vim.lsp.buf.diagnostic.set_loclist()', 'Loclist'],
 				\},
 			\'f' : {
 				\'name' : '+folder',
 				\'a': [':lua vim.lsp.buf.add_workspace_folder()', 'Add workspace folder'],
-				\'r':[':lua vim.lsp.buf.remove_workspace_folder()', 'Remove workspace folder'],
-				\'l':[':lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))', 'List workspace folders'],
+				\'r': [':lua vim.lsp.buf.remove_workspace_folder()', 'Remove workspace folder'],
+				\'l': [':lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))', 'List workspace folders'],
 				\},
-			\'l' : [':LspInfo', 'info']
+			\'l' : [':LspInfo', 'info'],
 			\}
 
 let g:which_key_map.m = {

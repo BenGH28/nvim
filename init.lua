@@ -96,7 +96,7 @@ require "packer".startup(
     -- files, files, files
     use {
       "kyazdani42/nvim-tree.lua",
-      event = "VimEnter",
+      -- disable = true,
       config = function()
         require "tree-conf"
       end
@@ -136,6 +136,7 @@ require "packer".startup(
     -- I changed something didn't I?
     use {
       "lewis6991/gitsigns.nvim",
+      -- disable = true,
       config = function()
         require("gitsigns").setup()
       end
