@@ -2,7 +2,15 @@ require "packer-config"
 vim.cmd [[packadd packer.nvim]]
 require "packer".startup(
   function(use)
-    local lsp_file_list = {"yaml", "cpp", "c", "python", "json", "lua", "rust", "bash"}
+    -- I feel the need, the need for specified
+    use {
+      "lewis6991/impatient.nvim",
+      config = function()
+        require "impatient"
+      end
+    }
+
+    local lsp_file_list = {"yaml", "cpp", "c", "python", "json", "lua", "rust", "bash", "sh"}
     --#region General Dependencies
     use {"nvim-lua/popup.nvim"}
     use {"nvim-lua/plenary.nvim"}
@@ -64,18 +72,10 @@ require "packer".startup(
     -- colours to make unicorns vomit
     use {
       "nvim-treesitter/nvim-treesitter",
-      event = "VimEnter",
+      event = "BufEnter",
       run = ":TSUpdate",
       config = function()
         require "treesitter-conf"
-      end
-    }
-    -- quotes, brackets and easy times ahead
-    use {
-      "windwp/nvim-autopairs",
-      event = "InsertEnter",
-      config = function()
-        require "autopairs"
       end
     }
     -- which bracket is this again?
@@ -86,6 +86,14 @@ require "packer".startup(
         require "nvim-treesitter.configs".setup {
           rainbow = {enable = true}
         }
+      end
+    }
+    -- quotes, brackets and easy times ahead
+    use {
+      "windwp/nvim-autopairs",
+      event = "InsertEnter",
+      config = function()
+        require "autopairs"
       end
     }
     -- I walk the line
@@ -104,7 +112,7 @@ require "packer".startup(
     -- see all the files on the moon
     use {
       "nvim-lua/telescope.nvim",
-      event = "VimEnter",
+      event = "BufEnter",
       config = function()
         require "telescope-conf"
       end
@@ -144,7 +152,7 @@ require "packer".startup(
     -- lets git kraken... oh wait wrong git app
     use {
       "kdheepak/lazygit.nvim",
-      event = "VimEnter",
+      event = "BufEnter",
       config = function()
         require "lazygit-conf"
       end
@@ -179,7 +187,6 @@ require "packer".startup(
   end
 )
 
--- require("lsp")
 -- =======================
 -- 		Basics
 -- =======================
