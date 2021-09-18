@@ -1,3 +1,3 @@
-vim.wo.foldmethod = "syntax"
-vim.bo.shiftwidth = 2
-vim.bo.tabstop = 2
+vim.opt.foldmethod = "indent"
+vim.opt.shiftwidth = 2
+vim.opt.tabstop = 2
