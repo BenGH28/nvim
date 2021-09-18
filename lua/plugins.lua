@@ -185,6 +185,7 @@ require "packer".startup(
     }
     use {
       "lukas-reineke/indent-blankline.nvim",
+      disable = true,
       config = function()
         require "indent_blankline".setup {
           buftype_exclude = {"terminal", "startify", "help"}
