@@ -2,7 +2,7 @@ require "packer-config"
 vim.cmd [[packadd packer.nvim]]
 require "packer".startup(
   function(use)
-    -- I feel the need, the need for specified
+    -- I feel the need, the need for speed
     use {
       "lewis6991/impatient.nvim",
       config = function()
