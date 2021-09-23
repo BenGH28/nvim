@@ -14,7 +14,7 @@ setmap("i", "kj", "<ESC>", noremap)
 setmap("n", "<Leader>ma", ":make<CR>", noremap)
 setmap("n", "<Leader>mc", ":make clean<CR>", noremap)
 setmap("n", "Y", "y$", noremap)
-setmap("n", "0", "^", noremap)
+setmap("n", "0", "0^", noremap)
 
 -- substitute word under cursor
 setmap("n", "<Leader>swg", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], noremap)
