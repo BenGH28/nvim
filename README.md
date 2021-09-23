@@ -43,6 +43,7 @@ Ensure you have the following tools available for automatic installation of some
 - go
 - npm
 - yarn
+- unzip
 
 Language supported:
 - python
@@ -52,6 +53,9 @@ Language supported:
 - yaml
 - bash
 - rust
+
+Run: `:BaseLSInstall` to install all the servers listed above
+Run: `:LspInstall <ServerName>` for others you wish to add later
 
 ## Fonts
 
