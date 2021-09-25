@@ -92,6 +92,34 @@ require("formatter").setup(
           }
         end
       },
+      css = {
+        function()
+          return {
+            exe = "prettier",
+            args = {
+              "--tab-width",
+              "4",
+              "--stdin-filepath",
+              vim.api.nvim_buf_get_name(0)
+            },
+            stdin = true
+          }
+        end
+      },
+      javascript = {
+        function()
+          return {
+            exe = "prettier",
+            args = {
+              "--tab-width",
+              "4",
+              "--stdin-filepath",
+              vim.api.nvim_buf_get_name(0)
+            },
+            stdin = true
+          }
+        end
+      },
       markdown = {
         function()
           return {
