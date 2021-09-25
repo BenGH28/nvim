@@ -48,7 +48,13 @@ let g:which_key_map.d = [':Dox', 'Doxygen']
 let g:which_key_map.f = {
             \'name' : '+files',
             \'o' : [':Format', 'Format'],
-            \'v' : 'open vimrc',
+            \'v'  : {
+                \'name': '+nvim config',
+                \'v': [':e $MYVIMRC','open init.lua'],
+                \'o': [':e /home/ben/.config/nvim/lua/options.lua', 'edit nvim options'],
+                \'m': [':e /home/ben/.config/nvim/lua/general-mappings.lua', 'edit nvim general mappings'],
+                \'p': [':e /home/ben/.config/nvim/lua/plugins.lua', 'edit plugins']
+                \},
             \'e' : [':Telescope file_browser','File Explorer'],
             \'f' : [':Telescope find_files','Find files'],
             \'g' : [':Telescope git_files','Git Files'],
