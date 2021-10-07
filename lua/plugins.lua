@@ -9,7 +9,27 @@ require "packer".startup(
         require "impatient"
       end
     }
-    local lsp_file_list = {"yaml", "cpp", "c", "python", "json", "lua", "rust", "bash", "sh"}
+
+    use {
+      "nathom/filetype.nvim",
+      config = function()
+        vim.g.did_load_filetypes = 1
+      end
+    }
+
+    local lsp_file_list = {
+      "yaml",
+      "cpp",
+      "c",
+      "python",
+      "json",
+      "lua",
+      "rust",
+      "bash",
+      "sh",
+      "javascript",
+      "css"
+    }
     --#region General Dependencies
     use {"nvim-lua/popup.nvim"}
     use {"nvim-lua/plenary.nvim"}
@@ -63,7 +83,6 @@ require "packer".startup(
     -- I'm really liking this format
     use {
       "mhartington/formatter.nvim",
-      ft = {"rust", "bash", "sh", "zsh", "lua", "cpp", "python", "markdown"},
       config = function()
         require("formatter-conf")
       end
@@ -103,7 +122,7 @@ require "packer".startup(
     -- files, files, files
     use {
       "kyazdani42/nvim-tree.lua",
-      -- disable = true,
+      event = "BufEnter",
       config = function()
         require "tree-conf"
       end
@@ -143,7 +162,6 @@ require "packer".startup(
     -- I changed something didn't I?
     use {
       "lewis6991/gitsigns.nvim",
-      -- disable = true,
       config = function()
         require("gitsigns").setup()
       end
@@ -184,6 +202,14 @@ require "packer".startup(
       opt = true
     }
     use {
+      "vhda/verilog_systemverilog.vim",
+      ft = "verilog",
+      config = function()
+        vim.cmd [[VerilogErrorFormat iverilog 1]]
+        vim.cmd [[setlocal makeprg=iverilog]]
+      end
+    }
+    use {
       "lukas-reineke/indent-blankline.nvim",
       disable = true,
       config = function()
@@ -191,6 +217,10 @@ require "packer".startup(
           buftype_exclude = {"terminal", "startify", "help"}
         }
       end
+    }
+    use {
+      "APZelos/blamer.nvim",
+      event = "BufEnter"
     }
   end
 )
