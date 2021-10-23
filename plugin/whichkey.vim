@@ -96,6 +96,23 @@ let g:which_key_map.m = {
             \'c' : 'clean',
             \}
 
+let g:which_key_map.p = {
+            \'name': '+packer',
+            \'i': [':call MyFunctions#mysource()| PackerInstall', 'install'],
+            \'u': [':call MyFunctions#mysource()| PackerUpdate', 'update'],
+            \'c': [':call MyFunctions#mysource()| PackerClean', 'clean'],
+            \'C': [':call MyFunctions#mysource()| PackerCompile', 'compile'],
+            \'s': [':call MyFunctions#mysource()| PackerSync', 'sync'],
+            \'S': [':PackerStatus', 'status']
+            \}
+
+let g:which_key_map.q = {
+            \'name': '+persistence',
+            \'c' : [":lua require'persistence'.load{}", 'load current directory session'],
+            \'l' : [":lua require'persistence'.load{last = true}", 'load last session'],
+            \'s' : [":lua require'persistence'.stop()", 'stop'],
+            \}
+
 let g:which_key_map.s = {
             \'name' : '+substitute',
             \'w' : {
@@ -110,14 +127,6 @@ let g:which_key_map.t = {
             \'g': [':LazyGit', 'LazyGit']
             \}
 
-let g:which_key_map.p = {
-            \'name': '+packer',
-            \'i': [':call MyFunctions#mysource()| PackerInstall', 'Install'],
-            \'u': [':call MyFunctions#mysource()| PackerUpdate', 'Update'],
-            \'c': [':call MyFunctions#mysource()| PackerClean', 'Clean'],
-            \'C': [':call MyFunctions#mysource()| PackerCompile', 'Compile'],
-            \'s': [':call MyFunctions#mysource()| PackerSync', 'Sync']
-            \}
 
 let g:which_key_map.v = 'source vimrc'
 
@@ -128,7 +137,20 @@ let g:which_key_map.w = {
             \'k' : 'decrease height',
             \'l' : 'increase width',
             \'=' : 'balance',
-            \'o' : 'show only current window'
+            \'o' : 'show only current window',
+            \'v' : [':vs', 'vertical split'],
+            \'s' : [':sp', 'horizontal split']
+            \}
+
+let g:which_key_map.x = {
+            \'name' : '+trouble',
+            \'x' : [':TroubleToggle', 'toggle'],
+            \'w' : [':TroubleToggle lsp_workspace_diagnostics', 'workspace diagnostics'],
+            \'d' : [':TroubleToggle lsp_document_diagnostics', 'document diagnostics'],
+            \'q' : [':TroubleToggle quickfix', 'quickfix'],
+            \'l' : [':TroubleToggle loclist', 'loclist'],
+            \"n": [':lua require("trouble").next({skip_groups = true, jump = true})', 'next'],
+            \"p": [':lua require("trouble").previous({skip_groups = true, jump = true})', 'previous']
             \}
 
 call which_key#register('<Space>', 'g:which_key_map')

@@ -233,5 +233,34 @@ require "packer".startup(
 
     --tmux syntax
     use {"tmux-plugins/vim-tmux"}
+
+    -- todo comments that stand out
+    use {
+      "folke/todo-comments.nvim",
+      config = function()
+        require("todo-comments").setup {}
+      end
+    }
+
+    -- Session persistence
+    use {
+      "folke/persistence.nvim",
+      event = "BufReadPre", -- this will only start session saving when an actual file was opened
+      module = "persistence",
+      config = function()
+        require("persistence").setup()
+      end
+    }
+
+    -- lsp diagnostics make for a lot of trouble
+    use {
+      "folke/trouble.nvim",
+      config = function()
+        require("trouble").setup {}
+        local keymap = vim.api.nvim_set_keymap
+
+        keymap("n", "gR", "<cmd>Trouble lsp_references<cr>", {silent = true, noremap = true})
+      end
+    }
   end
 )

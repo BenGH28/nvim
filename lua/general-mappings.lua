@@ -48,9 +48,8 @@ setmap("n", "<Leader>wl", ":vertical resize +3<CR>", silence)
 setmap("n", "<Leader>w=", "<C-W>=", silence)
 
 -- to do with files
--- setmap("n", "<Leader>fv", ":e $MYVIMRC<CR>", silence)
 setmap("n", "<Leader>fj", ":w!<CR>", noremap)
-setmap("n", "<Leader>fq", ":q", noremap)
+setmap("n", "<Leader>fq", ":q<CR>", noremap)
 setmap("n", "<Leader>v", ":luafile $MYVIMRC<CR>", noremap)
 
 --Ctrl-Backspace will delete the word behind the cursor in --INSERT--
