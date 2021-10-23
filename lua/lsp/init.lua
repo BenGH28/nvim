@@ -1,11 +1,11 @@
 require "lsp.keymap"
-require "lsp.compe-conf"
+require "lsp.cmp-conf"
 require "lsp.lspkind-conf"
 require "lsp.lspsaga-conf"
 
 local lspinstall = require "lspinstall"
 local signature_config = require "lsp.signature"
-local capabilities = vim.lsp.protocol.make_client_capabilities()
+local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 local function documentHighlight(client, bufnr)

@@ -10,6 +10,7 @@ require "packer".startup(
       end
     }
 
+    --use better filetype
     use {
       "nathom/filetype.nvim",
       config = function()
@@ -17,69 +18,71 @@ require "packer".startup(
       end
     }
 
-    local lsp_file_list = {
-      "yaml",
-      "cpp",
-      "c",
-      "python",
-      "json",
-      "lua",
-      "rust",
-      "bash",
-      "sh",
-      "javascript",
-      "css"
-    }
-    --#region General Dependencies
+    ---[[General Dependencies
     use {"nvim-lua/popup.nvim"}
     use {"nvim-lua/plenary.nvim"}
     use {"kyazdani42/nvim-web-devicons"}
-    --#endregion
+    --]]
 
-    --#region Lsp
-    use {
-      "hrsh7th/nvim-compe",
-      ft = lsp_file_list
-    }
-    use {
-      "onsails/lspkind-nvim",
-      ft = lsp_file_list
-    }
-    use {
-      "glepnir/lspsaga.nvim",
-      ft = lsp_file_list
-    }
+    ---[[ lsp
+    --the next-gen completion engine
+    use {"hrsh7th/nvim-cmp"}
+
+    -- complete based on the lsp
+    use {"hrsh7th/cmp-nvim-lsp"}
+
+    -- get completion data for a given path
+    use {"hrsh7th/cmp-path"}
+
+    -- get compeletion specific to the buffer
+    use {"hrsh7th/cmp-buffer"}
+
+    -- completion base on the nvim api
+    use {"hrsh7th/cmp-nvim-lua"}
+
+    -- snippets
+    use {"hrsh7th/vim-vsnip"}
+
+    -- snippet run
+    use {"hrsh7th/cmp-vsnip"}
+
+    -- snippet fill
+    use {"rafamadriz/friendly-snippets"}
+
+    -- pictograms for the lsp
+    use {"onsails/lspkind-nvim"}
+
+    -- lsp front end that looks nice
+    use {"glepnir/lspsaga.nvim"}
+
     -- if you could just sign right there
-    use {
-      "ray-x/lsp_signature.nvim",
-      ft = lsp_file_list
-    }
+    use {"ray-x/lsp_signature.nvim"}
+
     -- How can it be? Great scott we have an lsp!!
     use {
       "neovim/nvim-lspconfig",
-      after = {"lspsaga.nvim", "nvim-compe", "lspkind-nvim", "lsp_signature.nvim"},
       config = function()
         require("lsp")
       end
     }
-    -- "...I am the captain now"
-    use {
-      "kabouzeid/nvim-lspinstall"
-    }
-    use {"hrsh7th/vim-vsnip", after = "nvim-lspconfig"}
-    use {"hrsh7th/vim-vsnip-integ", after = "nvim-lspconfig"}
-    use {"rafamadriz/friendly-snippets", after = "nvim-lspconfig"}
-    --#endregion
 
+    -- "...I am the captain now"
+    use {"kabouzeid/nvim-lspinstall"}
+    --]] lsp
+
+    -- colorscheme
     use "sainnhe/edge"
+
     -- plugin to the outlet
     use {"wbthomason/packer.nvim", opt = true}
+
     -- Oh hey its me
     use {
       "BenGH28/neo-runner.nvim",
       cmd = "NeoRunner",
       run = ":UpdateRemotePlugins"
     }
+
     -- I'm really liking this format
     use {
       "mhartington/formatter.nvim",
@@ -87,6 +90,7 @@ require "packer".startup(
         require("formatter-conf")
       end
     }
+
     -- colours to make unicorns vomit
     use {
       "nvim-treesitter/nvim-treesitter",
@@ -96,6 +100,7 @@ require "packer".startup(
         require "treesitter-conf"
       end
     }
+
     -- which bracket is this again?
     use {
       "p00f/nvim-ts-rainbow",
@@ -106,6 +111,7 @@ require "packer".startup(
         }
       end
     }
+
     -- quotes, brackets and easy times ahead
     use {
       "windwp/nvim-autopairs",
@@ -114,11 +120,13 @@ require "packer".startup(
         require "autopairs"
       end
     }
+
     -- I walk the line
     use {
       "glepnir/galaxyline.nvim",
       branch = "main"
     }
+
     -- files, files, files
     use {
       "kyazdani42/nvim-tree.lua",
@@ -127,6 +135,7 @@ require "packer".startup(
         require "tree-conf"
       end
     }
+
     -- see all the files on the moon
     use {
       "nvim-lua/telescope.nvim",
@@ -135,6 +144,7 @@ require "packer".startup(
         require "telescope-conf"
       end
     }
+
     -- jump around, jump around
     use {
       "phaazon/hop.nvim",
@@ -143,6 +153,7 @@ require "packer".startup(
         require "hop".setup {keys = "etovxqpdygfblzhckisuran", term_seq_bias = 1.5}
       end
     }
+
     -- the Lone Ranger
     use {
       "kevinhwang91/rnvimr",
@@ -152,6 +163,7 @@ require "packer".startup(
         vim.g.rnvimr_ex_enable = 1
       end
     }
+
     -- wait that hex code is a colour?
     use {
       "norcalli/nvim-colorizer.lua",
@@ -159,6 +171,7 @@ require "packer".startup(
         require("colorizer").setup()
       end
     }
+
     -- I changed something didn't I?
     use {
       "lewis6991/gitsigns.nvim",
@@ -166,6 +179,7 @@ require "packer".startup(
         require("gitsigns").setup()
       end
     }
+
     -- lets git kraken... oh wait wrong git app
     use {
       "kdheepak/lazygit.nvim",
@@ -174,6 +188,7 @@ require "packer".startup(
         require "lazygit-conf"
       end
     }
+
     -- I'm pretty buff
     use {
       "akinsho/nvim-bufferline.lua",
@@ -210,17 +225,13 @@ require "packer".startup(
       end
     }
     use {
-      "lukas-reineke/indent-blankline.nvim",
-      disable = true,
+      "APZelos/blamer.nvim",
       config = function()
-        require "indent_blankline".setup {
-          buftype_exclude = {"terminal", "startify", "help"}
-        }
+        vim.g.blamer_enabled = 1
       end
     }
-    use {
-      "APZelos/blamer.nvim",
-      event = "BufEnter"
-    }
+
+    --tmux syntax
+    use {"tmux-plugins/vim-tmux"}
   end
 )
