@@ -5,7 +5,7 @@ saga.init_lsp_saga {
   warn_sign = "❗",
   hint_sign = "",
   infor_sign = "",
-  dianostic_header_icon = "   ",
+  diagnostic_header_icon = "   ",
   code_action_icon = " ",
   code_action_prompt = {enable = true, sign = true, sign_priority = 20, virtual_text = true},
   code_action_keys = {quit = "q", exec = "<CR>"},
@@ -17,8 +17,8 @@ saga.init_lsp_saga {
     vsplit = "s",
     split = "i",
     quit = "q",
-    scroll_down = "<C-f>",
-    scroll_up = "<C-b>" -- quit can be a table
+    scroll_down = "<C-j>",
+    scroll_up = "<C-k>"
   },
   rename_action_keys = {
     quit = "<C-c>",

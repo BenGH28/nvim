@@ -53,7 +53,7 @@ require "packer".startup(
     use {"onsails/lspkind-nvim"}
 
     -- lsp front end that looks nice
-    use {"glepnir/lspsaga.nvim"}
+    use {"tami5/lspsaga.nvim"}
 
     -- if you could just sign right there
     use {"ray-x/lsp_signature.nvim"}
@@ -183,10 +183,7 @@ require "packer".startup(
     -- lets git kraken... oh wait wrong git app
     use {
       "kdheepak/lazygit.nvim",
-      event = "BufEnter",
-      config = function()
-        require "lazygit-conf"
-      end
+      event = "BufEnter"
     }
 
     -- I'm pretty buff
