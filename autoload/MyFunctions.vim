@@ -32,3 +32,14 @@ function MyFunctions#mysource()
 	  echo "you can't source this..."
   endif
 endfunc
+
+let t:is_transparent = 0
+function! MyFunctions#Toggle_transparent_background()
+  if t:is_transparent == 0
+    hi Normal guibg=#282c34 ctermbg=235
+    let t:is_transparent = 1
+  else
+    hi Normal guibg=NONE ctermbg=NONE
+    let t:is_transparent = 0
+  endif
+endfunction

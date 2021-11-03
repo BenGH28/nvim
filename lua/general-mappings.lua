@@ -54,3 +54,5 @@ setmap("n", "<Leader>v", ":luafile $MYVIMRC<CR>", noremap)
 
 --Ctrl-Backspace will delete the word behind the cursor in --INSERT--
 setmap("i", "<C-h>", "<C-O>b<C-O>dw", noremap)
+
+setmap("n", "<leader>ct", ":call MyFunctions#Toggle_transparent_background()<CR>", noremap)
