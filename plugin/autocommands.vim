@@ -35,3 +35,5 @@ augroup tabstops
 	au!
 	au BufEnter * lua require"common".set_default_tab(vim.api.nvim_buf_get_option(0, 'filetype'))
 augroup END
+
+au VimEnter * call MyFunctions#Toggle_transparent_background()
