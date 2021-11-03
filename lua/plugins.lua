@@ -53,7 +53,10 @@ require "packer".startup(
     use {"onsails/lspkind-nvim"}
 
     -- lsp front end that looks nice
-    use {"glepnir/lspsaga.nvim"}
+    use {
+      "tami5/lspsaga.nvim",
+      branch = "nvim51"
+    }
 
     -- if you could just sign right there
     use {"ray-x/lsp_signature.nvim"}
@@ -193,7 +196,7 @@ require "packer".startup(
     use {
       "akinsho/nvim-bufferline.lua",
       config = function()
-        require "bufferline".setup()
+        require "bufferline-conf"
       end
     }
 
@@ -260,6 +263,36 @@ require "packer".startup(
         local keymap = vim.api.nvim_set_keymap
 
         keymap("n", "gR", "<cmd>Trouble lsp_references<cr>", {silent = true, noremap = true})
+      end
+    }
+
+    use {
+      "mfussenegger/nvim-dap",
+      config = function()
+        vim.cmd [[
+          nnoremap <silent> <F4> :lua require'dap'.repl.open()<CR>
+          nnoremap <silent> <F5> :lua require'dap'.continue()<CR>
+          nnoremap <silent> <F9> :lua require'dap'.toggle_breakpoint()<CR>
+          nnoremap <silent> <F10> :lua require'dap'.step_over()<CR>
+          nnoremap <silent> <F11> :lua require'dap'.step_into()<CR>
+          nnoremap <silent> <F12> :lua require'dap'.step_out()<CR>
+          "nnoremap <silent> <leader>B :lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
+          "nnoremap <silent> <leader>lp :lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
+          "nnoremap <silent> <leader>dr :lua require'dap'.repl.open()<CR>
+          "nnoremap <silent> <leader>dl :lua require'dap'.run_last()<CR>
+       ]]
+      end
+    }
+
+    use {
+      "Pocco81/DAPInstall.nvim",
+      config = function()
+        local dap_install = require("dap-install")
+        local dbg_list = require("dap-install.api.debuggers").get_installed_debuggers()
+
+        for _, debugger in ipairs(dbg_list) do
+          dap_install.config(debugger)
+        end
       end
     }
   end

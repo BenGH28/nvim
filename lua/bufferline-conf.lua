@@ -2,9 +2,6 @@ require("bufferline").setup {
   options = {
     -- "none" | "ordinal" | "buffer_id" | "both",
     numbers = "none",
-    -- "superscript", "", none, subscript
-    number_style = "superscript",
-    mappings = true,
     close_command = "bdelete! %d", -- can be a string | function, see "Mouse actions"
     right_mouse_command = "bdelete! %d", -- can be a string | function, see "Mouse actions"
     left_mouse_command = "buffer %d", -- can be a string | function, see "Mouse actions"
@@ -67,7 +64,7 @@ require("bufferline").setup {
     -- can also be a table containing 2 custom separators
     -- [focused and unfocused]. eg: { '|', '|' }
     -- separator_style = "slant" | "thick" | "thin" | {"any", "any"},
-    separator_style = "slant",
+    separator_style = "thick",
     enforce_regular_tabs = true,
     always_show_bufferline = true,
     -- sort_by = "id" | "extension" | "relative_directory" | "directory" | function(buffer_a, buffer_b)
