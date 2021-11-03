@@ -40,6 +40,12 @@ require "packer".startup(
     -- completion base on the nvim api
     use {"hrsh7th/cmp-nvim-lua"}
 
+    -- tmux completion
+    use {
+      "andersevenrud/compe-tmux",
+      branch = "cmp"
+    }
+
     -- snippets
     use {"hrsh7th/vim-vsnip"}
 
@@ -68,6 +74,17 @@ require "packer".startup(
 
     -- "...I am the captain now"
     use {"kabouzeid/nvim-lspinstall"}
+
+    -- lsp diagnostics make for a lot of trouble
+    use {
+      "folke/trouble.nvim",
+      config = function()
+        require("trouble").setup {}
+        local keymap = vim.api.nvim_set_keymap
+
+        keymap("n", "gR", "<cmd>Trouble lsp_references<cr>", {silent = true, noremap = true})
+      end
+    }
     --]] lsp
 
     -- colorscheme
@@ -246,17 +263,6 @@ require "packer".startup(
       module = "persistence",
       config = function()
         require("persistence").setup()
-      end
-    }
-
-    -- lsp diagnostics make for a lot of trouble
-    use {
-      "folke/trouble.nvim",
-      config = function()
-        require("trouble").setup {}
-        local keymap = vim.api.nvim_set_keymap
-
-        keymap("n", "gR", "<cmd>Trouble lsp_references<cr>", {silent = true, noremap = true})
       end
     }
   end

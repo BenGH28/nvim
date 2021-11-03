@@ -30,7 +30,16 @@ cmp.setup {
     {name = "vsnip"},
     {name = "nvim_lua"},
     {name = "path"},
-    {name = "buffer"}
+    {name = "buffer"},
+    {
+      name = "tmux",
+      opts = {
+        all_panes = true,
+        label = "[tmux]",
+        trigger_characters = {"."},
+        trigger_characters_ft = {} -- { filetype = { '.' } }
+      }
+    }
   },
   experimental = {
     native_menu = false,
