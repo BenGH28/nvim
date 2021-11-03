@@ -186,10 +186,7 @@ require "packer".startup(
     -- lets git kraken... oh wait wrong git app
     use {
       "kdheepak/lazygit.nvim",
-      event = "BufEnter",
-      config = function()
-        require "lazygit-conf"
-      end
+      event = "BufEnter"
     }
 
     -- I'm pretty buff
