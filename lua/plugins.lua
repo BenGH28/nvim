@@ -269,17 +269,6 @@ require "packer".startup(
       end
     }
 
-    -- lsp diagnostics make for a lot of trouble
-    use {
-      "folke/trouble.nvim",
-      config = function()
-        require("trouble").setup {}
-        local keymap = vim.api.nvim_set_keymap
-
-        keymap("n", "gR", "<cmd>Trouble lsp_references<cr>", {silent = true, noremap = true})
-      end
-    }
-
     use {
       "mfussenegger/nvim-dap",
       config = function()
