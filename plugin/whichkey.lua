@@ -155,8 +155,8 @@ local nmappings = {
     d = {":TroubleToggle lsp_document_diagnostics<cr>", "document diagnostics"},
     q = {":TroubleToggle quickfix<cr>", "quickfix"},
     l = {":TroubleToggle loclist<cr>", "loclist"},
-    n = {":lua requre'trouble'.next({skip_groups = true, jump = true})<cr>", "next"},
-    p = {":lua requre'trouble'.previous({skip_groups = true, jump = true})<cr>", "previous"}
+    n = {":lua require'trouble'.next({skip_groups = true, jump = true})<cr>", "next"},
+    p = {":lua require'trouble'.previous({skip_groups = true, jump = true})<cr>", "previous"}
   },
   w = {
     name = "+window",
