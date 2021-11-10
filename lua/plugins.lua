@@ -224,8 +224,6 @@ require "packer".startup(
     use "mhinz/vim-startify"
     -- 360 no scope
     use "unblevable/quick-scope"
-    -- what was that shortcut again?
-    use "liuchengxu/vim-which-key"
     -- documentation for the enlightend
     use {"vim-scripts/DoxygenToolkit.vim", ft = {"cpp", "c"}}
     -- OCD and me
@@ -269,6 +267,13 @@ require "packer".startup(
       end
     }
 
+    -- Lua
+    use {
+      "folke/which-key.nvim",
+      config = function()
+        require("which-key").setup {}
+      end
+    }
     use {
       "mfussenegger/nvim-dap",
       config = function()
