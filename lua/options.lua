@@ -50,3 +50,5 @@ vim.opt.listchars = {
 }
 vim.o.undodir = ".undo/"
 vim.o.undofile = true
+-- allow us to increment or decrement alphabetical characters
+vim.cmd [[set nrformats+=alpha]]
