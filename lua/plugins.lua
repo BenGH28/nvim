@@ -298,5 +298,15 @@ require "packer".startup(
         end
       end
     }
+
+    use {
+      "lukas-reineke/indent-blankline.nvim",
+      config = function()
+        require("indent_blankline").setup {
+          buftype_exclude = {"terminal", "help", "startify", "nofile", "NvimTree"},
+          filetype_exclude = {"help", "packer", "startify", "NvimTree", "alpha"}
+        }
+      end
+    }
   end
 )
