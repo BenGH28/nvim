@@ -1,3 +1,32 @@
+-- =============================================================
+-- non-leader mappings
+-- =============================================================
+
+-- alias the long function
+local setmap = vim.api.nvim_set_keymap
+
+local noremap = {noremap = true}
+local silence = {noremap = true, silent = true}
+
+setmap("i", "jk", "<ESC>", noremap)
+setmap("i", "kj", "<ESC>", noremap)
+
+setmap("n", "Y", "y$", noremap)
+setmap("n", "0", "0^", noremap)
+
+-- windows
+setmap("n", "<C-h>", ":wincmd h<CR>", silence)
+setmap("n", "<C-j>", ":wincmd j<CR>", silence)
+setmap("n", "<C-k>", ":wincmd k<CR>", silence)
+setmap("n", "<C-l>", ":wincmd l<CR>", silence)
+
+--Ctrl-Backspace will delete the word behind the cursor in --INSERT--
+setmap("i", "<C-h>", "<C-O>b<C-O>dw", noremap)
+
+-- =============================================================
+-- non-leader mappings
+-- =============================================================
+
 local wk = require "which-key"
 
 local nopts = {
@@ -37,7 +66,7 @@ local nmappings = {
       l = {":set background=light<cr>", "light"},
       d = {":set background=dark<cr>", "dark"},
       m = {":call MyFunctions#ToggleAlacrittyTheme()<cr>", "match alacritty"},
-      t = {":call MyFunctions#Toggle_transparent_background()<cr>", "toggle transparency"}
+      t = {":call MyFunctions#ToggleTransparentBackground()<cr>", "toggle transparency"}
     }
   },
   d = {":Dox<cr>", "Doxygen"},
@@ -48,10 +77,10 @@ local nmappings = {
       name = "+nvim config",
       v = {":e $MYVIMRC<cr>", "open init.lua"},
       -- not sure this binding does anything (major) now
-      s = {"luafile $MYVIMRC<cr>", "reload vimrc"},
-      o = {":e /home/ben/.config/nvim/lua/options.lua<cr>", "edit nvim options"},
-      m = {":e /home/ben/.config/nvim/lua/general-mappings.lua<cr>", "edit non-leader mappings"},
-      p = {":e /home/ben/.config/nvim/lua/plugins.lua<cr>", "edit plugins"}
+      s = {":so $MYVIMRC<cr>", "reload vimrc"},
+      o = {":lua require'common'.edit_lua_file('options')<cr>", "edit nvim options"},
+      p = {":lua require'common'.edit_lua_file('plugins')<cr>", "edit plugins"},
+      m = {":lua require'common'.edit_plugin_file('whichkey.lua')<cr>", "edit mappings"}
     },
     e = {":Telescope file_browser<cr>", "find explorer"},
     f = {":Telescope find_files<cr>", "find files"},
@@ -60,7 +89,7 @@ local nmappings = {
     h = {":Telescope oldfiles<cr>", "history"},
     j = {":w!<cr>", "save"},
     q = {":q<cr>", "quit"},
-    ["."] = {":call MyFunctions#mysource()<cr>", "souce current file"}
+    ["."] = {":so %<cr>", "source current file"}
   },
   g = {
     name = "+git",
@@ -100,12 +129,12 @@ local nmappings = {
   },
   p = {
     name = "+packer",
-    i = {":call MyFunctions#mysource() | PackerInstall<cr>", "install"},
-    u = {":call MyFunctions#mysource() | PackerUpdate<cr>", "update"},
-    c = {":call MyFunctions#mysource() | PackerClean<cr>", "clean"},
-    C = {":call MyFunctions#mysource() | PackerCompile<cr>", "compile"},
-    s = {":call MyFunctions#mysource() | PackerSync<cr>", "sync"},
-    S = {":call MyFunctions#mysource() | PackerStatus<cr>", "status"}
+    i = {":lua require'common'.install_plugins()<cr>", "install"},
+    u = {":lua require'common'.update_plugins()<cr>", "update"},
+    c = {":lua require'common'.clean_plugins()<cr>", "clean"},
+    C = {":lua require'comon'.compile_plugins()<cr>", "compile"},
+    s = {":lua require'common'.sync_plugins()<cr>", "sync"},
+    S = {":lua require'common'.packer_status()<cr>", "status"}
   },
   q = {
     name = "+quickfix",

@@ -15,26 +15,16 @@ endfunc
 " This function will toggle Alacritty's color scheme back and
 " forth between light and dark themes.
 function! MyFunctions#ToggleAlacrittyTheme()
-	if (system('alacritty-theme current') =~ "light")
-	  	call system('alacritty-theme change one_dark')
-	else
-	  	call system('alacritty-theme change one_light')
-	endif
-	call MyFunctions#AlignAlacrittyBackground()
-endfunc
-
-function MyFunctions#mysource()
-  if &filetype == 'lua'
-	  :luafile %
-  elseif &filetype == 'vim'
-	  :source %
-  else
-	  echo "you can't source this..."
-  endif
+    if (system('alacritty-theme current') =~ "light")
+        call system('alacritty-theme change one_dark')
+    else
+        call system('alacritty-theme change one_light')
+    endif
+    call MyFunctions#AlignAlacrittyBackground()
 endfunc
 
 let t:is_transparent = 0
-function! MyFunctions#Toggle_transparent_background()
+function! MyFunctions#ToggleTransparentBackground()
   if t:is_transparent == 0
     hi Normal guibg=#282c34 ctermbg=235
     let t:is_transparent = 1
