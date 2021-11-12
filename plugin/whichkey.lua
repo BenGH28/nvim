@@ -20,8 +20,8 @@ setmap("n", "<C-j>", ":wincmd j<CR>", silence)
 setmap("n", "<C-k>", ":wincmd k<CR>", silence)
 setmap("n", "<C-l>", ":wincmd l<CR>", silence)
 
---Ctrl-Backspace will delete the word behind the cursor in --INSERT--
-setmap("i", "<C-h>", "<C-O>b<C-O>dw", noremap)
+--Ctrl-Backspace will delete the word behind the cursor in INSERT mode
+setmap("i", "<C-h>", "<C-w>", noremap)
 
 -- =============================================================
 -- non-leader mappings
@@ -114,16 +114,26 @@ local nmappings = {
     d = {
       name = "+diagnostics",
       l = {":Lspsaga show_line_diagnostics<cr>", "Show line diagnostics"},
-      c = {":Lspsaga show_cursor_diagnostics", "Show cursor diagnostics"},
-      n = {":Lspsaga diagnostic_jump_next", "Next diagnostic"},
-      p = {":Lspsaga diagnostic_jump_prev", "Prev diagnostic"},
-      q = {"lua vim.lsp.diagnostic.set_loclist()", "Diagnostic list"}
+      c = {":Lspsaga show_cursor_diagnostics<cr>", "Show cursor diagnostics"},
+      n = {":Lspsaga diagnostic_jump_next<cr>", "Next diagnostic"},
+      p = {":Lspsaga diagnostic_jump_prev<cr>", "Prev diagnostic"},
+      q = {":lua vim.lsp.diagnostic.set_loclist()<cr>", "Diagnostic list"}
     },
     f = {
       name = "+folder",
       a = {"lua vim.lsp.buf.add_workspace_folder()", "Add workspace folder"},
       r = {"lua vim.lsp.buf.remove_workspace_folder()", "Remove workspace folder"},
       l = {"lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))", "List workspace folders"}
+    },
+    t = {
+      name = "+trouble",
+      x = {":TroubleToggle<cr>", "toggle"},
+      w = {":TroubleToggle lsp_workspace_diagnostics<cr>", "workspace diagnostics"},
+      d = {":TroubleToggle lsp_document_diagnostics<cr>", "document diagnostics"},
+      q = {":TroubleToggle quickfix<cr>", "quickfix"},
+      l = {":TroubleToggle loclist<cr>", "loclist"},
+      n = {":lua require'trouble'.next({skip_groups = true, jump = true})<cr>", "next"},
+      p = {":lua require'trouble'.previous({skip_groups = true, jump = true})<cr>", "previous"}
     },
     l = {":LspInfo", "info"}
   },
@@ -147,16 +157,6 @@ local nmappings = {
     c = {":lua require'persistence'.load{}<cr>", "load current directory session"},
     l = {":lua require'persistence'.load{last = true}<cr>", "load last session"},
     s = {":lua require'persistence'.stop{}<cr>", "stop"}
-  },
-  t = {
-    name = "+trouble",
-    x = {":TroubleToggle<cr>", "toggle"},
-    w = {":TroubleToggle lsp_workspace_diagnostics<cr>", "workspace diagnostics"},
-    d = {":TroubleToggle lsp_document_diagnostics<cr>", "document diagnostics"},
-    q = {":TroubleToggle quickfix<cr>", "quickfix"},
-    l = {":TroubleToggle loclist<cr>", "loclist"},
-    n = {":lua require'trouble'.next({skip_groups = true, jump = true})<cr>", "next"},
-    p = {":lua require'trouble'.previous({skip_groups = true, jump = true})<cr>", "previous"}
   },
   w = {
     name = "+window",
