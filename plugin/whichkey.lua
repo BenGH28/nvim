@@ -24,7 +24,7 @@ setmap("n", "<C-l>", ":wincmd l<CR>", silence)
 setmap("i", "<C-h>", "<C-w>", noremap)
 
 -- =============================================================
--- non-leader mappings
+-- leader mappings
 -- =============================================================
 
 local wk = require "which-key"
