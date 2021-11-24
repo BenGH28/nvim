@@ -33,7 +33,7 @@ cmp.setup {
     {name = "buffer"},
     {
       name = "tmux",
-      opts = {
+      options = {
         all_panes = true,
         label = "[tmux]",
         trigger_characters = {"."},
