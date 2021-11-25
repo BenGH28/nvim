@@ -235,8 +235,7 @@ require "packer".startup(
       "vhda/verilog_systemverilog.vim",
       ft = "verilog",
       config = function()
-        vim.cmd [[VerilogErrorFormat iverilog 1]]
-        vim.cmd [[setlocal makeprg=iverilog]]
+        vim.cmd("VerilogErrorFormat iverilog 1")
       end
     }
     use {
