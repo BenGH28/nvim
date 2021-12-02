@@ -26,10 +26,13 @@ Ensure you have the following tools available for automatic installation of some
 
 -   go
 -   npm
--   yarn
+-   pip
 -   unzip
+-   curl/wget
+-   gzip
+-   tar
 
-Language supported:
+    Languages supported out of the box:
 
 -   python
 -   lua
@@ -40,6 +43,7 @@ Language supported:
 -   rust
 
 Run: `:BaseLSInstall` to install all the servers listed above
+
 Run: `:LspInstall <ServerName>` for others you wish to add later
 
 ## Fonts
