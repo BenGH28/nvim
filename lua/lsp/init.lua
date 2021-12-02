@@ -66,7 +66,7 @@ local function setup_servers()
   lspinstaller.on_server_ready(
     function(server)
       local config = my_setup()
-      if server.name == "lua" then
+      if server.name == "sumneko_lua" then
         config.settings = lua_settings
       end
       server:setup(config)
