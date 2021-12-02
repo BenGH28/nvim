@@ -1,4 +1,3 @@
-vim.g.nvim_tree_follow = 1 -- 0 by default, this option allows the cursor to be updated when entering a buffer
 vim.g.nvim_tree_indent_markers = 1 -- 0 by default, this option shows indent markers when folders are open
 vim.g.nvim_tree_git_hl = 1 -- 0 by default, will enable file highlight for git attributes (can be used without the icons).
 vim.g.nvim_tree_show_icons = {git = 1, folders = 1, files = 1, folder_arrows = 1}
@@ -23,6 +22,7 @@ vim.g.nvim_tree_icons = {
 }
 
 require "nvim-tree".setup {
+  nvim_tree_follow = 1, -- 0 by default, this option allows the cursor to be updated when entering a buffer
   nvim_tree_hide_dotfiles = 0, -- 0 by default, this option hides files and folders starting with a dot `.`
   nvim_tree_ignore = {".git", "node_modules", ".cache", ".undo"}, -- empty by default
   disable_netrw = true,
