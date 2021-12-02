@@ -60,8 +60,7 @@ require "packer".startup(
 
     -- lsp front end that looks nice
     use {
-      "tami5/lspsaga.nvim",
-      branch = "nvim51"
+      "tami5/lspsaga.nvim"
     }
 
     -- if you could just sign right there
@@ -71,12 +70,12 @@ require "packer".startup(
     use {
       "neovim/nvim-lspconfig",
       config = function()
-        require("lsp")
+        require "lsp"
       end
     }
 
     -- "...I am the captain now"
-    use {"kabouzeid/nvim-lspinstall"}
+    use {"williamboman/nvim-lsp-installer"}
 
     -- lsp diagnostics make for a lot of trouble
     use {
@@ -252,7 +251,7 @@ require "packer".startup(
     use {
       "folke/todo-comments.nvim",
       config = function()
-        require("todo-comments").setup {}
+        require("todo-comments").setup()
       end
     }
 
