@@ -142,7 +142,7 @@ local nmappings = {
     i = {":lua require'common'.install_plugins()<cr>", "install"},
     u = {":lua require'common'.update_plugins()<cr>", "update"},
     c = {":lua require'common'.clean_plugins()<cr>", "clean"},
-    C = {":lua require'comon'.compile_plugins()<cr>", "compile"},
+    C = {":lua require'common'.compile_plugins()<cr>", "compile"},
     s = {":lua require'common'.sync_plugins()<cr>", "sync"},
     S = {":lua require'common'.packer_status()<cr>", "status"}
   },
