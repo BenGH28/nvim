@@ -54,6 +54,8 @@ local lua_settings = {
   }
 }
 
+local rust_settings ={ }
+
 local function my_setup()
   return {
     capabilities = capabilities,
@@ -68,6 +70,9 @@ local function setup_servers()
       local config = my_setup()
       if server.name == "sumneko_lua" then
         config.settings = lua_settings
+      end
+      if server.name == "rust_analyzer" then
+        config.settings = rust_settings
       end
       server:setup(config)
     end
