@@ -55,6 +55,7 @@ local nmappings = {
       p = {":HopPattern<cr>", "pattern"}
     },
     d = {":bdelete<cr>", "delete"},
+    f = {":lua vim.lsp.buf.formatting()<cr>", "format"},
     l = {":Telescope buffers<cr>", "list buffers"},
     s = {
       name = "+substitute",
@@ -72,7 +73,6 @@ local nmappings = {
   d = {":Dox<cr>", "Doxygen"},
   f = {
     name = "+files",
-    o = {":Format<cr>", "format"},
     v = {
       name = "+nvim config",
       v = {":e $MYVIMRC<cr>", "open init.lua"},
@@ -135,7 +135,7 @@ local nmappings = {
       n = {":lua require'trouble'.next({skip_groups = true, jump = true})<cr>", "next"},
       p = {":lua require'trouble'.previous({skip_groups = true, jump = true})<cr>", "previous"}
     },
-    l = {":LspInfo", "info"}
+    l = {":LspInfo<cr>", "info"}
   },
   p = {
     name = "+packer",

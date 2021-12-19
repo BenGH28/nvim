@@ -1,285 +1,295 @@
-require "packer-config"
-vim.cmd [[packadd packer.nvim]]
-require "packer".startup(
-  function(use)
-    -- I feel the need, the need for speed
-    use {
-      "lewis6991/impatient.nvim",
-      config = function()
-        require "impatient"
-      end
-    }
+require("packer-config")
+vim.cmd([[packadd packer.nvim]])
+require("packer").startup(function(use)
+	-- I feel the need, the need for speed
+	use({
+		"lewis6991/impatient.nvim",
+		config = function()
+			require("impatient")
+		end,
+	})
 
-    --use better filetype
-    use {
-      "nathom/filetype.nvim",
-      config = function()
-        vim.g.did_load_filetypes = 1
-      end
-    }
+	--use better filetype
+	use({
+		"nathom/filetype.nvim",
+		config = function()
+			vim.g.did_load_filetypes = 1
+		end,
+	})
 
-    ---[[General Dependencies
-    use {"nvim-lua/popup.nvim"}
-    use {"nvim-lua/plenary.nvim"}
-    use {"kyazdani42/nvim-web-devicons"}
-    --]]
+	---[[General Dependencies
+	use({ "nvim-lua/popup.nvim" })
+	use({ "nvim-lua/plenary.nvim" })
+	use({ "kyazdani42/nvim-web-devicons" })
+	--]]
 
-    ---[[ lsp
-    --the next-gen completion engine
-    use {"hrsh7th/nvim-cmp"}
+	---[[ lsp
+	--the next-gen completion engine
+	use({ "hrsh7th/nvim-cmp" })
 
-    -- complete based on the lsp
-    use {"hrsh7th/cmp-nvim-lsp"}
+	-- complete based on the lsp
+	use({ "hrsh7th/cmp-nvim-lsp" })
 
-    -- get completion data for a given path
-    use {"hrsh7th/cmp-path"}
+	-- get completion data for a given path
+	use({ "hrsh7th/cmp-path" })
 
-    -- get compeletion specific to the buffer
-    use {"hrsh7th/cmp-buffer"}
+	-- get compeletion specific to the buffer
+	use({ "hrsh7th/cmp-buffer" })
 
-    -- completion base on the nvim api
-    use {"hrsh7th/cmp-nvim-lua"}
+	-- completion base on the nvim api
+	use({ "hrsh7th/cmp-nvim-lua" })
 
-    -- tmux completion
-    use {
-      "andersevenrud/compe-tmux",
-      branch = "cmp"
-    }
+	-- tmux completion
+	use({
+		"andersevenrud/compe-tmux",
+		branch = "cmp",
+	})
 
-    -- snippets
-    use {"hrsh7th/vim-vsnip"}
+	-- snippets
+	use({ "hrsh7th/vim-vsnip" })
 
-    -- snippet run
-    use {"hrsh7th/cmp-vsnip"}
+	-- snippet run
+	use({ "hrsh7th/cmp-vsnip" })
 
-    -- snippet fill
-    use {"rafamadriz/friendly-snippets"}
+	-- snippet fill
+	use({ "rafamadriz/friendly-snippets" })
 
-    -- pictograms for the lsp
-    use {"onsails/lspkind-nvim"}
+	-- pictograms for the lsp
+	use({ "onsails/lspkind-nvim" })
 
-    -- lsp front end that looks nice
-    use {
-      "tami5/lspsaga.nvim"
-    }
+	-- lsp front end that looks nice
+	use({
+		"tami5/lspsaga.nvim",
+	})
 
-    -- if you could just sign right there
-    use {"ray-x/lsp_signature.nvim"}
+	-- if you could just sign right there
+	use({ "ray-x/lsp_signature.nvim" })
 
-    -- How can it be? Great scott we have an lsp!!
-    use {
-      "neovim/nvim-lspconfig",
-      config = function()
-        require "lsp"
-      end
-    }
+	-- How can it be? Great scott we have an lsp!!
+	use({
+		"neovim/nvim-lspconfig",
+		config = function()
+			require("lsp")
+		end,
+	})
 
-    -- "...I am the captain now"
-    use {"williamboman/nvim-lsp-installer"}
+	-- "...I am the captain now"
+	use({ "williamboman/nvim-lsp-installer" })
 
-    -- lsp diagnostics make for a lot of trouble
-    use {
-      "folke/trouble.nvim",
-      config = function()
-        require("trouble").setup {}
-        local keymap = vim.api.nvim_set_keymap
+	-- lsp diagnostics make for a lot of trouble
+	use({
+		"folke/trouble.nvim",
+		config = function()
+			require("trouble").setup({})
+			local keymap = vim.api.nvim_set_keymap
 
-        keymap("n", "gR", "<cmd>Trouble lsp_references<cr>", {silent = true, noremap = true})
-      end
-    }
-    --]] lsp
+			keymap("n", "gR", "<cmd>Trouble lsp_references<cr>", { silent = true, noremap = true })
+		end,
+	})
+	--]] lsp
 
-    -- colorscheme
-    use "sainnhe/edge"
+	-- colorscheme
+	use("sainnhe/edge")
 
-    -- plugin to the outlet
-    use {"wbthomason/packer.nvim", opt = true}
+	-- plugin to the outlet
+	use({ "wbthomason/packer.nvim", opt = true })
 
-    -- Oh hey its me
-    use {
-      "BenGH28/neo-runner.nvim",
-      cmd = "NeoRunner",
-      run = ":UpdateRemotePlugins"
-    }
+	-- Oh hey its me
+	use({
+		"BenGH28/neo-runner.nvim",
+		cmd = "NeoRunner",
+		run = ":UpdateRemotePlugins",
+	})
 
-    -- I'm really liking this format
-    use {
-      "mhartington/formatter.nvim",
-      config = function()
-        require("formatter-conf")
-      end
-    }
+	-- I'm really liking this format
+	use({
+		disable = true,
+		"mhartington/formatter.nvim",
+		config = function()
+			require("formatter-conf")
+		end,
+	})
 
-    -- colours to make unicorns vomit
-    use {
-      "nvim-treesitter/nvim-treesitter",
-      event = "BufEnter",
-      run = ":TSUpdate",
-      config = function()
-        require "treesitter-conf"
-      end
-    }
+	use({
+		"jose-elias-alvarez/null-ls.nvim",
+		config = function()
+			require("null-ls-conf")
+		end,
+	})
 
-    -- which bracket is this again?
-    use {
-      "p00f/nvim-ts-rainbow",
-      after = "nvim-treesitter",
-      config = function()
-        require "nvim-treesitter.configs".setup {
-          rainbow = {enable = true}
-        }
-      end
-    }
+	-- colours to make unicorns vomit
+	use({
+		"nvim-treesitter/nvim-treesitter",
+		event = "BufEnter",
+		run = ":TSUpdate",
+		config = function()
+			require("treesitter-conf")
+		end,
+	})
 
-    -- quotes, brackets and easy times ahead
-    use {
-      "windwp/nvim-autopairs",
-      event = "InsertEnter",
-      config = function()
-        require "autopairs"
-      end
-    }
+	-- which bracket is this again?
+	use({
+		"p00f/nvim-ts-rainbow",
+		after = "nvim-treesitter",
+		config = function()
+			require("nvim-treesitter.configs").setup({
+				rainbow = { enable = true },
+			})
+		end,
+	})
 
-    -- I walk the line
-    use {
-      "glepnir/galaxyline.nvim",
-      branch = "main"
-    }
+	-- quotes, brackets and easy times ahead
+	use({
+		"windwp/nvim-autopairs",
+		event = "InsertEnter",
+		config = function()
+			require("autopairs")
+		end,
+	})
 
-    -- files, files, files
-    use {
-      "kyazdani42/nvim-tree.lua",
-      event = "BufEnter",
-      config = function()
-        require "tree-conf"
-      end
-    }
+	-- I walk the line
+	use({
+		disable = true,
+		"glepnir/galaxyline.nvim",
+		branch = "main",
+	})
 
-    -- see all the files on the moon
-    use {
-      "nvim-lua/telescope.nvim",
-      event = "BufEnter",
-      config = function()
-        require "telescope-conf"
-      end
-    }
+	use({ "nvim-lualine/lualine.nvim" })
 
-    -- jump around, jump around
-    use {
-      "phaazon/hop.nvim",
-      event = "BufEnter",
-      config = function()
-        require "hop".setup {keys = "etovxqpdygfblzhckisuran", term_seq_bias = 1.5}
-      end
-    }
+	-- files, files, files
+	use({
+		"kyazdani42/nvim-tree.lua",
+		event = "BufEnter",
+		config = function()
+			require("tree-conf")
+		end,
+	})
 
-    -- the Lone Ranger
-    use {
-      "kevinhwang91/rnvimr",
-      opt = true,
-      branch = "main",
-      config = function()
-        vim.g.rnvimr_ex_enable = 1
-      end
-    }
+	-- see all the files on the moon
+	use({
+		"nvim-lua/telescope.nvim",
+		event = "BufEnter",
+		config = function()
+			require("telescope-conf")
+		end,
+	})
 
-    -- wait that hex code is a colour?
-    use {
-      "norcalli/nvim-colorizer.lua",
-      config = function()
-        require("colorizer").setup()
-      end
-    }
+	-- jump around, jump around
+	use({
+		"phaazon/hop.nvim",
+		event = "BufEnter",
+		config = function()
+			require("hop").setup({ keys = "etovxqpdygfblzhckisuran", term_seq_bias = 1.5 })
+		end,
+	})
 
-    -- I changed something didn't I?
-    use {
-      "lewis6991/gitsigns.nvim",
-      config = function()
-        require("gitsigns").setup()
-      end
-    }
+	-- the Lone Ranger
+	use({
+		"kevinhwang91/rnvimr",
+		opt = true,
+		branch = "main",
+		config = function()
+			vim.g.rnvimr_ex_enable = 1
+		end,
+	})
 
-    -- lets git kraken... oh wait wrong git app
-    use {
-      "kdheepak/lazygit.nvim",
-      event = "BufEnter"
-    }
+	-- wait that hex code is a colour?
+	use({
+		"norcalli/nvim-colorizer.lua",
+		config = function()
+			require("colorizer").setup()
+		end,
+	})
 
-    -- I'm pretty buff
-    use {
-      "akinsho/nvim-bufferline.lua",
-      config = function()
-        require "bufferline-conf"
-      end
-    }
+	-- I changed something didn't I?
+	use({
+		"lewis6991/gitsigns.nvim",
+		config = function()
+			require("gitsigns").setup()
+		end,
+	})
 
-    -- comments are easy
-    use {"tpope/vim-commentary"}
-    -- 'I have you completely surrounded'
-    use {"tpope/vim-surround"}
-    -- do it again
-    use "tpope/vim-repeat"
-    -- start screen for the vimified
-    use "mhinz/vim-startify"
-    -- 360 no scope
-    use "unblevable/quick-scope"
-    -- documentation for the enlightend
-    use {"vim-scripts/DoxygenToolkit.vim", ft = {"cpp", "c"}}
-    -- OCD and me
-    use {
-      "junegunn/vim-easy-align",
-      opt = true
-    }
-    use {
-      "vhda/verilog_systemverilog.vim",
-      ft = "verilog",
-      config = function()
-        vim.cmd("VerilogErrorFormat iverilog 1")
-      end
-    }
-    use {
-      "APZelos/blamer.nvim",
-      config = function()
-        vim.g.blamer_enabled = 1
-      end
-    }
+	-- lets git kraken... oh wait wrong git app
+	use({
+		"kdheepak/lazygit.nvim",
+		event = "BufEnter",
+	})
 
-    --tmux syntax
-    use {"tmux-plugins/vim-tmux"}
+	-- I'm pretty buff
+	use({
+		"akinsho/nvim-bufferline.lua",
+		config = function()
+			require("bufferline-conf")
+		end,
+	})
 
-    -- todo comments that stand out
-    use {
-      "folke/todo-comments.nvim",
-      config = function()
-        require("todo-comments").setup()
-      end
-    }
+	-- comments are easy
+	use({ "tpope/vim-commentary" })
+	-- 'I have you completely surrounded'
+	use({ "tpope/vim-surround" })
+	-- do it again
+	use("tpope/vim-repeat")
+	-- start screen for the vimified
+	use("mhinz/vim-startify")
+	-- 360 no scope
+	use("unblevable/quick-scope")
+	-- documentation for the enlightend
+	use({ "vim-scripts/DoxygenToolkit.vim", ft = { "cpp", "c" } })
+	-- OCD and me
+	use({
+		"junegunn/vim-easy-align",
+		opt = true,
+	})
+	use({
+		"vhda/verilog_systemverilog.vim",
+		ft = "verilog",
+		config = function()
+			vim.cmd("VerilogErrorFormat iverilog 1")
+		end,
+	})
+	use({
+		"APZelos/blamer.nvim",
+		config = function()
+			vim.g.blamer_enabled = 1
+		end,
+	})
 
-    -- Session persistence
-    use {
-      "folke/persistence.nvim",
-      event = "BufReadPre", -- this will only start session saving when an actual file was opened
-      module = "persistence",
-      config = function()
-        require("persistence").setup()
-      end
-    }
+	--tmux syntax
+	use({ "tmux-plugins/vim-tmux" })
 
-    -- Lua
-    use {
-      "folke/which-key.nvim",
-      config = function()
-        require("which-key").setup {
-          layout = {
-            align = "center"
-          }
-        }
-      end
-    }
-    use {
-      "mfussenegger/nvim-dap",
-      config = function()
-        vim.cmd [[
+	-- todo comments that stand out
+	use({
+		"folke/todo-comments.nvim",
+		config = function()
+			require("todo-comments").setup()
+		end,
+	})
+
+	-- Session persistence
+	use({
+		"folke/persistence.nvim",
+		event = "BufReadPre", -- this will only start session saving when an actual file was opened
+		module = "persistence",
+		config = function()
+			require("persistence").setup()
+		end,
+	})
+
+	-- Lua
+	use({
+		"folke/which-key.nvim",
+		config = function()
+			require("which-key").setup({
+				layout = {
+					align = "center",
+				},
+			})
+		end,
+	})
+	use({
+		"mfussenegger/nvim-dap",
+		config = function()
+			vim.cmd([[
           nnoremap <silent> <F4> :lua require'dap'.repl.open()<CR>
           nnoremap <silent> <F5> :lua require'dap'.continue()<CR>
           nnoremap <silent> <F9> :lua require'dap'.toggle_breakpoint()<CR>
@@ -290,30 +300,29 @@ require "packer".startup(
           "nnoremap <silent> <leader>lp :lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
           "nnoremap <silent> <leader>dr :lua require'dap'.repl.open()<CR>
           "nnoremap <silent> <leader>dl :lua require'dap'.run_last()<CR>
-       ]]
-      end
-    }
+       ]])
+		end,
+	})
 
-    use {
-      "Pocco81/DAPInstall.nvim",
-      config = function()
-        local dap_install = require("dap-install")
-        local dbg_list = require("dap-install.api.debuggers").get_installed_debuggers()
+	use({
+		"Pocco81/DAPInstall.nvim",
+		config = function()
+			local dap_install = require("dap-install")
+			local dbg_list = require("dap-install.api.debuggers").get_installed_debuggers()
 
-        for _, debugger in ipairs(dbg_list) do
-          dap_install.config(debugger)
-        end
-      end
-    }
+			for _, debugger in ipairs(dbg_list) do
+				dap_install.config(debugger)
+			end
+		end,
+	})
 
-    use {
-      "lukas-reineke/indent-blankline.nvim",
-      config = function()
-        require("indent_blankline").setup {
-          buftype_exclude = {"terminal", "help", "startify", "nofile", "NvimTree"},
-          filetype_exclude = {"help", "packer", "startify", "NvimTree", "alpha"}
-        }
-      end
-    }
-  end
-)
+	use({
+		"lukas-reineke/indent-blankline.nvim",
+		config = function()
+			require("indent_blankline").setup({
+				buftype_exclude = { "terminal", "help", "startify", "nofile", "NvimTree" },
+				filetype_exclude = { "help", "packer", "startify", "NvimTree", "alpha" },
+			})
+		end,
+	})
+end)
