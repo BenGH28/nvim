@@ -32,7 +32,6 @@ local function source_file(file)
 end
 
 function M.install_plugins()
-  print("packer is installing things...")
   source_file("plugins")
   cmd("PackerInstall")
 end

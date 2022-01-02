@@ -41,8 +41,7 @@ require("packer").startup(function(use)
 
 	-- tmux completion
 	use({
-		"andersevenrud/compe-tmux",
-		branch = "cmp",
+		"andersevenrud/cmp-tmux",
 	})
 
 	-- snippets
@@ -325,4 +324,5 @@ require("packer").startup(function(use)
 			})
 		end,
 	})
+	use({ "lambdalisue/suda.vim" })
 end)
