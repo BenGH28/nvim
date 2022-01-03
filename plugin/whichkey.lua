@@ -54,7 +54,7 @@ local nmappings = {
       l = {":HopLine<cr>", "line"},
       p = {":HopPattern<cr>", "pattern"}
     },
-    d = {":bdelete<cr>", "delete"},
+    d = {":Bdelete<cr>", "delete"},
     f = {":lua vim.lsp.buf.formatting()<cr>", "format"},
     l = {":Telescope buffers<cr>", "list buffers"},
     s = {
@@ -117,7 +117,7 @@ local nmappings = {
       c = {":Lspsaga show_cursor_diagnostics<cr>", "Show cursor diagnostics"},
       n = {":Lspsaga diagnostic_jump_next<cr>", "Next diagnostic"},
       p = {":Lspsaga diagnostic_jump_prev<cr>", "Prev diagnostic"},
-      q = {":lua vim.lsp.diagnostic.set_loclist()<cr>", "Diagnostic list"}
+      d = {":lua vim.lsp.diagnostic.set_loclist()<cr>", "Diagnostic list"}
     },
     f = {
       name = "+folder",
@@ -128,8 +128,8 @@ local nmappings = {
     t = {
       name = "+trouble",
       x = {":TroubleToggle<cr>", "toggle"},
-      w = {":TroubleToggle lsp_workspace_diagnostics<cr>", "workspace diagnostics"},
-      d = {":TroubleToggle lsp_document_diagnostics<cr>", "document diagnostics"},
+      w = {":TroubleToggle workspace_diagnostics<cr>", "workspace diagnostics"},
+      d = {":TroubleToggle document_diagnostics<cr>", "document diagnostics"},
       q = {":TroubleToggle quickfix<cr>", "quickfix"},
       l = {":TroubleToggle loclist<cr>", "loclist"},
       n = {":lua require'trouble'.next({skip_groups = true, jump = true})<cr>", "next"},

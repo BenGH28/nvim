@@ -325,4 +325,5 @@ require("packer").startup(function(use)
 		end,
 	})
 	use({ "lambdalisue/suda.vim" })
+	use({ "moll/vim-bbye" })
 end)
