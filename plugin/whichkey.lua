@@ -8,6 +8,8 @@ local setmap = vim.api.nvim_set_keymap
 local noremap = {noremap = true}
 local silence = {noremap = true, silent = true}
 
+setmap("n", "<C-n>", ":NvimTreeToggle<CR>", silence)
+
 setmap("i", "jk", "<ESC>", noremap)
 setmap("i", "kj", "<ESC>", noremap)
 
@@ -46,8 +48,8 @@ local nmappings = {
   ["9"] = {":BufferLineGoToBuffer 9<cr>", "Goto buffer 9"},
   b = {
     name = "+buffers",
-    n = {":bNext<cr>", "next"},
-    p = {":bprevious", "previous"},
+    n = {":BufferLineCycleNext<cr>", "next"},
+    p = {":BufferLineCyclePrev<cr>", "previous"},
     h = {
       name = "+hop",
       w = {":HopWord<cr>", "word"},

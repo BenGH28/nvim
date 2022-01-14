@@ -40,12 +40,15 @@ require("packer").startup(function(use)
 	use({ "hrsh7th/cmp-nvim-lua" })
 
 	-- tmux completion
-	use({
-		"andersevenrud/cmp-tmux",
-	})
+	use({ "andersevenrud/cmp-tmux" })
 
 	-- snippets
-	use({ "hrsh7th/vim-vsnip" })
+	use({
+		"hrsh7th/vim-vsnip",
+		config = function()
+			vim.g.vsnip_snippet_dir = vim.fn.stdpath("config") .. "/vsnip"
+		end,
+	})
 
 	-- snippet run
 	use({ "hrsh7th/cmp-vsnip" })
