@@ -156,7 +156,12 @@ require("packer").startup(function(use)
 		branch = "main",
 	})
 
-	use({ "nvim-lualine/lualine.nvim" })
+	use({
+		"nvim-lualine/lualine.nvim",
+		config = function()
+			require("lualine-conf")
+		end,
+	})
 
 	-- files, files, files
 	use({
@@ -243,13 +248,6 @@ require("packer").startup(function(use)
 		opt = true,
 	})
 	use({
-		"vhda/verilog_systemverilog.vim",
-		ft = "verilog",
-		config = function()
-			vim.cmd("VerilogErrorFormat iverilog 1")
-		end,
-	})
-	use({
 		"APZelos/blamer.nvim",
 		config = function()
 			vim.g.blamer_enabled = 1
@@ -290,6 +288,7 @@ require("packer").startup(function(use)
 	})
 	use({
 		"mfussenegger/nvim-dap",
+		disable = true,
 		config = function()
 			vim.cmd([[
           nnoremap <silent> <F4> :lua require'dap'.repl.open()<CR>
@@ -308,6 +307,7 @@ require("packer").startup(function(use)
 
 	use({
 		"Pocco81/DAPInstall.nvim",
+		disable = true,
 		config = function()
 			local dap_install = require("dap-install")
 			local dbg_list = require("dap-install.api.debuggers").get_installed_debuggers()
@@ -329,4 +329,19 @@ require("packer").startup(function(use)
 	})
 	use({ "lambdalisue/suda.vim" })
 	use({ "moll/vim-bbye" })
+
+	use({
+		"SmiteshP/nvim-gps",
+		config = function()
+			require("nvim-gps").setup({
+				icons = {
+					["class-name"] = "ﴯ ",
+					["function-name"] = " ",
+					["method-name"] = " ",
+					["container-name"] = "⛶ ",
+					["tag-name"] = "炙",
+				},
+			})
+		end,
+	})
 end)
