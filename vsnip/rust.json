@@ -10,5 +10,15 @@
             "}"
         ],
         "description": "#[cfg(test)]..."
+    },
+    "rstest": {
+        "prefix": "rstest",
+        "body": [
+            "#[rstest]",
+            "fn ${1:name}(${2:fixture}: ${3:type}) -> ${4:RetType} {",
+            "   ${5:unimplemented!();}",
+            "}"
+        ],
+        "description": "#[rstest]"
     }
 }
