@@ -16,8 +16,7 @@ vim.diagnostic.config({
 
 local function documentHighlight(client, bufnr)
 	if client.resolved_capabilities.document_highlight then
-		vim.cmd
-			[[
+		vim.cmd([[
       hi LspDiagnosticsVirtualTextInformation term=bold guifg='#51afef' guibg='#202328'
       hi LspDiagnosticsVirtualTextWarning term=bold guifg='#ecbe7b' guibg='#202328'
       hi LspDiagnosticsVirtualTextHint term=bold guifg='#98c379' guibg='#202328'
@@ -27,7 +26,7 @@ local function documentHighlight(client, bufnr)
         autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
         autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
       augroup END
-      ]]
+      ]])
 	end
 end
 
@@ -73,7 +72,18 @@ local function setup_servers()
 		if server.name == "sumneko_lua" then
 			config.settings = lua_settings
 		elseif server.name == "rust_analyzer" then
-			local server_opts = {}
+			local server_opts = {
+				settings = {
+					-- to enable rust-analyzer settings visit:
+					-- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
+					["rust-analyzer"] = {
+						-- enable clippy on save
+						checkOnSave = {
+							command = "clippy",
+						},
+					},
+				},
+			}
 			local tools_opts = require("lsp.rust-tools-opts").tools
 			local dap_opts = require("lsp.rust-tools-opts").dap
 			require("rust-tools").setup({
