@@ -91,6 +91,7 @@ local nmappings = {
     h = {":Telescope oldfiles<cr>", "history"},
     j = {":w!<cr>", "save"},
     q = {":q<cr>", "quit"},
+    p = {":Telescope projects<cr>", "projects"},
     ["."] = {":so %<cr>", "source current file"}
   },
   g = {

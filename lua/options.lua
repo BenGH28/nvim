@@ -53,3 +53,7 @@ vim.o.undodir = ".undo/"
 vim.o.undofile = true
 -- allow us to increment or decrement alphabetical characters
 vim.cmd [[set nrformats+=alpha]]
+
+--neovide
+vim.cmd[[set guifont=Iosevka:h12]]
+vim.g['neovide_cursor_animation_length'] = 0.05
