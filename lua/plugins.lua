@@ -386,4 +386,12 @@ require("packer").startup(function(use)
 			require("telescope").load_extension("projects")
 		end,
 	})
+
+	use({
+		"xuhdev/vim-latex-live-preview",
+		ft = "tex",
+		config = function()
+			vim.g["livepreview_perviewer"] = "zathura"
+		end,
+	})
 end)

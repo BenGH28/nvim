@@ -35,3 +35,8 @@ augroup tabstops
 	au!
 	au BufEnter * lua require"common".set_default_tab(vim.api.nvim_buf_get_option(0, 'filetype'))
 augroup END
+
+augroup tex
+    au!
+    au BufEnter *.tex set ft=tex
+augroup END

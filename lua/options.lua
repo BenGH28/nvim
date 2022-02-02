@@ -42,7 +42,7 @@ vim.o.scrolloff = 4
 vim.o.lazyredraw = false -- don't show me the execution of macros--
 vim.o.completeopt = "menuone,noselect"
 vim.o.list = true
-vim.cmd[[set modeline]]
+vim.o.modeline = true
 vim.opt.listchars = {
   tab = "| ",
   eol = "⤶",
