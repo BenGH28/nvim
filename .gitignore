@@ -1,4 +1,4 @@
-plugin/packer_compiled.vim
-plugin/packer_compiled.lua
+plugin/packer_compiled.*
 .undo/
 sessions/
+spell/

@@ -96,6 +96,7 @@ local nmappings = {
 		j = { ":w!<cr>", "save" },
 		q = { ":q<cr>", "quit" },
 		p = { ":Telescope projects<cr>", "projects" },
+		s = { ":NewScratchBelow<cr>", "scratch buffer" },
 		["."] = { ":so %<cr>", "source current file" },
 	},
 	g = {
