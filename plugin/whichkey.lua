@@ -1,6 +1,5 @@
--- =============================================================
--- non-leader mappings
--- =============================================================
+-- vim: foldmethod=marker
+-- {{{ regular maps
 
 -- alias the long function
 local setmap = vim.api.nvim_set_keymap
@@ -29,16 +28,53 @@ setmap("i", "<C-h>", "<C-w>", noremap)
 --need to escape \ in the lua api
 setmap("t", "<Esc>", "<C-\\><C-n>", noremap)
 
--- =============================================================
--- leader mappings
--- =============================================================
+-- }}} regular
+
+--{{{ which-key
 
 local wk = require("which-key")
 
-local nopts = {
-	prefix = "<Leader>",
+--{{{ g mappings
+local gmaps = {
+	l = { ":HopLine<cr>", "hop line" },
+	p = { ":HopPattern<cr>", "hop pattern" },
 }
-local nmappings = {
+local g_opts = {
+	prefix = "g",
+}
+
+wk.register(gmaps, g_opts)
+--}}} g
+
+--{{{normal mappings
+
+--{{{loud normal mappings
+local loud_normal_maps = {
+	b = {
+		s = {
+			name = "+substitute",
+			-- need to register this here other wise it will have a silent mapping which then won't appear in the cmdline area until user types
+			g = { [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], "global word substitute" },
+			l = { [[:s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], "local word substitute" },
+		},
+	},
+}
+
+wk.register(loud_normal_maps, { silent = false })
+--}}} loud
+
+--{{{ silent normal mappings
+
+local silent_normal_opts = {
+	prefix = "<Leader>",
+	mode = "n",
+	buffer = nil,
+	silent = true,
+	noremap = true,
+	nowait = false,
+}
+
+local silent_normal_maps = {
 	["."] = { ":tabn<cr>", "next" },
 	[","] = { ":tabp<cr>", "previous" },
 	["1"] = { ":BufferLineGoToBuffer 1<cr>", "Goto buffer 1" },
@@ -54,20 +90,9 @@ local nmappings = {
 		name = "+buffers",
 		n = { ":BufferLineCycleNext<cr>", "next" },
 		p = { ":BufferLineCyclePrev<cr>", "previous" },
-		h = {
-			name = "+hop",
-			w = { ":HopWord<cr>", "word" },
-			l = { ":HopLine<cr>", "line" },
-			p = { ":HopPattern<cr>", "pattern" },
-		},
 		d = { ":Bdelete!<cr>", "delete" },
 		f = { ":lua vim.lsp.buf.formatting()<cr>", "format" },
 		l = { ":Telescope buffers<cr>", "list buffers" },
-		s = {
-			name = "+substitute",
-			g = { [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], "global word substitute" },
-			l = { [[:s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], "local word substitute" },
-		},
 		b = {
 			name = "+background",
 			l = { ":set background=light<cr>", "light" },
@@ -183,4 +208,9 @@ local nmappings = {
 	},
 }
 
-wk.register(nmappings, nopts)
+wk.register(silent_normal_maps, silent_normal_opts)
+--}}} silent
+
+--}}} normals
+
+--}}} which-key
