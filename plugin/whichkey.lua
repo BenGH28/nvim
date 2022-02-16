@@ -59,8 +59,12 @@ local loud_normal_maps = {
 		},
 	},
 }
+local loud_normal_opts = {
+  silent = false,
+  prefix = "<Leader>"
+}
 
-wk.register(loud_normal_maps, { silent = false })
+wk.register(loud_normal_maps, loud_normal_opts)
 --}}} loud
 
 --{{{ silent normal mappings

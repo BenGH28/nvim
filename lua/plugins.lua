@@ -103,15 +103,6 @@ require("packer").startup(function(use)
 		run = ":UpdateRemotePlugins",
 	})
 
-	-- I'm really liking this format
-	use({
-		disable = true,
-		"mhartington/formatter.nvim",
-		config = function()
-			require("formatter-conf")
-		end,
-	})
-
 	use({
 		"jose-elias-alvarez/null-ls.nvim",
 		config = function()
@@ -147,13 +138,6 @@ require("packer").startup(function(use)
 		config = function()
 			require("autopairs")
 		end,
-	})
-
-	-- I walk the line
-	use({
-		disable = true,
-		"glepnir/galaxyline.nvim",
-		branch = "main",
 	})
 
 	use({
@@ -260,6 +244,7 @@ require("packer").startup(function(use)
 	-- todo comments that stand out
 	use({
 		"folke/todo-comments.nvim",
+		requires = "nvim-lua/plenary.nvim",
 		config = function()
 			require("todo-comments").setup()
 		end,
@@ -286,6 +271,7 @@ require("packer").startup(function(use)
 			})
 		end,
 	})
+
 	use({
 		"mfussenegger/nvim-dap",
 		disable = true,
@@ -332,6 +318,7 @@ require("packer").startup(function(use)
 
 	use({
 		"SmiteshP/nvim-gps",
+		disable = true,
 		config = function()
 			require("nvim-gps").setup({
 				icons = {
@@ -348,6 +335,7 @@ require("packer").startup(function(use)
 	-- Lua
 	use({
 		"ahmedkhalf/project.nvim",
+		requires = { "nvim-lua/telescope.nvim" },
 		config = function()
 			require("project_nvim").setup({
 				-- Manual mode doesn't automatically change your root directory, so you have
