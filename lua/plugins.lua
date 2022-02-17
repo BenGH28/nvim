@@ -382,4 +382,6 @@ require("packer").startup(function(use)
 			vim.g["livepreview_perviewer"] = "zathura"
 		end,
 	})
+
+	use({ "windwp/nvim-ts-autotag", })
 end)
