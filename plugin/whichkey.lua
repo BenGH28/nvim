@@ -21,6 +21,9 @@ setmap("n", "<C-j>", ":wincmd j<CR>", silence)
 setmap("n", "<C-k>", ":wincmd k<CR>", silence)
 setmap("n", "<C-l>", ":wincmd l<CR>", silence)
 
+-- "hover doc
+setmap("n", "K", ':lua require"lspsaga.hover".render_hover_doc()<CR>', silence)
+
 --Ctrl-Backspace will delete the word behind the cursor in INSERT mode
 setmap("i", "<C-h>", "<C-w>", noremap)
 
@@ -38,6 +41,11 @@ local wk = require("which-key")
 local gmaps = {
 	l = { ":HopLine<cr>", "hop line" },
 	p = { ":HopPattern<cr>", "hop pattern" },
+	d = { ":lua vim.lsp.buf.definition()<CR>", "go to definition" },
+	I = { ":lua vim.lsp.buf.implementation()<CR>", "go to implementation" },
+	r = { ":lua vim.lsp.buf.references()<CR>", "go to references" },
+	h = { ':lua require"lspsaga.provider".lsp_finder()<CR>', "lsp finder" },
+	n = { ':lua require"lspsaga.rename".rename()<CR>', "rename" },
 }
 local g_opts = {
 	prefix = "g",
@@ -60,8 +68,8 @@ local loud_normal_maps = {
 	},
 }
 local loud_normal_opts = {
-  silent = false,
-  prefix = "<Leader>"
+	silent = false,
+	prefix = "<Leader>",
 }
 
 wk.register(loud_normal_maps, loud_normal_opts)

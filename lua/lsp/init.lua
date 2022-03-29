@@ -1,4 +1,3 @@
-require("lsp.keymap")
 require("lsp.vsnip-conf")
 require("lsp.cmp-conf")
 require("lsp.lspkind-conf")

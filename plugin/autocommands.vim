@@ -5,8 +5,8 @@
 "Gets rid of the highlightswhen you leave commandline {{{
 augroup vimrc-incsearch-highlight
 	au!
-	au CmdlineEnter /,\? set hlsearch
-	au CmdlineLeave /,\? set nohlsearch
+	au CmdlineEnter * set hlsearch
+	au CmdlineLeave * set nohlsearch
 augroup END
 "}}}
 
@@ -22,7 +22,7 @@ augroup END
 augroup white-space-and-format
 	au!
 	au BufWritePre * %s/\s\+$//e
-	" au BufWritePost *.py,*.rs,*.cpp,*.cc,*.sh,*.zsh,*.lua,*.md :Format
+	au BufWritePost * :Format
 augroup END
 "}}}
 

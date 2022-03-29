@@ -1,5 +1,4 @@
 require("packer-config")
-vim.cmd([[packadd packer.nvim]])
 require("packer").startup(function(use)
 	-- I feel the need, the need for speed
 	use({
@@ -39,8 +38,14 @@ require("packer").startup(function(use)
 	-- completion base on the nvim api
 	use({ "hrsh7th/cmp-nvim-lua" })
 
+	-- cmdline completion
+	use({ "hrsh7th/cmp-cmdline" })
+
 	-- tmux completion
 	use({ "andersevenrud/cmp-tmux" })
+
+	-- sort python dunder methods below regular methods
+	use("lukas-reineke/cmp-under-comparator")
 
 	-- snippets
 	use({
@@ -94,7 +99,7 @@ require("packer").startup(function(use)
 	use("sainnhe/edge")
 
 	-- plugin to the outlet
-	use({ "wbthomason/packer.nvim", opt = true })
+	use({ "wbthomason/packer.nvim" })
 
 	-- Oh hey its me
 	use({
@@ -225,7 +230,7 @@ require("packer").startup(function(use)
 	-- 360 no scope
 	use("unblevable/quick-scope")
 	-- documentation for the enlightend
-	use({ "vim-scripts/DoxygenToolkit.vim", ft = { "cpp", "c" } })
+	use({ "vim-scripts/DoxygenToolkit.vim", ft = { "cpp", "c", "javascript" } })
 	-- OCD and me
 	use({
 		"junegunn/vim-easy-align",
@@ -335,20 +340,23 @@ require("packer").startup(function(use)
 	-- Lua
 	use({
 		"ahmedkhalf/project.nvim",
-    event = "BufEnter",
+		event = "BufEnter",
 		requires = { "nvim-lua/telescope.nvim" },
-    config = function ()
-      require("project-conf")
-    end
+		config = function()
+			require("project-conf")
+		end,
 	})
-
 	use({
 		"xuhdev/vim-latex-live-preview",
 		ft = "tex",
-		config = function()
-			vim.g["livepreview_perviewer"] = "zathura"
+		setup = function()
+			--run this before we load
+			vim.g["livepreview_previewer"] = "zathura"
 		end,
 	})
+	use({
+		"davidgranstrom/nvim-markdown-preview",
+	})
 
-	use({ "windwp/nvim-ts-autotag", })
+	use({ "windwp/nvim-ts-autotag" })
 end)

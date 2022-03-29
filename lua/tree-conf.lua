@@ -42,7 +42,6 @@ require("nvim-tree").setup({
 			error = "",
 		},
 	},
-	auto_close = true,
 	open_on_tab = false,
 	hijack_cursor = false,
 	update_cwd = false,
@@ -75,4 +74,3 @@ require("nvim-tree").setup({
 		require_confirm = true,
 	},
 })
-
