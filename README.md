@@ -1,6 +1,5 @@
 # nvim
-
-![nvim](https://github.com/BenGH28/dots/blob/master/.screenshots/nvim-lua-config.png)
+![image](https://user-images.githubusercontent.com/45215137/161371967-2ca62397-01ec-4555-85fc-9e117073f2d1.png)
 
 ## Install
 
