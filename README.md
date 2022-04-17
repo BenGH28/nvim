@@ -4,8 +4,7 @@
 
 ## Install
 
-Compile Neovim from source to get the latest and greatest.
-[Neovim 0.5](https://github.com/neovim/neovim) is **REQUIRED**.
+[Neovim 0.6+](https://github.com/neovim/neovim) is **REQUIRED**.
 
 Bootstrap.sh will clone this config into `$HOME/.config/nvim`
 backing up any pre-existing config to `$HOME/.config/nvim.bak`.
@@ -32,7 +31,7 @@ Ensure you have the following tools available for automatic installation of some
 -   gzip
 -   tar
 
-    Languages supported out of the box:
+Languages supported out of the box:
 
 -   python
 -   lua

@@ -1,6 +1,6 @@
 require("packer-config")
 require("packer").startup(function(use)
-	-- I feel the need, the need for speed
+	-- better loading of files
 	use({
 		"lewis6991/impatient.nvim",
 		config = function()
@@ -8,13 +8,8 @@ require("packer").startup(function(use)
 		end,
 	})
 
-	--use better filetype
-	use({
-		"nathom/filetype.nvim",
-		config = function()
-			vim.g.did_load_filetypes = 1
-		end,
-	})
+	--use faster filetype
+	use({ "nathom/filetype.nvim" })
 
 	---[[General Dependencies
 	use({ "nvim-lua/popup.nvim" })
@@ -69,7 +64,6 @@ require("packer").startup(function(use)
 		"tami5/lspsaga.nvim",
 	})
 
-	-- if you could just sign right there
 	use({ "ray-x/lsp_signature.nvim" })
 
 	-- How can it be? Great scott we have an lsp!!
@@ -80,10 +74,9 @@ require("packer").startup(function(use)
 		end,
 	})
 
-	-- "...I am the captain now"
 	use({ "williamboman/nvim-lsp-installer" })
 
-	-- lsp diagnostics make for a lot of trouble
+	-- diagnostics
 	use({
 		"folke/trouble.nvim",
 		config = function()
@@ -98,10 +91,8 @@ require("packer").startup(function(use)
 	-- colorscheme
 	use("sainnhe/edge")
 
-	-- plugin to the outlet
 	use({ "wbthomason/packer.nvim" })
 
-	-- Oh hey its me
 	use({
 		"BenGH28/neo-runner.nvim",
 		cmd = "NeoRunner",
@@ -115,9 +106,9 @@ require("packer").startup(function(use)
 		end,
 	})
 
-	-- colours to make unicorns vomit
 	use({
 		"nvim-treesitter/nvim-treesitter",
+		before = "neorg",
 		event = "BufEnter",
 		run = ":TSUpdate",
 		config = function()
@@ -125,18 +116,11 @@ require("packer").startup(function(use)
 		end,
 	})
 
-	-- which bracket is this again?
 	use({
 		"p00f/nvim-ts-rainbow",
-		after = "nvim-treesitter",
-		config = function()
-			require("nvim-treesitter.configs").setup({
-				rainbow = { enable = true },
-			})
-		end,
+		before = "nvim-treesitter",
 	})
 
-	-- quotes, brackets and easy times ahead
 	use({
 		"windwp/nvim-autopairs",
 		event = "InsertEnter",
@@ -152,7 +136,6 @@ require("packer").startup(function(use)
 		end,
 	})
 
-	-- files, files, files
 	use({
 		"kyazdani42/nvim-tree.lua",
 		event = "BufEnter",
@@ -161,7 +144,6 @@ require("packer").startup(function(use)
 		end,
 	})
 
-	-- see all the files on the moon
 	use({
 		"nvim-lua/telescope.nvim",
 		event = "BufEnter",
@@ -170,7 +152,6 @@ require("packer").startup(function(use)
 		end,
 	})
 
-	-- jump around, jump around
 	use({
 		"phaazon/hop.nvim",
 		event = "BufEnter",
@@ -179,17 +160,6 @@ require("packer").startup(function(use)
 		end,
 	})
 
-	-- the Lone Ranger
-	use({
-		"kevinhwang91/rnvimr",
-		opt = true,
-		branch = "main",
-		config = function()
-			vim.g.rnvimr_ex_enable = 1
-		end,
-	})
-
-	-- wait that hex code is a colour?
 	use({
 		"norcalli/nvim-colorizer.lua",
 		config = function()
@@ -197,7 +167,6 @@ require("packer").startup(function(use)
 		end,
 	})
 
-	-- I changed something didn't I?
 	use({
 		"lewis6991/gitsigns.nvim",
 		config = function()
@@ -205,13 +174,11 @@ require("packer").startup(function(use)
 		end,
 	})
 
-	-- lets git kraken... oh wait wrong git app
 	use({
 		"kdheepak/lazygit.nvim",
 		event = "BufEnter",
 	})
 
-	-- I'm pretty buff
 	use({
 		"akinsho/nvim-bufferline.lua",
 		config = function()
@@ -219,19 +186,15 @@ require("packer").startup(function(use)
 		end,
 	})
 
-	-- comments are easy
+	-- tpope
 	use({ "tpope/vim-commentary" })
-	-- 'I have you completely surrounded'
 	use({ "tpope/vim-surround" })
-	-- do it again
 	use("tpope/vim-repeat")
+
 	-- start screen for the vimified
 	use("mhinz/vim-startify")
-	-- 360 no scope
 	use("unblevable/quick-scope")
-	-- documentation for the enlightend
 	use({ "vim-scripts/DoxygenToolkit.vim", ft = { "cpp", "c", "javascript" } })
-	-- OCD and me
 	use({
 		"junegunn/vim-easy-align",
 		opt = true,
@@ -351,12 +314,19 @@ require("packer").startup(function(use)
 		ft = "tex",
 		setup = function()
 			--run this before we load
-			vim.g["livepreview_previewer"] = "zathura"
+			vim.g["livepreview_previewer"] = "okular"
 		end,
 	})
-	use({
-		"davidgranstrom/nvim-markdown-preview",
-	})
+	use({ "davidgranstrom/nvim-markdown-preview" })
 
-	use({ "windwp/nvim-ts-autotag" })
+	use({ "windwp/nvim-ts-autotag", before = "nvim-treesitter" })
+
+	use({
+		"nvim-neorg/neorg",
+		ft = "norg",
+		config = function()
+			require("norg-conf")
+		end,
+		requires = "nvim-lua/plenary.nvim",
+	})
 end)
