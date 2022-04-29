@@ -1,4 +1,3 @@
-vim.g.nvim_tree_indent_markers = 1 -- 0 by default, this option shows indent markers when folders are open
 vim.g.nvim_tree_git_hl = 1 -- 0 by default, will enable file highlight for git attributes (can be used without the icons).
 vim.g.nvim_tree_show_icons = { git = 1, folders = 1, files = 1, folder_arrows = 1 }
 
@@ -22,16 +21,20 @@ vim.g.nvim_tree_icons = {
 }
 
 require("nvim-tree").setup({
-	nvim_tree_follow = 1, -- 0 by default, this option allows the cursor to be updated when entering a buffer
-	nvim_tree_hide_dotfiles = 0, -- 0 by default, this option hides files and folders starting with a dot `.`
-	nvim_tree_ignore = { ".git", "node_modules", ".cache", ".undo" }, -- empty by default
 	disable_netrw = true,
 	hijack_netrw = true,
-	open_on_setup = true,
+	open_on_setup = false,
 	ignore_ft_on_setup = { "startify" },
-	update_to_buf_dir = {
-		enable = true,
-		auto_open = true,
+
+	renderer = {
+		indent_markers = {
+			enable = true,
+			icons = {
+				corner = "└ ",
+				edge = "│ ",
+				none = "  ",
+			},
+		},
 	},
 	diagnostics = {
 		enable = true,
@@ -50,27 +53,14 @@ require("nvim-tree").setup({
 		update_cwd = true,
 		ignore_list = {},
 	},
-	system_open = {
-		cmd = nil,
-		args = {},
-	},
-	view = {
-		width = 30,
-		height = 30,
-		side = "left",
-		auto_resize = true,
-		mappings = {
-			custom_only = false,
-			list = {},
-		},
-	},
 	git = {
 		enable = true,
 		ignore = true,
 		timeout = 500,
 	},
-	trash = {
-		cmd = "trash",
-		require_confirm = true,
+	filters = {
+		dotfiles = false,
+		custom = {},
+		exclude = { ".git", "node_modules", ".cache", ".undo" },
 	},
 })

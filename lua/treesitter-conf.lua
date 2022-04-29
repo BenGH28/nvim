@@ -18,9 +18,26 @@ parser_configs.norg_table = {
 	},
 }
 
+local languages = {
+	"c",
+	"cpp",
+	"lua",
+	"rust",
+	"bash",
+	"toml",
+	"typescript",
+	"vim",
+	"yaml",
+	"python",
+	"norg",
+	"javascript",
+	"css",
+	"html",
+	"markdown",
+}
+
 local opts = {
-	ensure_installed = "maintained",
-	ignore_install = { "latex" },
+	ensure_installed = languages,
 	sync_install = false,
 	indent = { enable = true },
 	highlight = { enable = true },
