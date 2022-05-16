@@ -96,6 +96,9 @@ local function setup_servers()
 			})
 			server:attach_buffers()
 			return
+		elseif server.name == "clangd" then
+			-- get rid of the warnings from null-ls when using clangd
+			config.capabilities.offsetEncoding = { "utf-16" }
 		end
 		server:setup(config)
 	end)

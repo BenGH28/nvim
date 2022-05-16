@@ -2,7 +2,7 @@
 -- Author: shadmansaleh
 -- Credit: glepnir
 local lualine = require("lualine")
-local gps, err = pcall( require,"nvim-gps")
+local gps = require("nvim-gps")
 
 -- Color table for highlights
 -- stylua: ignore
@@ -156,12 +156,10 @@ ins_left({
 	},
 })
 
-if gps then
-  ins_left({
-    gps.get_location,
-    cond = gps.is_availabe,
-  })
-end
+ins_left({
+	gps.get_location,
+	cond = gps.is_availabe,
+})
 
 ins_right({
 	-- Lsp server name .
