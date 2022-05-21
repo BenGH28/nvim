@@ -3,7 +3,7 @@
 
 ## Install
 
-[Neovim 0.6+](https://github.com/neovim/neovim) is **REQUIRED**.
+[Latest version of neovim required](https://github.com/neovim/neovim) is **REQUIRED**.
 
 Bootstrap.sh will clone this config into `$HOME/.config/nvim`
 backing up any pre-existing config to `$HOME/.config/nvim.bak`.
