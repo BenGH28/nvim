@@ -62,8 +62,8 @@ local loud_normal_maps = {
 		s = {
 			name = "+substitute",
 			-- need to register this here other wise it will have a silent mapping which then won't appear in the cmdline area until user types
-			g = { [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], "global word substitute" },
-			l = { [[:s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], "local word substitute" },
+			g = { [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], "substitute word in file" },
+			l = { [[:s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], "substitute word in line" },
 		},
 	},
 }

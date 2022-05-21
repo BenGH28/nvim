@@ -286,7 +286,9 @@ require("packer").startup(function(use)
 
 	use({
 		"SmiteshP/nvim-gps",
-		disable = true,
+		-- disable = true,
+		after = "nvim-treesitter",
+		before = "nvim-lualine",
 		config = function()
 			require("nvim-gps").setup({
 				icons = {
@@ -329,4 +331,5 @@ require("packer").startup(function(use)
 		end,
 		requires = "nvim-lua/plenary.nvim",
 	})
+	use("fladson/vim-kitty")
 end)
