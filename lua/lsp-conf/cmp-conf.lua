@@ -1,23 +1,20 @@
 -- Setup nvim-cmp.
 local cmp = require("cmp")
 
-
 cmp.setup({
-  window = {
-    completion = cmp.config.window.bordered(),
-    documentation = cmp.config.window.bordered(),
-  },
+	window = {
+		completion = cmp.config.window.bordered(),
+		documentation = cmp.config.window.bordered(),
+	},
 	snippet = {
 		expand = function(args)
 			vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
 		end,
 	},
-	mapping = cmp.mapping.preset.insert{
+	mapping = cmp.mapping.preset.insert({
 		["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
 		["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
-		["<Down>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
-		["<Up>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
-		["<C-d>"] = cmp.mapping.scroll_docs(-4),
+		["<C-b>"] = cmp.mapping.scroll_docs(-4),
 		["<C-f>"] = cmp.mapping.scroll_docs(4),
 		["<C-Space>"] = cmp.mapping.complete(),
 		["<C-e>"] = cmp.mapping.abort(),
@@ -25,7 +22,7 @@ cmp.setup({
 			behavior = cmp.ConfirmBehavior.Replace,
 			select = true,
 		}),
-	},
+	}),
 	completion = {
 		completeopt = "menu,menuone,noinsert",
 		keyword_length = 1,
@@ -61,10 +58,6 @@ cmp.setup({
 		},
 	},
 
-	experimental = {
-		native_menu = false,
-		ghost_text = false,
-	},
 	formatting = {
 		format = require("lspkind").cmp_format({
 			with_text = true,
@@ -77,9 +70,10 @@ cmp.setup({
 		}),
 	},
 })
+
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline("/", {
-  mapping = cmp.mapping.preset.cmdline(),
+	mapping = cmp.mapping.preset.cmdline(),
 	sources = {
 		{ name = "buffer" },
 	},
@@ -87,6 +81,7 @@ cmp.setup.cmdline("/", {
 
 -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline(":", {
+	mapping = cmp.mapping.preset.cmdline(),
 	sources = cmp.config.sources({
 		{ name = "path" },
 	}, {

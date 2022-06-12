@@ -4,19 +4,16 @@
 vim.g.mapleader = " "
 vim.g.python3_host_prog = "/bin/python3"
 vim.o.termguicolors = true -- for accurate colors
-vim.cmd [[colorscheme edge]]
-vim.cmd(":set cpo-=C")
 vim.o.number = true
 vim.o.relativenumber = true
 vim.o.wrap = false
 vim.o.signcolumn = "yes"
 vim.o.syntax = "on"
-vim.cmd [[filetype plugin indent on]]
 vim.o.compatible = false
 vim.o.ignorecase = true
 vim.o.smartcase = true
 vim.o.hidden = true -- allows you to save buffers that you might still want to jump to
-vim.o.wildmenu = true -- statusline command completion
+-- vim.o.wildmenu = true -- statusline command completion
 vim.o.backspace = "indent,eol,start" -- allow backspacing over autoindent, line breaks and start of insert action
 vim.o.autoindent = true -- keeps indent from the line above
 vim.o.smartindent = true
@@ -40,20 +37,20 @@ vim.o.inccommand = "split"
 vim.o.autochdir = true
 vim.o.scrolloff = 4
 vim.o.lazyredraw = false -- don't show me the execution of macros--
-vim.o.completeopt = "menuone,noselect"
+vim.o.completeopt = "menu,menuone,noselect"
 vim.o.list = true
 vim.o.modeline = true
+vim.o.updatetime = 40
 vim.opt.listchars = {
-  tab = "| ",
-  eol = "⤶",
-  precedes = "«",
-  extends = "»"
+	tab = "| ",
+	eol = "⤶",
+	precedes = "«",
+	extends = "»",
 }
 vim.o.undodir = ".undo/"
 vim.o.undofile = true
 -- allow us to increment or decrement alphabetical characters
-vim.cmd [[set nrformats+=alpha]]
-
---neovide
-vim.cmd[[set guifont=Iosevka:h12]]
-vim.g['neovide_cursor_animation_length'] = 0.05
+vim.cmd([[set nrformats+=alpha]])
+vim.cmd([[filetype plugin indent on]])
+vim.cmd([[colorscheme edge]])
+vim.cmd(":set cpo-=C")

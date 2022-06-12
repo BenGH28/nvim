@@ -2,7 +2,7 @@
 -- Author: shadmansaleh
 -- Credit: glepnir
 local lualine = require("lualine")
-local gps = require("nvim-gps")
+-- local gps = require("nvim-gps")
 
 -- Color table for highlights
 -- stylua: ignore
@@ -156,10 +156,10 @@ ins_left({
 	},
 })
 
-ins_left({
-	gps.get_location,
-	cond = gps.is_availabe,
-})
+-- ins_left({
+-- 	gps.get_location,
+-- 	cond = gps.is_availabe,
+-- })
 
 ins_right({
 	-- Lsp server name .
@@ -189,7 +189,7 @@ ins_right({
 		dos = "", -- e70f
 		mac = "", -- e711
 	},
-	icons_enabled = true, -- I think icons are cool but Eviline doesn't have them. sigh
+	icons_enabled = true,
 	color = { fg = colors.green, gui = "bold" },
 })
 
@@ -201,7 +201,6 @@ ins_right({
 
 ins_right({
 	"diff",
-	-- Is it me or the symbol for modified us really weird
 	symbols = { added = " ", modified = "柳 ", removed = " " },
 	diff_color = {
 		added = { fg = colors.green },

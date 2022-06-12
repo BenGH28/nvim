@@ -1,5 +1,6 @@
 require("packer-config")
 require("packer").startup(function(use)
+	use({ "wbthomason/packer.nvim" })
 	-- better loading of files
 	use({
 		"lewis6991/impatient.nvim",
@@ -57,24 +58,21 @@ require("packer").startup(function(use)
 	use({ "rafamadriz/friendly-snippets" })
 
 	-- pictograms for the lsp
-	use({ "onsails/lspkind-nvim" })
+	use({ "onsails/lspkind-nvim", before = "nvim-lspconfig" })
 
 	-- lsp front end that looks nice
-	use({
-		"tami5/lspsaga.nvim",
-	})
+	use({ "tami5/lspsaga.nvim", before = "nvim-lspconfig" })
 
-	use({ "ray-x/lsp_signature.nvim" })
+	use({ "ray-x/lsp_signature.nvim", before = "nvim-lspconfig" })
 
-	-- How can it be? Great scott we have an lsp!!
+	use({ "williamboman/nvim-lsp-installer", before = "nvim-lspconfig" })
+
 	use({
 		"neovim/nvim-lspconfig",
 		config = function()
-			require("lsp")
+			require("lsp-conf")
 		end,
 	})
-
-	use({ "williamboman/nvim-lsp-installer" })
 
 	-- diagnostics
 	use({
@@ -90,8 +88,6 @@ require("packer").startup(function(use)
 
 	-- colorscheme
 	use("sainnhe/edge")
-
-	use({ "wbthomason/packer.nvim" })
 
 	use({
 		"BenGH28/neo-runner.nvim",
@@ -301,7 +297,7 @@ require("packer").startup(function(use)
 			})
 		end,
 	})
-	use({ "simrat39/rust-tools.nvim" })
+	use({ "simrat39/rust-tools.nvim", disable = false, before = "nvim-lspconfig" })
 	-- Lua
 	use({
 		"ahmedkhalf/project.nvim",
