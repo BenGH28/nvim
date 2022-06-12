@@ -1,9 +1,9 @@
-require("lsp-conf.vsnip-conf")
-require("lsp-conf.cmp-conf")
-require("lsp-conf.lspkind-conf")
-require("lsp-conf.lspsaga-conf")
+require("conf.lsp.vsnip-conf")
+require("conf.lsp.cmp-conf")
+require("conf.lsp.lspkind-conf")
+require("conf.lsp.lspsaga-conf")
 
-local signature_config = require("lsp-conf.signature")
+local signature_config = require("conf.lsp.signature")
 local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
@@ -46,6 +46,7 @@ end
 local function on_attach(client, bufnr)
 	documentHighlight(client, bufnr)
 	require("lsp_signature").on_attach(signature_config)
+	require("nvim-navic").attach(client, bufnr)
 end
 
 local lua_settings = {

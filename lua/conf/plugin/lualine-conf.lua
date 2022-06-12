@@ -2,22 +2,22 @@
 -- Author: shadmansaleh
 -- Credit: glepnir
 local lualine = require("lualine")
--- local gps = require("nvim-gps")
+local navic = require("nvim-navic")
 
 -- Color table for highlights
 -- stylua: ignore
 local colors = {
   bg       = '#202328',
   fg       = '#bbc2cf',
-  yellow   = '#ECBE7B',
+  yellow   = '#E5C07B',
   cyan     = '#008080',
   darkblue = '#081633',
-  green    = '#98be65',
+  green    = '#98C379',
   orange   = '#FF8800',
   violet   = '#a9a1e1',
   magenta  = '#c678dd',
-  blue     = '#51afef',
-  red      = '#ec5f67',
+  blue     = '#61afef',
+  red      = '#E06C75',
 }
 
 local conditions = {
@@ -63,7 +63,7 @@ local config = {
 	inactive_sections = {
 		-- these are to remove the defaults
 		lualine_a = {},
-		lualine_v = {},
+		lualine_b = {},
 		lualine_y = {},
 		lualine_z = {},
 		lualine_c = {},
@@ -116,7 +116,7 @@ ins_left({
 			t = colors.red,
 		}
 		vim.api.nvim_command("hi! LualineMode guifg=" .. mode_color[vim.fn.mode()] .. " guibg=" .. colors.bg)
-		return ""
+		return ""
 	end,
 	color = "LualineMode",
 	padding = { right = 1 },
@@ -140,10 +140,6 @@ ins_left({
 	color = { fg = colors.magenta, gui = "bold" },
 })
 
-ins_left({ "location" })
-
-ins_left({ "progress", color = { fg = colors.fg, gui = "bold" } })
-
 ins_left({
 	"diagnostics",
 	sources = { "nvim_diagnostic" },
@@ -156,10 +152,10 @@ ins_left({
 	},
 })
 
--- ins_left({
--- 	gps.get_location,
--- 	cond = gps.is_availabe,
--- })
+ins_left({
+	navic.get_location,
+	cond = navic.is_availabe,
+})
 
 ins_right({
 	-- Lsp server name .
@@ -181,6 +177,8 @@ ins_right({
 	icon = "",
 	color = { fg = colors.red, gui = "bold" },
 })
+
+ins_right({ "progress", color = { fg = colors.fg, gui = "bold" } })
 
 ins_right({
 	"fileformat",

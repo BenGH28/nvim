@@ -67,12 +67,7 @@ require("packer").startup(function(use)
 
 	use({ "williamboman/nvim-lsp-installer", before = "nvim-lspconfig" })
 
-	use({
-		"neovim/nvim-lspconfig",
-		config = function()
-			require("lsp-conf")
-		end,
-	})
+	use({ "neovim/nvim-lspconfig" })
 
 	-- diagnostics
 	use({
@@ -97,19 +92,12 @@ require("packer").startup(function(use)
 
 	use({
 		"jose-elias-alvarez/null-ls.nvim",
-		config = function()
-			require("null-ls-conf")
-		end,
 	})
 
 	use({
 		"nvim-treesitter/nvim-treesitter",
 		before = "neorg",
-		event = "BufEnter",
 		run = ":TSUpdate",
-		config = function()
-			require("treesitter-conf")
-		end,
 	})
 
 	use({
@@ -121,22 +109,19 @@ require("packer").startup(function(use)
 		"windwp/nvim-autopairs",
 		event = "InsertEnter",
 		config = function()
-			require("autopairs")
+			require("conf.plugin.autopairs-conf")
 		end,
 	})
 
 	use({
 		"nvim-lualine/lualine.nvim",
-		config = function()
-			require("lualine-conf")
-		end,
 	})
 
 	use({
 		"kyazdani42/nvim-tree.lua",
 		event = "BufEnter",
 		config = function()
-			require("tree-conf")
+			require("conf.plugin.tree-conf")
 		end,
 	})
 
@@ -144,7 +129,7 @@ require("packer").startup(function(use)
 		"nvim-lua/telescope.nvim",
 		event = "BufEnter",
 		config = function()
-			require("telescope-conf")
+			require("conf.plugin.telescope-conf")
 		end,
 	})
 
@@ -165,9 +150,6 @@ require("packer").startup(function(use)
 
 	use({
 		"lewis6991/gitsigns.nvim",
-		config = function()
-			require("gitsigns").setup()
-		end,
 	})
 
 	use({
@@ -177,9 +159,6 @@ require("packer").startup(function(use)
 
 	use({
 		"akinsho/nvim-bufferline.lua",
-		config = function()
-			require("bufferline-conf")
-		end,
 	})
 
 	-- tpope
@@ -281,19 +260,41 @@ require("packer").startup(function(use)
 	use({ "moll/vim-bbye" })
 
 	use({
-		"SmiteshP/nvim-gps",
-		-- disable = true,
-		after = "nvim-treesitter",
-		before = "nvim-lualine",
+		"SmiteshP/nvim-navic",
 		config = function()
-			require("nvim-gps").setup({
+			require("nvim-navic").setup({
 				icons = {
-					["class-name"] = "ﴯ ",
-					["function-name"] = " ",
-					["method-name"] = " ",
-					["container-name"] = "⛶ ",
-					["tag-name"] = "炙",
+					File = " ",
+					Module = " ",
+					Namespace = " ",
+					Package = " ",
+					Class = " ",
+					Method = " ",
+					Property = " ",
+					Field = " ",
+					Constructor = " ",
+					Enum = "練",
+					Interface = "練",
+					Function = " ",
+					Variable = " ",
+					Constant = " ",
+					String = " ",
+					Number = " ",
+					Boolean = "◩ ",
+					Array = " ",
+					Object = " ",
+					Key = " ",
+					Null = "ﳠ ",
+					EnumMember = " ",
+					Struct = " ",
+					Event = " ",
+					Operator = " ",
+					TypeParameter = " ",
 				},
+				highlight = false,
+				separator = " > ",
+				depth_limit = 0,
+				depth_limit_indicator = "..",
 			})
 		end,
 	})
@@ -304,7 +305,7 @@ require("packer").startup(function(use)
 		event = "BufEnter",
 		requires = { "nvim-lua/telescope.nvim" },
 		config = function()
-			require("project-conf")
+			require("conf.plugin.project-conf")
 		end,
 	})
 	use({
@@ -322,10 +323,10 @@ require("packer").startup(function(use)
 	use({
 		"nvim-neorg/neorg",
 		ft = "norg",
-		config = function()
-			require("norg-conf")
-		end,
 		requires = "nvim-lua/plenary.nvim",
+		config = function()
+			require("conf.plugin.norg-conf")
+		end,
 	})
 	use("fladson/vim-kitty")
 end)

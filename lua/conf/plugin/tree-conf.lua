@@ -1,25 +1,3 @@
-vim.g.nvim_tree_git_hl = 1 -- 0 by default, will enable file highlight for git attributes (can be used without the icons).
-vim.g.nvim_tree_show_icons = { git = 1, folders = 1, files = 1, folder_arrows = 1 }
-
-vim.g.nvim_tree_icons = {
-	default = "",
-	symlink = "",
-	git = {
-		unstaged = "✗",
-		staged = "✓",
-		unmerged = "",
-		renamed = "➜",
-		untracked = "★",
-	},
-	folder = {
-		default = "",
-		open = "",
-		empty = "",
-		empty_open = "",
-		symlink = "",
-	},
-}
-
 require("nvim-tree").setup({
 	disable_netrw = true,
 	hijack_netrw = true,
@@ -27,6 +5,33 @@ require("nvim-tree").setup({
 	ignore_ft_on_setup = { "startify" },
 
 	renderer = {
+		highlight_git = true,
+		icons = {
+			show = {
+				git = true,
+				folder = true,
+				file = true,
+				folder_arrow = true,
+			},
+			glyphs = {
+				default = "",
+				symlink = "",
+				git = {
+					unstaged = "✗",
+					staged = "✓",
+					unmerged = "",
+					renamed = "➜",
+					untracked = "★",
+				},
+				folder = {
+					default = "",
+					open = "",
+					empty = "",
+					empty_open = "",
+					symlink = "",
+				},
+			},
+		},
 		indent_markers = {
 			enable = true,
 			icons = {
