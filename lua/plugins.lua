@@ -46,6 +46,7 @@ require("packer").startup(function(use)
 	-- snippets
 	use({
 		"hrsh7th/vim-vsnip",
+		event = "InsertEnter",
 		config = function()
 			vim.g.vsnip_snippet_dir = vim.fn.stdpath("config") .. "/vsnip"
 		end,
@@ -83,6 +84,7 @@ require("packer").startup(function(use)
 
 	-- colorscheme
 	use("sainnhe/edge")
+	use("marko-cerovac/material.nvim")
 
 	use({
 		"BenGH28/neo-runner.nvim",
@@ -119,7 +121,7 @@ require("packer").startup(function(use)
 
 	use({
 		"kyazdani42/nvim-tree.lua",
-		event = "BufEnter",
+		cmd = "NvimTreeToggle",
 		config = function()
 			require("conf.plugin.tree-conf")
 		end,
@@ -127,7 +129,7 @@ require("packer").startup(function(use)
 
 	use({
 		"nvim-lua/telescope.nvim",
-		event = "BufEnter",
+		cmd = "Telescope",
 		config = function()
 			require("conf.plugin.telescope-conf")
 		end,
@@ -154,7 +156,7 @@ require("packer").startup(function(use)
 
 	use({
 		"kdheepak/lazygit.nvim",
-		event = "BufEnter",
+		cmd = "LazyGit",
 	})
 
 	use({
@@ -167,7 +169,7 @@ require("packer").startup(function(use)
 	use("tpope/vim-repeat")
 
 	-- start screen for the vimified
-	use("mhinz/vim-startify")
+	-- use("mhinz/vim-startify")
 	use("unblevable/quick-scope")
 	use({ "vim-scripts/DoxygenToolkit.vim", ft = { "cpp", "c", "javascript" } })
 	use({
@@ -187,6 +189,7 @@ require("packer").startup(function(use)
 	-- todo comments that stand out
 	use({
 		"folke/todo-comments.nvim",
+		event = "BufEnter",
 		requires = "nvim-lua/plenary.nvim",
 		config = function()
 			require("todo-comments").setup()
@@ -298,6 +301,7 @@ require("packer").startup(function(use)
 			})
 		end,
 	})
+
 	use({ "simrat39/rust-tools.nvim", disable = false, before = "nvim-lspconfig" })
 	-- Lua
 	use({
