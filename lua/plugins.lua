@@ -150,18 +150,14 @@ require("packer").startup(function(use)
 		end,
 	})
 
-	use({
-		"lewis6991/gitsigns.nvim",
-	})
+	use({ "lewis6991/gitsigns.nvim" })
 
 	use({
 		"kdheepak/lazygit.nvim",
 		cmd = "LazyGit",
 	})
 
-	use({
-		"akinsho/nvim-bufferline.lua",
-	})
+	use({ "akinsho/nvim-bufferline.lua" })
 
 	-- tpope
 	use({ "tpope/vim-commentary" })
@@ -169,16 +165,14 @@ require("packer").startup(function(use)
 	use("tpope/vim-repeat")
 
 	-- start screen for the vimified
-	-- use("mhinz/vim-startify")
+	use({ "mhinz/vim-startify", disable = true })
 	use("unblevable/quick-scope")
+
 	use({ "vim-scripts/DoxygenToolkit.vim", ft = { "cpp", "c", "javascript" } })
-	use({
-		"junegunn/vim-easy-align",
-		opt = true,
-	})
+
 	use({
 		"APZelos/blamer.nvim",
-		config = function()
+		setup = function()
 			vim.g.blamer_enabled = 1
 		end,
 	})
@@ -206,7 +200,6 @@ require("packer").startup(function(use)
 		end,
 	})
 
-	-- Lua
 	use({
 		"folke/which-key.nvim",
 		config = function()
