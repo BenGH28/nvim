@@ -4,6 +4,5 @@ require "unsource"
 -- source the packer plugins
 require "core"
 
-
 -- set user options
 require "options"

@@ -1,4 +1,3 @@
-require "core.lsp"
 require "core.conf.treesitter-conf"
 require "core.conf.doxygen-conf"
 require "core.conf.bufferline-conf"

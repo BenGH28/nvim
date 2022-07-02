@@ -1,10 +1,10 @@
-require "core.lsp.vsnip-conf"
-require "core.lsp.cmp-conf"
-require "core.lsp.lspkind-conf"
-require "core.lsp.lspsaga-conf"
-require "core.lsp.null-ls-conf"
+require "core.ide.lsp.vsnip-conf"
+require "core.ide.lsp.cmp-conf"
+require "core.ide.lsp.lspkind-conf"
+require "core.ide.lsp.lspsaga-conf"
+require "core.ide.lsp.null-ls-conf"
 
-local signature_config = require "core.lsp.signature"
+local signature_config = require "core.ide.lsp.signature"
 local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
