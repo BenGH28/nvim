@@ -1,11 +1,9 @@
 -- disable some files that are source on startup
-require("unsource")
+require "unsource"
 
 -- source the packer plugins
-require("core.pack")
+require "core"
 
--- set plugin configurations
-require("core.conf")
 
 -- set user options
-require("options")
+require "options"

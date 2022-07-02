@@ -1,3 +1,4 @@
+-- get packer installed
 require "core.pack.packer-config"
 local spec = function(use)
 	use { "wbthomason/packer.nvim" }
@@ -19,33 +20,6 @@ local spec = function(use)
 	--]]
 
 	---[[ lsp
-	--the next-gen completion engine
-	use { "hrsh7th/nvim-cmp" }
-
-	-- complete based on the lsp
-	use { "hrsh7th/cmp-nvim-lsp" }
-
-	-- get completion data for a given path
-	use { "hrsh7th/cmp-path" }
-
-	-- get compeletion specific to the buffer
-	use { "hrsh7th/cmp-buffer" }
-
-	-- completion base on the nvim api
-	use { "hrsh7th/cmp-nvim-lua" }
-
-	-- cmdline completion
-	use { "hrsh7th/cmp-cmdline" }
-
-	-- tmux completion
-	use { "andersevenrud/cmp-tmux" }
-
-	-- snippet run
-	use { "hrsh7th/cmp-vsnip", after = "vim-vsnip" }
-
-	-- sort python dunder methods below regular methods
-	use "lukas-reineke/cmp-under-comparator"
-
 	-- snippets
 	use {
 		"hrsh7th/vim-vsnip",
