@@ -19,45 +19,6 @@ local spec = function(use)
 	use { "kyazdani42/nvim-web-devicons" }
 	--]]
 
-	---[[ lsp
-	-- snippets
-	use {
-		"hrsh7th/vim-vsnip",
-		event = "InsertEnter",
-		config = function()
-			vim.g.vsnip_snippet_dir = vim.fn.stdpath "config" .. "/vsnip"
-		end,
-	}
-
-	-- snippet fill
-	use { "rafamadriz/friendly-snippets" }
-
-	-- pictograms for the lsp
-	use { "onsails/lspkind-nvim", before = "nvim-lspconfig" }
-
-	-- lsp front end that looks nice
-	use { "tami5/lspsaga.nvim", before = "nvim-lspconfig" }
-
-	use { "ray-x/lsp_signature.nvim", before = "nvim-lspconfig" }
-
-	use { "williamboman/nvim-lsp-installer", before = "nvim-lspconfig" }
-
-	use { "neovim/nvim-lspconfig" }
-
-	-- diagnostics
-	use {
-		"folke/trouble.nvim",
-		config = function()
-			require("trouble").setup {}
-			local keymap = vim.api.nvim_set_keymap
-
-			keymap("n", "gR", "<cmd>Trouble lsp_references<cr>", { silent = true, noremap = true })
-		end,
-	}
-
-	use { "jose-elias-alvarez/null-ls.nvim" }
-	--]] lsp
-
 	-- colorscheme
 	use "sainnhe/edge"
 	use "marko-cerovac/material.nvim"
