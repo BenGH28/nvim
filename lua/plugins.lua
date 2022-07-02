@@ -40,6 +40,9 @@ require("packer").startup(function(use)
 	-- tmux completion
 	use({ "andersevenrud/cmp-tmux" })
 
+	-- snippet run
+	use({ "hrsh7th/cmp-vsnip", after = "vim-vsnip" })
+
 	-- sort python dunder methods below regular methods
 	use("lukas-reineke/cmp-under-comparator")
 
@@ -51,9 +54,6 @@ require("packer").startup(function(use)
 			vim.g.vsnip_snippet_dir = vim.fn.stdpath("config") .. "/vsnip"
 		end,
 	})
-
-	-- snippet run
-	use({ "hrsh7th/cmp-vsnip" })
 
 	-- snippet fill
 	use({ "rafamadriz/friendly-snippets" })
@@ -80,6 +80,8 @@ require("packer").startup(function(use)
 			keymap("n", "gR", "<cmd>Trouble lsp_references<cr>", { silent = true, noremap = true })
 		end,
 	})
+
+	use({ "jose-elias-alvarez/null-ls.nvim" })
 	--]] lsp
 
 	-- colorscheme
@@ -93,13 +95,10 @@ require("packer").startup(function(use)
 	})
 
 	use({
-		"jose-elias-alvarez/null-ls.nvim",
-	})
-
-	use({
 		"nvim-treesitter/nvim-treesitter",
 		before = "neorg",
 		run = ":TSUpdate",
+		requires = "nvim-treesitter/playground",
 	})
 
 	use({
@@ -111,19 +110,17 @@ require("packer").startup(function(use)
 		"windwp/nvim-autopairs",
 		event = "InsertEnter",
 		config = function()
-			require("conf.plugin.autopairs-conf")
+			require("core.conf.autopairs-conf")
 		end,
 	})
 
-	use({
-		"nvim-lualine/lualine.nvim",
-	})
+	use({ "nvim-lualine/lualine.nvim" })
 
 	use({
 		"kyazdani42/nvim-tree.lua",
 		cmd = "NvimTreeToggle",
 		config = function()
-			require("conf.plugin.tree-conf")
+			require("core.conf.tree-conf")
 		end,
 	})
 
@@ -131,7 +128,7 @@ require("packer").startup(function(use)
 		"nvim-lua/telescope.nvim",
 		cmd = "Telescope",
 		config = function()
-			require("conf.plugin.telescope-conf")
+			require("core.conf.telescope-conf")
 		end,
 	})
 
@@ -302,7 +299,7 @@ require("packer").startup(function(use)
 		event = "BufEnter",
 		requires = { "nvim-lua/telescope.nvim" },
 		config = function()
-			require("conf.plugin.project-conf")
+			require("core.conf.project-conf")
 		end,
 	})
 	use({
@@ -322,7 +319,7 @@ require("packer").startup(function(use)
 		ft = "norg",
 		requires = "nvim-lua/plenary.nvim",
 		config = function()
-			require("conf.plugin.norg-conf")
+			require("core.conf.norg-conf")
 		end,
 	})
 	use("fladson/vim-kitty")

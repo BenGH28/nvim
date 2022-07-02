@@ -5,7 +5,7 @@ require("unsource")
 require("plugins")
 
 -- set plugin configurations
-require("conf.plugin")
+require("core.conf")
 
 -- set user options
 require("options")

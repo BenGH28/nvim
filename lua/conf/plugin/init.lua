@@ -1,7 +1,0 @@
-require("conf.lsp")
-require("conf.plugin.treesitter-conf")
-require("conf.plugin.doxygen-conf")
-require("conf.plugin.bufferline-conf")
-require("conf.plugin.lualine-conf")
-require("conf.plugin.null-ls-conf")
-require("conf.plugin.material")
