@@ -2,7 +2,7 @@
 require("unsource")
 
 -- source the packer plugins
-require("plugins")
+require("core.pack")
 
 -- set plugin configurations
 require("core.conf")

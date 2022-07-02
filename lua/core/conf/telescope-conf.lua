@@ -1,6 +1,6 @@
-local actions = require("telescope.actions")
+local actions = require "telescope.actions"
 
-require("telescope").setup({
+require("telescope").setup {
 	defaults = {
 		mappings = {
 			i = {
@@ -53,4 +53,4 @@ require("telescope").setup({
 		-- Developer configurations: Not meant for general override
 		buffer_previewer_maker = require("telescope.previewers").buffer_previewer_maker,
 	},
-})
+}

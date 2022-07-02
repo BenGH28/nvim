@@ -1,4 +1,4 @@
-require("bufferline").setup({
+require("bufferline").setup {
 	options = {
 		-- "none" | "ordinal" | "buffer_id" | "both",
 		numbers = "none",
@@ -21,7 +21,7 @@ require("bufferline").setup({
 		--- some limitations that will *NOT* be fixed.
 		name_formatter = function(buf) -- buf contains a "name", "path" and "bufnr"
 			-- remove extension from markdown files for example
-			if buf.name:match("%.md") then
+			if buf.name:match "%.md" then
 				return vim.fn.fnamemodify(buf.name, ":t:r")
 			end
 		end,
@@ -30,7 +30,7 @@ require("bufferline").setup({
 		tab_size = 18,
 		diagnostics = "nvim_lsp",
 		diagnostics_indicator = function(count, level, diagnostics_dict, context)
-			local icon = level:match("error") and " " or " "
+			local icon = level:match "error" and " " or " "
 			return icon .. count
 		end,
 		-- NOTE: this will be called a lot so don't do any heavy processing here
@@ -74,4 +74,4 @@ require("bufferline").setup({
 		--   end
 		sort_by = "extension",
 	},
-})
+}

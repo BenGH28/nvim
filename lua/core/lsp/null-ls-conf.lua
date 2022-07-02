@@ -1,4 +1,4 @@
-local null_ls = require("null-ls")
+local null_ls = require "null-ls"
 
 -- register any number of sources simultaneously
 local sources = {
@@ -17,4 +17,4 @@ local sources = {
 	null_ls.builtins.diagnostics.yamllint,
 }
 
-null_ls.setup({ sources = sources })
+null_ls.setup { sources = sources }

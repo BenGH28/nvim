@@ -50,8 +50,8 @@ vim.opt.listchars = {
 vim.o.undodir = ".undo/"
 vim.o.undofile = true
 -- allow us to increment or decrement alphabetical characters
-vim.cmd("set nrformats+=alpha")
-vim.cmd("filetype plugin indent on")
+vim.cmd "set nrformats+=alpha"
+vim.cmd "filetype plugin indent on"
 -- vim.g.material_style = "deep ocean"
-vim.cmd("colorscheme material")
-vim.cmd(":set cpo-=C")
+vim.cmd "colorscheme material"
+vim.cmd ":set cpo-=C"

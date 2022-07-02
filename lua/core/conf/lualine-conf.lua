@@ -1,8 +1,8 @@
 -- Eviline config for lualine
 -- Author: shadmansaleh
 -- Credit: glepnir
-local lualine = require("lualine")
-local navic = require("nvim-navic")
+local lualine = require "lualine"
+local navic = require "nvim-navic"
 
 -- Color table for highlights
 -- stylua: ignore
@@ -22,13 +22,13 @@ local colors = {
 
 local conditions = {
 	buffer_not_empty = function()
-		return vim.fn.empty(vim.fn.expand("%:t")) ~= 1
+		return vim.fn.empty(vim.fn.expand "%:t") ~= 1
 	end,
 	hide_in_width = function()
 		return vim.fn.winwidth(0) > 80
 	end,
 	check_git_workspace = function()
-		local filepath = vim.fn.expand("%:p:h")
+		local filepath = vim.fn.expand "%:p:h"
 		local gitdir = vim.fn.finddir(".git", filepath .. ";")
 		return gitdir and #gitdir > 0 and #gitdir < #filepath
 	end,
@@ -81,15 +81,15 @@ local function ins_right(component)
 	table.insert(config.sections.lualine_x, component)
 end
 
-ins_left({
+ins_left {
 	function()
 		return "▊"
 	end,
 	color = { fg = colors.blue }, -- Sets highlighting of component
 	padding = { left = 0, right = 1 }, -- We don't need space before this
-})
+}
 
-ins_left({
+ins_left {
 	-- mode component
 	function()
 		-- auto change color according to neovims mode
@@ -120,27 +120,27 @@ ins_left({
 	end,
 	color = "LualineMode",
 	padding = { right = 1 },
-})
+}
 
-ins_left({
+ins_left {
 	-- filesize component
 	"filesize",
 	cond = conditions.buffer_not_empty,
-})
+}
 
-ins_left({
+ins_left {
 	"filetype",
 	colored = true,
 	icon_only = true,
-})
+}
 
-ins_left({
+ins_left {
 	"filename",
 	cond = conditions.buffer_not_empty,
 	color = { fg = colors.magenta, gui = "bold" },
-})
+}
 
-ins_left({
+ins_left {
 	"diagnostics",
 	sources = { "nvim_diagnostic" },
 	symbols = { error = " ", warn = " ", info = " " },
@@ -150,14 +150,14 @@ ins_left({
 		color_warn = { fg = colors.yellow },
 		color_info = { fg = colors.cyan },
 	},
-})
+}
 
-ins_left({
+ins_left {
 	navic.get_location,
 	cond = navic.is_availabe,
-})
+}
 
-ins_right({
+ins_right {
 	-- Lsp server name .
 	function()
 		local msg = "No Active Lsp"
@@ -176,11 +176,11 @@ ins_right({
 	end,
 	icon = "",
 	color = { fg = colors.red, gui = "bold" },
-})
+}
 
-ins_right({ "progress", color = { fg = colors.fg, gui = "bold" } })
+ins_right { "progress", color = { fg = colors.fg, gui = "bold" } }
 
-ins_right({
+ins_right {
 	"fileformat",
 	symbols = {
 		unix = "", -- e712
@@ -189,15 +189,15 @@ ins_right({
 	},
 	icons_enabled = true,
 	color = { fg = colors.green, gui = "bold" },
-})
+}
 
-ins_right({
+ins_right {
 	"branch",
 	icon = "",
 	color = { fg = colors.violet, gui = "bold" },
-})
+}
 
-ins_right({
+ins_right {
 	"diff",
 	symbols = { added = " ", modified = "柳 ", removed = " " },
 	diff_color = {
@@ -206,15 +206,15 @@ ins_right({
 		removed = { fg = colors.red },
 	},
 	cond = conditions.hide_in_width,
-})
+}
 
-ins_right({
+ins_right {
 	function()
 		return "▊"
 	end,
 	color = { fg = colors.blue },
 	padding = { left = 1 },
-})
+}
 
 -- Now don't forget to initialize lualine
 lualine.setup(config)

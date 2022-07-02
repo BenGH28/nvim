@@ -1,35 +1,35 @@
-require("core.lsp.vsnip-conf")
-require("core.lsp.cmp-conf")
-require("core.lsp.lspkind-conf")
-require("core.lsp.lspsaga-conf")
-require("core.lsp.null-ls-conf")
+require "core.lsp.vsnip-conf"
+require "core.lsp.cmp-conf"
+require "core.lsp.lspkind-conf"
+require "core.lsp.lspsaga-conf"
+require "core.lsp.null-ls-conf"
 
-local signature_config = require("core.lsp.signature")
+local signature_config = require "core.lsp.signature"
 local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-vim.diagnostic.config({
+vim.diagnostic.config {
 	virtual_text = {
 		prefix = "●",
 	},
-})
+}
 
 local function documentHighlight(client, bufnr)
 	if client.resolved_capabilities.document_highlight then
-		vim.cmd([[
+		vim.cmd [[
       hi! LspDiagnosticsVirtualTextInformation term=bold guifg='#51afef' guibg='#202328'
       hi! LspDiagnosticsVirtualTextWarning term=bold guifg='#ecbe7b' guibg='#202328'
       hi! LspDiagnosticsVirtualTextHint term=bold guifg='#98c379' guibg='#202328'
       hi! LspDiagnosticsVirtualTextError term=bold guifg='#ec5f67' guibg='#202328'
-    ]])
+    ]]
 
 		vim.api.nvim_create_augroup("lsp_document_highlight", {
 			clear = false,
 		})
-		vim.api.nvim_clear_autocmds({
+		vim.api.nvim_clear_autocmds {
 			buffer = bufnr,
 			group = "lsp_document_highlight",
-		})
+		}
 
 		vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
 			group = "lsp_document_highlight",
@@ -65,8 +65,8 @@ local lua_settings = {
 		workspace = {
 			-- Make the server aware of Neovim runtime files
 			library = {
-				[vim.fn.expand("$VIMRUNTIME/lua")] = true,
-				[vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+				[vim.fn.expand "$VIMRUNTIME/lua"] = true,
+				[vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
 			},
 		},
 	},

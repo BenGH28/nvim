@@ -1,4 +1,4 @@
-require("neorg").setup({
+require("neorg").setup {
 	load = {
 		["core.defaults"] = {},
 		["core.norg.completion"] = { config = {
@@ -20,4 +20,4 @@ require("neorg").setup({
 			},
 		},
 	},
-})
+}

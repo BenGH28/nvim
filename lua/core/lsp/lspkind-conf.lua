@@ -1,4 +1,4 @@
-require("lspkind").init({
+require("lspkind").init {
 	mode = "symbol",
 	preset = "default",
 
@@ -24,4 +24,4 @@ require("lspkind").init({
 		Constant = "",
 		Struct = "",
 	},
-})
+}
