@@ -21,9 +21,7 @@ require("bufferline").setup {
 		--- some limitations that will *NOT* be fixed.
 		name_formatter = function(buf) -- buf contains a "name", "path" and "bufnr"
 			-- remove extension from markdown files for example
-			if buf.name:match "%.md" then
-				return vim.fn.fnamemodify(buf.name, ":t:r")
-			end
+			return vim.fn.fnamemodify(buf.path, ":p:.")
 		end,
 		max_name_length = 18,
 		max_prefix_length = 15, -- prefix used when a buffer is de-duplicated

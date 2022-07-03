@@ -95,5 +95,15 @@ local spec = {
 			require "core.conf.telescope-conf"
 		end,
 	},
+
+	-- colorscheme
+	{ "sainnhe/edge" },
+
+	{
+		"marko-cerovac/material.nvim",
+		-- config = function()
+		-- 	vim.g.material_style = "Darker"
+		-- end,
+	},
 }
 return spec

@@ -1,62 +1,49 @@
--- get packer installed
-require "core.pack.packer-config"
+local pack = {}
+local packer = require "packer"
 
---plugin specification
-local spec = function(use)
-	use { "wbthomason/packer.nvim" }
-	-- better loading of files
-	use {
-		"lewis6991/impatient.nvim",
-		config = function()
-			require "impatient"
-		end,
-	}
-
-	--use faster filetype
-	use { "nathom/filetype.nvim" }
-
-	---[[General Dependencies
-	use { "nvim-lua/popup.nvim" }
-	use { "nvim-lua/plenary.nvim" }
-	use { "kyazdani42/nvim-web-devicons" }
-	--]]
-
-	-- colorscheme
-	use "sainnhe/edge"
-	use "marko-cerovac/material.nvim"
-
-	use {
-		"BenGH28/neo-runner.nvim",
-		cmd = "NeoRunner",
-		run = ":UpdateRemotePlugins",
-	}
-
-	--tmux syntax
-	use { "tmux-plugins/vim-tmux" }
-
-	use { "lambdalisue/suda.vim" }
-
-	use { "moll/vim-bbye" }
-
-	use {
-		"xuhdev/vim-latex-live-preview",
-		ft = "tex",
-		setup = function()
-			--run this before we load
-			vim.g["livepreview_previewer"] = "okular"
-		end,
-	}
-	use { "davidgranstrom/nvim-markdown-preview" }
-
-	use {
-		"nvim-neorg/neorg",
-		ft = "norg",
-		requires = "nvim-lua/plenary.nvim",
-		config = function()
-			require "core.conf.norg-conf"
-		end,
-	}
-	use "fladson/vim-kitty"
+pack.use_spec = function(plugins)
+	for _, plugin in ipairs(plugins) do
+		packer.use(plugin)
+	end
 end
 
-require("packer").startup(spec)
+local function use_prereqs()
+	-- these are all the prereqs plugins
+	-- since you need packer to do any of the stuff in my config
+	-- these plugins should be loadeded here along side it
+	local spec = {
+		-- better loading of files
+		{
+			"lewis6991/impatient.nvim",
+			config = function()
+				require "impatient"
+			end,
+		},
+
+		{ "wbthomason/packer.nvim" },
+
+		-- faster filetype
+		{ "nathom/filetype.nvim" },
+
+		---[[General Dependencies
+		{ "nvim-lua/popup.nvim" },
+		{ "nvim-lua/plenary.nvim" },
+		{ "kyazdani42/nvim-web-devicons" },
+
+		--]]
+	}
+	pack.use_spec(spec)
+end
+
+-- get packer ready for the plugins
+function pack.init(config)
+	require "core.pack.packer-setup"
+	local packer_config = config or {}
+	-- make packer work correctly from the get go
+	packer.init(packer_config)
+	--clear the packer specification and plugins list
+	packer.reset()
+	use_prereqs()
+end
+
+return pack
