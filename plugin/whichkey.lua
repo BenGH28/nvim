@@ -35,7 +35,7 @@ setmap("t", "<Esc>", "<C-\\><C-n>", noremap)
 
 --{{{ which-key
 
-local wk = require("which-key")
+local wk = require "which-key"
 
 --{{{ g mappings
 local gmaps = {
@@ -133,7 +133,7 @@ local silent_normal_maps = {
 		q = { ":q<cr>", "quit" },
 		p = { ":Telescope projects<cr>", "projects" },
 		s = { ":NewScratchBelow<cr>", "scratch buffer" },
-		["."] = { ":so %<cr>", "source current file" },
+		["."] = { ":source % | echo 'file sourced'<cr>", "source current file" },
 	},
 	g = {
 		name = "+git",

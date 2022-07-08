@@ -1,4 +1,3 @@
-local use = require("packer").use
 local spec = {
 	-- snippets
 	{
@@ -35,6 +34,9 @@ local spec = {
 		"ahmedkhalf/project.nvim",
 		event = "BufEnter",
 		requires = { "nvim-lua/telescope.nvim" },
+		config = function()
+			require "core.ide.project-conf"
+		end,
 	},
 
 	{
@@ -42,11 +44,20 @@ local spec = {
 		disable = true,
 	},
 
-	{ "vim-scripts/DoxygenToolkit.vim", ft = { "cpp", "c", "javascript" } },
+	{
+		"vim-scripts/DoxygenToolkit.vim",
+		ft = { "cpp", "c", "javascript" },
+		config = function()
+			require "core.ide.doxygen-conf"
+		end,
+	},
 
 	{
 		"windwp/nvim-autopairs",
 		event = "InsertEnter",
+		config = function()
+			require "core.ide.autopairs-conf"
+		end,
 	},
 	-- Session persistence
 	{

@@ -1,5 +1,4 @@
 require "core.ide.lsp.vsnip-conf"
-require "core.ide.lsp.cmp-conf"
 require "core.ide.lsp.lspkind-conf"
 require "core.ide.lsp.lspsaga-conf"
 require "core.ide.lsp.null-ls-conf"

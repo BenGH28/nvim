@@ -1,10 +1,45 @@
 -- Setup nvim-cmp.
 local cmp = require "cmp"
 
+local kind_icons = {
+	Text = "",
+	Method = "",
+	Function = "",
+	Constructor = "",
+	Field = "",
+	Variable = "",
+	Class = "ﴯ",
+	Interface = "",
+	Module = "",
+	Property = "ﰠ",
+	Unit = "",
+	Value = "",
+	Enum = "",
+	Keyword = "",
+	Snippet = "",
+	Color = "",
+	File = "",
+	Reference = "",
+	Folder = "",
+	EnumMember = "",
+	Constant = "",
+	Struct = "",
+	Event = "",
+	Operator = "",
+	TypeParameter = "",
+}
+
+local win_ui = { "Normal:Pmenu,FloatBorder:Pmenu,Search:None", col_offset = 1, side_padding = 0 }
 cmp.setup {
+	entries = {
+		name = "custom",
+		selection_order = "near_cursor",
+	},
+
 	window = {
-		completion = cmp.config.window.bordered(),
-		documentation = cmp.config.window.bordered(),
+		-- completion = cmp.config.window.bordered(),
+		completion = win_ui,
+		documentation = win_ui,
 	},
 	snippet = {
 		expand = function(args)
@@ -16,7 +51,7 @@ cmp.setup {
 		["<C-p>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
 		["<C-b>"] = cmp.mapping.scroll_docs(-4),
 		["<C-f>"] = cmp.mapping.scroll_docs(4),
-		["<C-Space>"] = cmp.mapping.complete(),
+		["<C-y>"] = cmp.mapping.complete(),
 		["<C-e>"] = cmp.mapping.abort(),
 		["<CR>"] = cmp.mapping.confirm {
 			behavior = cmp.ConfirmBehavior.Replace,
@@ -59,21 +94,39 @@ cmp.setup {
 	},
 
 	formatting = {
-		format = require("lspkind").cmp_format {
-			with_text = true,
-			menu = {
+		-- fields = { "kind", "abbr" },
+		format = function(entry, vim_item)
+			local exists, lspkind = pcall(require, "lspkind")
+			local opts = {
 				buffer = "[Buffer]",
 				nvim_lsp = "[LSP]",
 				vsnip = "[VSnip]",
 				nvim_lua = "[NVIM]",
-			},
-		},
+				latex_symbols = "[LaTeX]",
+			}
+
+			if not exists then
+				-- Kind icons
+				vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
+				-- Source
+				vim_item.menu = (opts)[entry.source.name]
+				return vim_item
+			else
+				return lspkind.cmp_format {
+					mode = "text_symbol",
+					menu = opts,
+				}(entry, vim_item)
+			end
+		end,
 	},
 }
 
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline("/", {
 	mapping = cmp.mapping.preset.cmdline(),
+	view = {
+		entries = { name = "wildmenu" },
+	},
 	sources = {
 		{ name = "buffer" },
 	},
@@ -82,6 +135,7 @@ cmp.setup.cmdline("/", {
 -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline(":", {
 	mapping = cmp.mapping.preset.cmdline(),
+
 	sources = cmp.config.sources({
 		{ name = "path" },
 	}, {
