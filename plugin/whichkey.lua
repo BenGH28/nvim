@@ -35,7 +35,11 @@ setmap("t", "<Esc>", "<C-\\><C-n>", noremap)
 
 --{{{ which-key
 
-local wk = require("which-key")
+local good, wk = pcall(require, 'which-key')
+
+if not good then
+	return
+end
 
 --{{{ g mappings
 local gmaps = {
@@ -104,7 +108,7 @@ local silent_normal_maps = {
 		p = { ":BufferLineCyclePrev<cr>", "previous" },
 		d = { ":Bdelete!<cr>", "delete" },
 		f = { ":lua vim.lsp.buf.formatting()<cr>", "format" },
-		l = { ":Telescope buffers<cr>", "list buffers" },
+		l = { ":lua require('telescope.builtin').buffers()<cr>", "list buffers" },
 		b = {
 			name = "+background",
 			l = { ":set background=light<cr>", "light" },
@@ -125,16 +129,15 @@ local silent_normal_maps = {
 			p = { ":lua require'common'.edit_lua_file('plugins')<cr>", "edit plugins" },
 			m = { ":lua require'common'.edit_plugin_file('whichkey.lua')<cr>", "edit mappings" },
 		},
-		e = { ":Telescope file_browser<cr>", "find explorer" },
-		f = { ":Telescope find_files<cr>", "find files" },
-		g = { ":Telescope git_files<cr>", "git files" },
-		["/"] = { ":Telescope live_grep<cr>", "search project" },
-		h = { ":Telescope oldfiles<cr>", "history" },
+		f = { ":lua require'telescope.builtin'.find_files()<cr>", "find files" },
+		g = { ":lua require'telescope.builtin'.git_files()<cr>", "git files" },
+		["/"] = { ":lua require'telescope.builtin'.live_grep()<cr>", "search project" },
+		h = { ":lua require'telescope.builtin'.oldfiles()<cr>", "history" },
 		j = { ":w!<cr>", "save" },
 		q = { ":q<cr>", "quit" },
 		p = { ":Telescope projects<cr>", "projects" },
 		s = { ":NewScratchBelow<cr>", "scratch buffer" },
-		["."] = { ":so %<cr>", "source current file" },
+		["."] = { ":source % | echo 'file sourced'<cr>", "source current file" },
 	},
 	g = {
 		name = "+git",
@@ -150,8 +153,8 @@ local silent_normal_maps = {
 	},
 	h = {
 		name = "+help",
-		h = { ":Telescope help_tags<cr>", "help docs" },
-		m = { ":Telescope man_pages<cr>", "man pages" },
+		h = { ":lua require('telescope.builtin').help_tags()<cr>", "help docs" },
+		m = { ":lua require('telescope.builtin').man_pages()<cr>", "man pages" },
 	},
 	l = {
 		name = "+lsp",
