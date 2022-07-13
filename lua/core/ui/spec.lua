@@ -1,6 +1,7 @@
 local spec = {
 	{
 		"folke/which-key.nvim",
+		event = "UIEnter",
 		config = function()
 			require("which-key").setup {
 				layout = {
@@ -12,6 +13,7 @@ local spec = {
 
 	{
 		"lukas-reineke/indent-blankline.nvim",
+		event = "UIEnter",
 		config = function()
 			require("indent_blankline").setup {
 				buftype_exclude = { "terminal", "help", "startify", "nofile", "NvimTree" },
@@ -62,16 +64,24 @@ local spec = {
 	-- todo comments that stand out
 	{
 		"folke/todo-comments.nvim",
-		event = "BufEnter",
 		requires = "nvim-lua/plenary.nvim",
+		event = "BufEnter",
 		config = function()
-			require("todo-comments").setup()
+			require "core.ui.todo-comments-conf"
 		end,
 	},
-	-- start screen for the vimified
-	{ "mhinz/vim-startify", disable = true },
+
+	-- really fast startify alternative
+	{
+		"goolord/alpha-nvim",
+		requires = { "kyazdani42/nvim-web-devicons" },
+		config = function()
+			require("alpha").setup(require("alpha.themes.startify").config)
+		end,
+	},
 	{
 		"norcalli/nvim-colorizer.lua",
+		event = "UIEnter",
 		config = function()
 			require("colorizer").setup()
 		end,

@@ -32,32 +32,32 @@ local function source_file(file)
 end
 
 function M.install_plugins()
-	source_file "plugins"
+	source_file "core/init"
 	cmd "PackerInstall"
 end
 
 function M.update_plugins()
-	source_file "plugins"
+	source_file "core/init"
 	cmd "PackerUpdate"
 end
 
 function M.clean_plugins()
-	source_file "plugins"
+	source_file "core/init"
 	cmd "PackerClean"
 end
 
 function M.compile_plugins()
-	source_file "plugins"
+	source_file "/core/init"
 	cmd "PackerCompile"
 end
 
 function M.sync_plugins()
-	source_file "plugins"
+	source_file "core/init"
 	cmd "PackerSync"
 end
 
 function M.packer_status()
-	source_file "plugins"
+	source_file "core/init"
 	cmd "PackerStatus"
 end
 
