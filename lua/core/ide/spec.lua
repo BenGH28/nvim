@@ -1,34 +1,44 @@
 local spec = {
-	-- snippets
-	{
-		"hrsh7th/vim-vsnip",
-		event = "InsertEnter",
-		setup = function()
-			vim.g.vsnip_snippet_dir = vim.fn.stdpath "config" .. "/vsnip"
-		end,
-	},
-
 	-- snippet fill
 	{ "rafamadriz/friendly-snippets" },
 
-	-- pictograms for the lsp
-	{ "onsails/lspkind-nvim", before = "nvim-lspconfig" },
+	{
+		"neovim/nvim-lspconfig",
+		config = function()
+			require "core.ide.lsp"
+		end,
+		requires = {
 
-	-- lsp front end that looks nice
-	{ "tami5/lspsaga.nvim", before = "nvim-lspconfig" },
+			-- pictograms for the lsp
+			{ "onsails/lspkind-nvim" },
 
-	{ "ray-x/lsp_signature.nvim", before = "nvim-lspconfig" },
+			-- lsp front end that looks nice
+			{ "tami5/lspsaga.nvim" },
 
-	{ "williamboman/nvim-lsp-installer", before = "nvim-lspconfig" },
+			{ "ray-x/lsp_signature.nvim" },
 
-	{ "neovim/nvim-lspconfig" },
+			-- convenient tool for installing lang servers
+			{ "williamboman/nvim-lsp-installer" },
+
+			-- rust ide stuff
+			{ "simrat39/rust-tools.nvim" },
+
+			-- add in some nice formatting and linting stuff
+			{ "jose-elias-alvarez/null-ls.nvim" },
+
+			-- get some snippet support
+			{
+				"hrsh7th/vim-vsnip",
+				event = "InsertEnter",
+				setup = function()
+					vim.g.vsnip_snippet_dir = vim.fn.stdpath "config" .. "/vsnip"
+				end,
+			},
+		},
+	},
 
 	-- diagnostics
 	{ "folke/trouble.nvim" },
-
-	{ "jose-elias-alvarez/null-ls.nvim" },
-
-	{ "simrat39/rust-tools.nvim", disable = false, before = "nvim-lspconfig" },
 
 	{
 		"ahmedkhalf/project.nvim",

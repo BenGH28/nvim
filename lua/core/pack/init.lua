@@ -1,49 +1,44 @@
 local pack = {}
+
+local execute = vim.api.nvim_command
+local fn = vim.fn
+
+local install_path = fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
+
+if fn.empty(fn.glob(install_path)) > 0 then
+	execute("!git clone https://github.com/wbthomason/packer.nvim " .. install_path)
+	execute "packadd packer.nvim"
+end
+
 local packer = require "packer"
 
-pack.use_spec = function(plugins)
-	for _, plugin in ipairs(plugins) do
-		packer.use(plugin)
-	end
-end
+-- these are all the prereqs plugins since you need packer to do any of the stuff in my config
+-- these plugins should be loadeded here along side it
+pack.pre_reqs = {
+	{ "wbthomason/packer.nvim" },
+	-- better loading of files
+	{
+		"lewis6991/impatient.nvim",
+		config = function()
+			require "impatient"
+		end,
+	},
 
-local function use_prereqs()
-	-- these are all the prereqs plugins
-	-- since you need packer to do any of the stuff in my config
-	-- these plugins should be loadeded here along side it
-	local spec = {
-		-- better loading of files
-		{
-			"lewis6991/impatient.nvim",
-			config = function()
-				require "impatient"
-			end,
-		},
 
-		{ "wbthomason/packer.nvim" },
+	-- faster filetype
+	{ "nathom/filetype.nvim" },
 
-		-- faster filetype
-		{ "nathom/filetype.nvim" },
+	---[[General Dependencies
+	{ "nvim-lua/popup.nvim" },
+	{ "nvim-lua/plenary.nvim" },
+	{ "kyazdani42/nvim-web-devicons" },
+	--]]
+}
 
-		---[[General Dependencies
-		{ "nvim-lua/popup.nvim" },
-		{ "nvim-lua/plenary.nvim" },
-		{ "kyazdani42/nvim-web-devicons" },
 
-		--]]
-	}
-	pack.use_spec(spec)
-end
-
--- get packer ready for the plugins
-function pack.init(config)
-	require "core.pack.packer-setup"
-	local packer_config = config or {}
-	-- make packer work correctly from the get go
-	packer.init(packer_config)
-	--clear the packer specification and plugins list
-	packer.reset()
-	use_prereqs()
+function pack.startup(spec)
+	local spec = {spec} or {pre_reqs}
+	packer.startup(spec)
 end
 
 return pack

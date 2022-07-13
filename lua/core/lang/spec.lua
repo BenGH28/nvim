@@ -11,7 +11,7 @@ local spec = {
 		end,
 	},
 
-	{ "davidgranstrom/nvim-markdown-preview" },
+	{ "davidgranstrom/nvim-markdown-preview", ft = "markdown" },
 
 	{
 		"nvim-neorg/neorg",

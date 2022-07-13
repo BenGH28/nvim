@@ -52,6 +52,5 @@ vim.o.undofile = true
 -- allow us to increment or decrement alphabetical characters
 vim.cmd "set nrformats+=alpha"
 vim.cmd "filetype plugin indent on"
-vim.g.material_style = "oceanic"
-vim.cmd "colorscheme material"
+require("onedark").load()
 vim.cmd ":set cpo-=C"

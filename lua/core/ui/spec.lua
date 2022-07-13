@@ -76,34 +76,32 @@ local spec = {
 			require("colorizer").setup()
 		end,
 	},
-	{ "akinsho/nvim-bufferline.lua" },
 
-	{ "nvim-lualine/lualine.nvim" },
+	{
+		"akinsho/nvim-bufferline.lua",
+		event = "UIEnter",
+		config = function()
+			require "core.ui.bufferline-conf"
+		end,
+	},
+
+	{
+		"nvim-lualine/lualine.nvim",
+		event = "UIEnter",
+		config = function()
+			require "core.ui.lualine-conf"
+		end,
+	},
 
 	{
 		"kyazdani42/nvim-tree.lua",
 		cmd = "NvimTreeToggle",
 		config = function()
-			require "core.conf.tree-conf"
-		end,
-	},
-
-	{
-		"nvim-lua/telescope.nvim",
-		cmd = "Telescope",
-		config = function()
-			require "core.conf.telescope-conf"
+			require "core.ui.tree-conf"
 		end,
 	},
 
 	-- colorscheme
-	{ "sainnhe/edge" },
-
-	{
-		"marko-cerovac/material.nvim",
-		-- config = function()
-		-- 	vim.g.material_style = "Darker"
-		-- end,
-	},
+	{ "navarasu/onedark.nvim" },
 }
 return spec

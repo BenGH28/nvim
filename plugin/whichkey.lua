@@ -35,7 +35,11 @@ setmap("t", "<Esc>", "<C-\\><C-n>", noremap)
 
 --{{{ which-key
 
-local wk = require "which-key"
+local good, wk = pcall(require, 'which-key')
+
+if not good then
+	return
+end
 
 --{{{ g mappings
 local gmaps = {

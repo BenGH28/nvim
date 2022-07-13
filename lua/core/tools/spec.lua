@@ -12,8 +12,16 @@ local spec = {
 	{
 		"phaazon/hop.nvim",
 		event = "BufEnter",
+		keys = { "gl", "gp" },
 		config = function()
 			require("hop").setup { keys = "etovxqpdygfblzhckisuran", term_seq_bias = 1.5 }
+		end,
+	},
+	{
+		"nvim-lua/telescope.nvim",
+		event = "UIEnter",
+		config = function()
+			require "core.tools.telescope-conf"
 		end,
 	},
 

@@ -1,6 +1,6 @@
 local spec = {
 
-	{ "lewis6991/gitsigns.nvim" },
+	{ "lewis6991/gitsigns.nvim", event = "BufEnter" },
 
 	{
 		"kdheepak/lazygit.nvim",
