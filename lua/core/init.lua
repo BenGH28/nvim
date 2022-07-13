@@ -43,4 +43,4 @@ end
 
 pack.startup(plugins)
 
-require "options"
+require "core.options"
