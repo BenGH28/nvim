@@ -35,7 +35,7 @@ setmap("t", "<Esc>", "<C-\\><C-n>", noremap)
 
 --{{{ which-key
 
-local good, wk = pcall(require, 'which-key')
+local good, wk = pcall(require, "which-key")
 
 if not good then
 	return
@@ -193,6 +193,10 @@ local silent_normal_maps = {
 		C = { ":lua require'common'.compile_plugins()<cr>", "compile" },
 		s = { ":lua require'common'.sync_plugins()<cr>", "sync" },
 		S = { ":lua require'common'.packer_status()<cr>", "status" },
+		e = {
+			":lua require'edit_module_spec'.edit(require('telescope.themes').get_dropdown())<cr>",
+			"edit plugin spec",
+		},
 	},
 	q = {
 		name = "+quickfix",
