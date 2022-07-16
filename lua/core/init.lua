@@ -24,6 +24,7 @@ local pack = require "core.pack"
 
 --load me some modules
 local modules = {
+	pack.pre_reqs,
 	require "core.completion",
 	require "core.ide",
 	require "core.sitter",
@@ -31,7 +32,6 @@ local modules = {
 	require "core.ui",
 	require "core.lang",
 	require "core.tools",
-	pack.pre_reqs,
 }
 
 local plugins = {}
@@ -41,6 +41,6 @@ for _, module in pairs(modules) do
 	end
 end
 
-pack.startup(plugins)
+pack:startup(plugins)
 
 require "core.options"

@@ -15,7 +15,6 @@ local packer = require "packer"
 -- these are all the prereqs plugins since you need packer to do any of the stuff in my config
 -- these plugins should be loadeded here along side it
 pack.pre_reqs = {
-	{ "wbthomason/packer.nvim" },
 	-- better loading of files
 	{
 		"lewis6991/impatient.nvim",
@@ -23,10 +22,9 @@ pack.pre_reqs = {
 			require "impatient"
 		end,
 	},
-
-
 	-- faster filetype
 	{ "nathom/filetype.nvim" },
+	{ "wbthomason/packer.nvim" },
 
 	---[[General Dependencies
 	{ "nvim-lua/popup.nvim" },
@@ -35,9 +33,8 @@ pack.pre_reqs = {
 	--]]
 }
 
-
-function pack.startup(spec)
-	local spec = {spec} or {pre_reqs}
+function pack:startup(spec)
+	spec = { spec } or { self.pre_reqs }
 	packer.startup(spec)
 end
 
