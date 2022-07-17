@@ -45,7 +45,6 @@ end
 
 local function on_attach(client, bufnr)
 	documentHighlight(client, bufnr)
-	require("lsp_signature").on_attach(signature_config)
 	require("nvim-navic").attach(client, bufnr)
 end
 

@@ -33,7 +33,7 @@ require("telescope").setup {
 		layout_strategy = "horizontal",
 		layout_config = {
 			preview_cutoff = 120,
-			prompt_position = "bottom",
+			-- prompt_position = "top",
 			width = 0.8,
 			horizontal = { mirror = false },
 			vertical = { mirror = false },
@@ -41,7 +41,7 @@ require("telescope").setup {
 		file_sorter = require("telescope.sorters").get_fuzzy_file,
 		file_ignore_patterns = {},
 		generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,
-		winblend = 0,
+		winblend = 10,
 		border = {},
 		borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
 		color_devicons = true,

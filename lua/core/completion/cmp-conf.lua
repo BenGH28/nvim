@@ -29,7 +29,8 @@ local kind_icons = {
 	TypeParameter = "",
 }
 
-local win_ui = { "Normal:Pmenu,FloatBorder:Pmenu,Search:None", col_offset = 1, side_padding = 0 }
+-- local win_ui = { "Normal:Pmenu,FloatBorder:Pmenu,Search:None", col_offset = 1, side_padding = 0 }
+local win_ui = cmp.config.window.bordered()
 cmp.setup {
 	entries = {
 		name = "custom",
@@ -37,7 +38,6 @@ cmp.setup {
 	},
 
 	window = {
-		-- completion = cmp.config.window.bordered(),
 		completion = win_ui,
 		documentation = win_ui,
 	},

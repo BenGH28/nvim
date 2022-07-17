@@ -15,7 +15,12 @@ local spec = {
 			-- lsp front end that looks nice
 			{ "tami5/lspsaga.nvim" },
 
-			{ "ray-x/lsp_signature.nvim" },
+			{
+				"ray-x/lsp_signature.nvim",
+				config = function()
+					require "core.ide.lsp.signature"
+				end,
+			},
 
 			-- convenient tool for installing lang servers
 			{ "williamboman/nvim-lsp-installer" },
