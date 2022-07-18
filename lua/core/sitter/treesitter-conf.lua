@@ -27,7 +27,7 @@ local languages = {
 	"toml",
 	"typescript",
 	"tsx",
-	"vim",
+	-- "vim",
 	"yaml",
 	"python",
 	"norg",

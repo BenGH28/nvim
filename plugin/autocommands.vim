@@ -41,7 +41,7 @@ augroup tex
     au BufEnter *.tex set ft=tex
 augroup END
 
-augroup packer_user_config
-  autocmd!
-  autocmd BufWritePost plugins.lua source <afile> | PackerCompile
-augroup end
+" augroup packer_user_config
+"   autocmd!
+"   autocmd BufWritePost spec.lua source <afile> | PackerCompile
+" augroup end
