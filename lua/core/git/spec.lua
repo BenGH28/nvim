@@ -9,6 +9,7 @@ local spec = {
 
 	{
 		"APZelos/blamer.nvim",
+		event = "BufEnter",
 		setup = function()
 			vim.g.blamer_enabled = 1
 		end,

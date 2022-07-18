@@ -99,7 +99,7 @@ local function setup_servers()
 		"html",
 		"ltex",
 		"jsonls",
-		"pylsp",
+		"jedi_language_server",
 		"sumneko_lua",
 		"tsserver",
 	}

@@ -1,5 +1,5 @@
 -- =======================
--- 		Basics
+-- BBasics
 -- =======================
 vim.g.mapleader = " "
 vim.g.python3_host_prog = "/bin/python3"
@@ -13,7 +13,7 @@ vim.o.compatible = false
 vim.o.ignorecase = true
 vim.o.smartcase = true
 vim.o.hidden = true -- allows you to save buffers that you might still want to jump to
--- vim.o.wildmenu = true -- statusline command completion
+vim.o.wildmenu = true -- statusline command completion
 vim.o.backspace = "indent,eol,start" -- allow backspacing over autoindent, line breaks and start of insert action
 vim.o.autoindent = true -- keeps indent from the line above
 vim.o.smartindent = true
@@ -50,7 +50,6 @@ vim.opt.listchars = {
 vim.o.undodir = ".undo/"
 vim.o.undofile = true
 -- allow us to increment or decrement alphabetical characters
-vim.cmd "set nrformats+=alpha"
+vim.cmd ":set nrformats+=alpha"
 vim.cmd "filetype plugin indent on"
-require("onedark").load()
 vim.cmd ":set cpo-=C"

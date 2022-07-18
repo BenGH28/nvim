@@ -7,10 +7,16 @@ local setmap = vim.api.nvim_set_keymap
 local noremap = { noremap = true }
 local silence = { noremap = true, silent = true }
 
-setmap("n", "<C-n>", ":NvimTreeToggle<CR>", silence)
-
 setmap("i", "jk", "<ESC>", noremap)
 setmap("i", "kj", "<ESC>", noremap)
+
+--Ctrl-Backspace will delete the word behind the cursor in INSERT mode
+setmap("i", "<C-h>", "<C-w>", noremap)
+
+-- I really want this to work too but alas no dice
+-- setmap("c", "<C-BS>", "<C-w>", noremap)
+
+setmap("n", "<C-n>", ":NvimTreeToggle<CR>", silence)
 
 setmap("n", "Y", "y$", noremap)
 setmap("n", "0", "0^", noremap)
@@ -21,11 +27,8 @@ setmap("n", "<C-j>", ":wincmd j<CR>", silence)
 setmap("n", "<C-k>", ":wincmd k<CR>", silence)
 setmap("n", "<C-l>", ":wincmd l<CR>", silence)
 
--- "hover doc
-setmap("n", "K", ':lua require"lspsaga.hover".render_hover_doc()<CR>', silence)
-
---Ctrl-Backspace will delete the word behind the cursor in INSERT mode
-setmap("i", "<C-h>", "<C-w>", noremap)
+-- think of J but for K... very obvious I know
+setmap("n", "K", "Dk$p", silence)
 
 --terminal escape
 --need to escape \ in the lua api
@@ -117,7 +120,11 @@ local silent_normal_maps = {
 			t = { ":call MyFunctions#ToggleTransparentBackground()<cr>", "toggle transparency" },
 		},
 	},
-	d = { ":Dox<cr>", "Doxygen" },
+	d = {
+		name = "+docs",
+		d = { ":Dox<cr>", "Doxygen" },
+		k = { ':lua require"lspsaga.hover".render_hover_doc()<CR>', "hover doc" },
+	},
 	f = {
 		name = "+files",
 		v = {
@@ -125,8 +132,7 @@ local silent_normal_maps = {
 			v = { ":e $MYVIMRC<cr>", "open init.lua" },
 			-- not sure this binding does anything (major) now
 			s = { ":so $MYVIMRC<cr>", "reload vimrc" },
-			o = { ":lua require'common'.edit_lua_file('options')<cr>", "edit nvim options" },
-			p = { ":lua require'common'.edit_lua_file('plugins')<cr>", "edit plugins" },
+			o = { ":lua require'common'.edit_lua_file('core/options')<cr>", "edit nvim options" },
 			m = { ":lua require'common'.edit_plugin_file('whichkey.lua')<cr>", "edit mappings" },
 		},
 		f = { ":lua require'telescope.builtin'.find_files()<cr>", "find files" },

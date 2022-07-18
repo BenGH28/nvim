@@ -31,33 +31,43 @@ local function source_file(file)
 	cmd("source " .. path)
 end
 
-function M.install_plugins()
+local function reload()
+	for pkg in pairs(package.loaded) do
+		if pkg:match "^core.*" then
+			package.loaded[pkg] = nil
+			print("unloading package %s", pkg)
+		end
+	end
 	source_file "core/init"
+end
+
+function M.install_plugins()
+	reload()
 	cmd "PackerInstall"
 end
 
 function M.update_plugins()
-	source_file "core/init"
+	reload()
 	cmd "PackerUpdate"
 end
 
 function M.clean_plugins()
-	source_file "core/init"
+	reload()
 	cmd "PackerClean"
 end
 
 function M.compile_plugins()
-	source_file "/core/init"
+	reload()
 	cmd "PackerCompile"
 end
 
 function M.sync_plugins()
-	source_file "core/init"
+	reload()
 	cmd "PackerSync"
 end
 
 function M.packer_status()
-	source_file "core/init"
+	reload()
 	cmd "PackerStatus"
 end
 

@@ -1,13 +1,12 @@
 local spec = {
-	-- snippet fill
-	{ "rafamadriz/friendly-snippets" },
-
 	{
 		"neovim/nvim-lspconfig",
 		config = function()
 			require "core.ide.lsp"
 		end,
 		requires = {
+			-- snippet fill
+			{ "rafamadriz/friendly-snippets" },
 
 			-- pictograms for the lsp
 			{ "onsails/lspkind-nvim" },
@@ -34,7 +33,6 @@ local spec = {
 			-- get some snippet support
 			{
 				"hrsh7th/vim-vsnip",
-				event = "InsertEnter",
 				setup = function()
 					vim.g.vsnip_snippet_dir = vim.fn.stdpath "config" .. "/vsnip"
 				end,

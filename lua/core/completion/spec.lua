@@ -1,8 +1,8 @@
 local spec = {
-
 	--the next-gen completion engine
 	{
 		"hrsh7th/nvim-cmp",
+		event = "InsertEnter",
 		requires = {
 			-- complete based on the lsp
 			{ "hrsh7th/cmp-nvim-lsp" },
@@ -17,7 +17,7 @@ local spec = {
 			{ "hrsh7th/cmp-nvim-lua" },
 
 			-- cmdline completion
-			{ "hrsh7th/cmp-cmdline" },
+			-- { "hrsh7th/cmp-cmdline" },
 
 			-- tmux completion
 			{ "andersevenrud/cmp-tmux" },

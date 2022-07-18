@@ -10,57 +10,17 @@ local spec = {
 			}
 		end,
 	},
-
 	{
 		"lukas-reineke/indent-blankline.nvim",
 		event = "UIEnter",
 		config = function()
 			require("indent_blankline").setup {
 				buftype_exclude = { "terminal", "help", "startify", "nofile", "NvimTree" },
-				filetype_exclude = { "help", "packer", "startify", "NvimTree", "alpha" },
+				filetype_exclude = { "help", "packer", "startify", "NvimTree", "alpha", "norg" },
 			}
 		end,
 	},
 
-	{
-		"SmiteshP/nvim-navic",
-		config = function()
-			require("nvim-navic").setup {
-				icons = {
-					File = " ",
-					Module = " ",
-					Namespace = " ",
-					Package = " ",
-					Class = " ",
-					Method = " ",
-					Property = " ",
-					Field = " ",
-					Constructor = " ",
-					Enum = "練",
-					Interface = "練",
-					Function = " ",
-					Variable = " ",
-					Constant = " ",
-					String = " ",
-					Number = " ",
-					Boolean = "◩ ",
-					Array = " ",
-					Object = " ",
-					Key = " ",
-					Null = "ﳠ ",
-					EnumMember = " ",
-					Struct = " ",
-					Event = " ",
-					Operator = " ",
-					TypeParameter = " ",
-				},
-				highlight = false,
-				separator = " > ",
-				depth_limit = 0,
-				depth_limit_indicator = "..",
-			}
-		end,
-	},
 	-- todo comments that stand out
 	{
 		"folke/todo-comments.nvim",
@@ -98,6 +58,16 @@ local spec = {
 	{
 		"nvim-lualine/lualine.nvim",
 		event = "UIEnter",
+
+		requires = {
+			{
+				"SmiteshP/nvim-navic",
+				config = function()
+					require "core.ui.navic-conf"
+				end,
+			},
+		},
+
 		config = function()
 			require "core.ui.lualine-conf"
 		end,
@@ -112,6 +82,11 @@ local spec = {
 	},
 
 	-- colorscheme
-	{ "navarasu/onedark.nvim" },
+	{
+		"navarasu/onedark.nvim",
+		config = function()
+			require("onedark").load()
+		end,
+	},
 }
 return spec

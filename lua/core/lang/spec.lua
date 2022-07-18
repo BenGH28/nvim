@@ -18,7 +18,7 @@ local spec = {
 		ft = "norg",
 		requires = "nvim-lua/plenary.nvim",
 		config = function()
-			require "core.conf.norg-conf"
+			require "core.lang.norg-conf"
 		end,
 	},
 
