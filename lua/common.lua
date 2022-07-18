@@ -35,7 +35,7 @@ local function reload()
 	for pkg in pairs(package.loaded) do
 		if pkg:match "^core.*" then
 			package.loaded[pkg] = nil
-			print("unloading package %s", pkg)
+			-- print("unloading package %s", pkg)
 		end
 	end
 	source_file "core/init"
