@@ -48,6 +48,7 @@ end
 local gmaps = {
 	l = { ":HopLine<cr>", "hop line" },
 	p = { ":HopPattern<cr>", "hop pattern" },
+	w = { ":HopWord<cr>", "hop word" },
 	d = { ":lua vim.lsp.buf.definition()<CR>", "go to definition" },
 	I = { ":lua vim.lsp.buf.implementation()<CR>", "go to implementation" },
 	r = { ":lua vim.lsp.buf.references()<CR>", "go to references" },

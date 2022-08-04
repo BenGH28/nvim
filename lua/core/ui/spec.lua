@@ -85,7 +85,7 @@ local spec = {
 	{
 		"navarasu/onedark.nvim",
 		config = function()
-			require("onedark").load()
+			require "core.ui.onedark-conf"
 		end,
 	},
 }
