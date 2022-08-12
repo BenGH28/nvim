@@ -71,10 +71,14 @@ local lua_settings = {
 }
 
 local rust_opts = {
+	server = {
+		on_attach = function(_, bufnr)
+			vim.keymap.set("n", "<leader-dk>", require("rust-tools").hover_actions.hover_actions, { buffer = bufnr })
+		end,
+	},
 	tools = {
 		-- rust-tools options
 		autoSetHints = true,
-		hover_with_actions = true,
 		inlay_hints = {
 			only_current_line = false,
 			show_parameter_hints = true,
