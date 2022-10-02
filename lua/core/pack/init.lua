@@ -34,7 +34,13 @@ pack.pre_reqs = {
 }
 
 function pack:startup(spec)
-	spec = { spec } or { self.pre_reqs }
+	local util = require('packer.util')
+	local config = {
+		display = {
+			open_fn = util.float
+		}
+	}
+	spec = { spec, config = config } or { self.pre_reqs, config = config }
 	packer.startup(spec)
 end
 

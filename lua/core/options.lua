@@ -42,10 +42,10 @@ vim.o.list = true
 vim.o.modeline = true
 vim.o.updatetime = 40
 vim.opt.listchars = {
-	tab = "| ",
-	eol = "⤶",
-	precedes = "«",
-	extends = "»",
+  tab = "| ",
+  eol = "⤶",
+  precedes = "«",
+  extends = "»",
 }
 vim.o.undodir = ".undo/"
 vim.o.undofile = true

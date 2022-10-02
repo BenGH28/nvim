@@ -18,14 +18,6 @@ augroup quick-scope-colours
 augroup END
 "}}}
 
-"whitespace must die {{{
-augroup white-space-and-format
-	au!
-	au BufWritePre * %s/\s\+$//e
-	au BufWritePost * :Format
-augroup END
-"}}}
-
 augroup terminal-numbers
 	au!
 	au TermOpen,TermEnter * setlocal nornu nonu
