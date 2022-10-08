@@ -1,87 +1,90 @@
 local spec = {
-  {
-    "neovim/nvim-lspconfig",
-    config = function()
-      require "core.ide.lsp"
-    end,
-    requires = {
-      -- snippet fill
-      { "rafamadriz/friendly-snippets" },
 
-      -- pictograms for the lsp
-      { "onsails/lspkind-nvim" },
+	{
+		"neovim/nvim-lspconfig",
+		after = "mason",
+		config = function()
+			require "core.ide.lsp"
+		end,
+		requires = {
+			-- snippet fill
+			{ "rafamadriz/friendly-snippets" },
 
-      -- lsp front end that looks nice
-      { "tami5/lspsaga.nvim" },
+			-- pictograms for the lsp
+			{ "onsails/lspkind-nvim" },
 
-      {
-        "ray-x/lsp_signature.nvim",
-        config = function()
-          require "core.ide.lsp.signature"
-        end,
-      },
+			-- lsp front end that looks nice
+			{ "tami5/lspsaga.nvim" },
 
-      -- convenient tool for installing lang servers
-      { "williamboman/nvim-lsp-installer" },
+			{
+				"ray-x/lsp_signature.nvim",
+				config = function()
+					require "core.ide.lsp.signature"
+				end,
+			},
 
-      -- rust ide stuff
-      { "simrat39/rust-tools.nvim" },
+			-- convenient tool for installing lang servers
+			{ "williamboman/mason.nvim" },
+			{ "williamboman/mason-lspconfig.nvim" },
 
-      -- add in some nice formatting and linting stuff
-      { "jose-elias-alvarez/null-ls.nvim" },
+			-- rust ide stuff
+			{ "simrat39/rust-tools.nvim" },
 
-      -- get some snippet support
-      {
-        "hrsh7th/vim-vsnip",
-        -- disable = true,
-        setup = function()
-          vim.g.vsnip_snippet_dir = vim.fn.stdpath "config" .. "/vsnip"
-        end,
-      },
-    },
-  },
+			-- add in some nice formatting and linting stuff
+			{ "jose-elias-alvarez/null-ls.nvim" },
 
-  -- diagnostics
-  { "folke/trouble.nvim" },
+			-- get some snippet support
+			{
+				"hrsh7th/vim-vsnip",
+				-- disable = true,
+				setup = function()
+					vim.g.vsnip_snippet_dir = vim.fn.stdpath "config" .. "/vsnip"
+				end,
+			},
+		},
+	},
 
-  {
-    "ahmedkhalf/project.nvim",
-    event = "BufEnter",
-    requires = { "nvim-lua/telescope.nvim" },
-    config = function()
-      require "core.ide.project-conf"
-    end,
-  },
+	-- diagnostics
+	{ "folke/trouble.nvim" },
 
-  {
-    "mfussenegger/nvim-dap",
-    disable = true,
-  },
+	{
+		"ahmedkhalf/project.nvim",
+		event = "BufEnter",
+		requires = { "nvim-lua/telescope.nvim" },
+		config = function()
+			require "core.ide.project-conf"
+		end,
+	},
 
-  {
-    "vim-scripts/DoxygenToolkit.vim",
-    ft = { "cpp", "c", "javascript" },
-    config = function()
-      require "core.ide.doxygen-conf"
-    end,
-  },
+	{
+		"mfussenegger/nvim-dap",
+		disable = true,
+	},
 
-  {
-    "windwp/nvim-autopairs",
-    event = "InsertEnter",
-    config = function()
-      require "core.ide.autopairs-conf"
-    end,
-  },
-  -- Session persistence
-  {
-    "folke/persistence.nvim",
-    event = "BufReadPre", -- this will only start session saving when an actual file was opened
-    module = "persistence",
-    config = function()
-      require("persistence").setup()
-    end,
-  },
+	{
+		"vim-scripts/DoxygenToolkit.vim",
+		ft = { "cpp", "c", "javascript" },
+		config = function()
+			require "core.ide.doxygen-conf"
+		end,
+	},
+
+	{
+		"windwp/nvim-autopairs",
+		event = "InsertEnter",
+		config = function()
+			require "core.ide.autopairs-conf"
+		end,
+	},
+	-- Session persistence
+	{
+		"folke/persistence.nvim",
+		event = "BufReadPre", -- this will only start session saving when an actual file was opened
+		module = "persistence",
+		config = function()
+			require("persistence").setup()
+		end,
+	},
 }
 
 return spec
