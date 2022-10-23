@@ -2,7 +2,6 @@ local spec = {
 
 	{
 		"neovim/nvim-lspconfig",
-		after = "mason",
 		config = function()
 			require "core.ide.lsp"
 		end,
@@ -27,9 +26,6 @@ local spec = {
 			{ "williamboman/mason.nvim" },
 			{ "williamboman/mason-lspconfig.nvim" },
 
-			-- rust ide stuff
-			{ "simrat39/rust-tools.nvim" },
-
 			-- add in some nice formatting and linting stuff
 			{ "jose-elias-alvarez/null-ls.nvim" },
 
@@ -43,6 +39,9 @@ local spec = {
 			},
 		},
 	},
+
+	-- rust ide stuff
+	{ "simrat39/rust-tools.nvim" },
 
 	-- diagnostics
 	{ "folke/trouble.nvim" },
