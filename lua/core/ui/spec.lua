@@ -85,6 +85,7 @@ local spec = {
 
   },
   -- colorscheme
+  {"Domeee/mosel.nvim"},
   {
     "navarasu/onedark.nvim",
     config = function()

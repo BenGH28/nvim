@@ -55,7 +55,7 @@ M.edit = function(opts)
 		},
 		sorter = conf.generic_sorter(opts),
 
-		attach_mappings = function(prompt_bufnr, map)
+		attach_mappings = function(prompt_bufnr, _)
 			actions.select_default:replace(function()
 				actions.close(prompt_bufnr)
 				local selection = action_state.get_selected_entry()
