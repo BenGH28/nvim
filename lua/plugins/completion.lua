@@ -1,9 +1,9 @@
-local spec = {
+return {
 	--the next-gen completion engine
 	{
 		"hrsh7th/nvim-cmp",
 		event = "InsertEnter",
-		requires = {
+		dependencies = {
 			-- complete based on the lsp
 			{ "hrsh7th/cmp-nvim-lsp" },
 
@@ -33,4 +33,3 @@ local spec = {
 		end,
 	},
 }
-return spec

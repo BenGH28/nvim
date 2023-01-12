@@ -1,18 +1,11 @@
-local spec = {
+return {
   {
     "folke/which-key.nvim",
-    event = "UIEnter",
-    config = function()
-      require("which-key").setup {
-        layout = {
-          align = "center",
-        },
-      }
-    end,
+    config = function() end,
   },
   {
     "lukas-reineke/indent-blankline.nvim",
-    event = "UIEnter",
+    event = "BufRead",
     config = function()
       require("indent_blankline").setup {
         buftype_exclude = { "terminal", "help", "startify", "nofile", "NvimTree" },
@@ -24,8 +17,8 @@ local spec = {
   -- todo comments that stand out
   {
     "folke/todo-comments.nvim",
-    requires = "nvim-lua/plenary.nvim",
-    event = "BufEnter",
+    dependencies = "nvim-lua/plenary.nvim",
+    event = "BufRead",
     config = function()
       require "core.ui.todo-comments-conf"
     end,
@@ -34,14 +27,15 @@ local spec = {
   -- really fast startify alternative
   {
     "goolord/alpha-nvim",
-    requires = { "kyazdani42/nvim-web-devicons" },
+    lazy = false,
+    dependencies = { "kyazdani42/nvim-web-devicons" },
     config = function()
       require("alpha").setup(require("alpha.themes.startify").config)
     end,
   },
   {
     "norcalli/nvim-colorizer.lua",
-    event = "UIEnter",
+    event = "BufRead",
     config = function()
       require("colorizer").setup()
     end,
@@ -49,8 +43,8 @@ local spec = {
 
   {
     "akinsho/nvim-bufferline.lua",
-    event = "UIEnter",
-    tag = 'v2.*',
+    event = "VeryLazy",
+    version = "v2.*",
     config = function()
       require "core.ui.bufferline-conf"
     end,
@@ -58,7 +52,7 @@ local spec = {
 
   {
     "nvim-lualine/lualine.nvim",
-    event = "UIEnter",
+    event = "VeryLazy",
     config = function()
       require "core.ui.lualine-conf"
     end,
@@ -74,23 +68,23 @@ local spec = {
 
   {
     "utilyre/barbecue.nvim",
-    requires = {
+    event = "VeryLazy",
+    dependencies = {
       "kyazdani42/nvim-web-devicons",
       "smiteshp/nvim-navic",
     },
     config = function()
       require "core.ui.barbecue-conf"
-    end
-
-
+    end,
   },
   -- colorscheme
-  {"Domeee/mosel.nvim"},
+  { "Domeee/mosel.nvim" },
   {
     "navarasu/onedark.nvim",
+    lazy = false,
+    priority = 1000,
     config = function()
       require "core.ui.onedark-conf"
     end,
   },
 }
-return spec
