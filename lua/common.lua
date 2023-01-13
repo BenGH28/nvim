@@ -26,49 +26,5 @@ function M.edit_plugin_file(file)
 	cmd("edit " .. path)
 end
 
-local function source_file(file)
-	local path = vim.fn.stdpath "config" .. "/lua/" .. file .. ".lua"
-	cmd("source " .. path)
-end
-
-local function reload()
-	for pkg in pairs(package.loaded) do
-		if pkg:match "^core.*" then
-			package.loaded[pkg] = nil
-			-- print("unloading package %s", pkg)
-		end
-	end
-	source_file "core/init"
-end
-
-function M.install_plugins()
-	reload()
-	cmd "PackerInstall"
-end
-
-function M.update_plugins()
-	reload()
-	cmd "PackerUpdate"
-end
-
-function M.clean_plugins()
-	reload()
-	cmd "PackerClean"
-end
-
-function M.compile_plugins()
-	reload()
-	cmd "PackerCompile"
-end
-
-function M.sync_plugins()
-	reload()
-	cmd "PackerSync"
-end
-
-function M.packer_status()
-	reload()
-	cmd "PackerStatus"
-end
 
 return M

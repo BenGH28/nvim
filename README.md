@@ -12,11 +12,7 @@ backing up any pre-existing config to `$HOME/.config/nvim.bak`.
 curl https://raw.githubusercontent.com/BenGH28/nvim/main/bootstrap.sh | sh
 ```
 
-Install the plugins on first startup.
-
-```sh
-nvim +PackerSync
-```
+All plugins will install on initial startup of neovim thanks to [lazy.nvim](https://github.com/folke/lazy.nvim).
 
 ## Language Servers
 
@@ -40,7 +36,6 @@ Languages supported out of the box:
 -   bash
 -   rust
 
-Run: `:BaseLSInstall` to install all the servers listed above
 
 Run: `:LspInstall <ServerName>` for others you wish to add later
 

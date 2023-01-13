@@ -13,36 +13,12 @@ vim.g.loaded_matchparen = 1
 vim.g.loaded_2html_plugin = 1
 vim.g.loaded_logiPat = 1
 vim.g.loaded_rrhelper = 1
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
-vim.g.loaded_netrwSettings = 1
-vim.g.loaded_netrwFileHandlers = 1
+-- vim.g.loaded_netrw = 1
+-- vim.g.loaded_netrwPlugin = 1
+-- vim.g.loaded_netrwSettings = 1
+-- vim.g.loaded_netrwFileHandlers = 1
 vim.g.loaded_fzf = 1
 vim.g.load_black = 1
 vim.g.did_load_filetypes = 0
 vim.g.do_filetype_lua = 1
 
-local pack = require "core.pack"
-
---load me some modules
-local modules = {
-	pack.pre_reqs,
-	require "core.completion",
-	require "core.ide",
-	require "core.sitter",
-	require "core.git",
-	require "core.ui",
-	require "core.lang",
-	require "core.tools",
-}
-
-local plugins = {}
-for _, module in pairs(modules) do
-	for _, plugin in pairs(module) do
-		table.insert(plugins, plugin)
-	end
-end
-
-pack:startup(plugins)
-
-require "core.options"
