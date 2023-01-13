@@ -1,8 +1,5 @@
 return {
-  {
-    "folke/which-key.nvim",
-    config = function() end,
-  },
+  { "folke/which-key.nvim" },
   {
     "lukas-reineke/indent-blankline.nvim",
     event = "BufRead",
@@ -20,7 +17,7 @@ return {
     dependencies = "nvim-lua/plenary.nvim",
     event = "BufRead",
     config = function()
-      require "core.ui.todo-comments-conf"
+      require "core.ui.todo-comments"
     end,
   },
 
@@ -46,7 +43,7 @@ return {
     event = "VeryLazy",
     version = "v2.*",
     config = function()
-      require "core.ui.bufferline-conf"
+      require "core.ui.bufferline"
     end,
   },
 
@@ -54,7 +51,7 @@ return {
     "nvim-lualine/lualine.nvim",
     event = "VeryLazy",
     config = function()
-      require "core.ui.lualine-conf"
+      require "core.ui.lualine"
     end,
   },
 
@@ -62,7 +59,7 @@ return {
     "kyazdani42/nvim-tree.lua",
     cmd = "NvimTreeToggle",
     config = function()
-      require "core.ui.tree-conf"
+      require "core.ui.tree"
     end,
   },
 
@@ -74,7 +71,7 @@ return {
       "smiteshp/nvim-navic",
     },
     config = function()
-      require "core.ui.barbecue-conf"
+      require "core.ui.barbecue"
     end,
   },
   -- colorscheme
@@ -84,7 +81,7 @@ return {
     lazy = false,
     priority = 1000,
     config = function()
-      require "core.ui.onedark-conf"
+      require "core.ui.onedark"
     end,
   },
 }

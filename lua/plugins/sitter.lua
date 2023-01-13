@@ -10,7 +10,7 @@ return {
       "nvim-treesitter/nvim-treesitter-textobjects",
     },
     config = function()
-      require "core.sitter.treesitter-conf"
+      require "core.treesitter"
     end,
   },
 }

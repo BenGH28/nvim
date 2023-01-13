@@ -18,7 +18,7 @@ return {
     ft = "norg",
     dependencies = "nvim-lua/plenary.nvim",
     config = function()
-      require "core.lang.norg-conf"
+      require "core.norg"
     end,
   },
 

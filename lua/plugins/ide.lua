@@ -2,12 +2,14 @@ return {
   {
     "williamboman/mason.nvim",
     event = "BufRead",
-    config = function()
-      require "core.ide.lsp"
-    end,
     dependencies = {
       { "williamboman/mason-lspconfig.nvim" },
-      { "neovim/nvim-lspconfig" },
+      {
+        "neovim/nvim-lspconfig",
+        config = function()
+          require "core.ide.lsp"
+        end,
+      },
       -- snippet fill
       { "rafamadriz/friendly-snippets" },
 
@@ -50,7 +52,7 @@ return {
     "vim-scripts/DoxygenToolkit.vim",
     ft = { "cpp", "c", "javascript" },
     config = function()
-      require "core.ide.doxygen-conf"
+      require "core.ide.doxygen"
     end,
   },
 
@@ -58,7 +60,7 @@ return {
     "windwp/nvim-autopairs",
     event = "InsertEnter",
     config = function()
-      require "core.ide.autopairs-conf"
+      require "core.ide.autopairs"
     end,
   },
 

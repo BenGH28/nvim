@@ -5,7 +5,6 @@ return {
   {
     "kdheepak/lazygit.nvim",
     cmd = "LazyGit",
-    -- disable = true
   },
 
   {

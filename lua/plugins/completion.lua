@@ -29,7 +29,7 @@ return {
 			{ "lukas-reineke/cmp-under-comparator" },
 		},
 		config = function()
-			require "core.completion.cmp-conf"
+			require "core.cmp"
 		end,
 	},
 }

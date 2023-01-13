@@ -30,33 +30,33 @@ return {
 
 	{
 		"phaazon/hop.nvim",
-		keys = { "gl", "gp" },
+		cmd = { "HopLine", "HopPattern", "HopWord" },
 		config = function()
 			require("hop").setup { keys = "etovxqpdygfblzhckisuran", term_seq_bias = 1.5 }
 		end,
 	},
 
 	{
-		"nvim-lua/telescope.nvim",
+		"nvim-telescope/telescope.nvim",
 		cmd = "Telescope",
+		config = function()
+			require "core.telescope"
+		end,
 		dependencies = {
 			{ "nvim-telescope/telescope-file-browser.nvim" },
 			{
 				"ahmedkhalf/project.nvim",
 				config = function()
-					require "core.ide.project-conf"
+					require "core.project"
 				end,
 			},
 		},
-		config = function()
-			require "core.tools.telescope-conf"
-		end,
 	},
 
 	-- tpope
-	{ "tpope/vim-commentary", lazy = false },
-	{ "tpope/vim-surround", lazy = false },
-	{ "tpope/vim-repeat", lazy = false },
+	{ "tpope/vim-commentary", event = "BufEnter" },
+	{ "tpope/vim-surround", event = "BufEnter" },
+	{ "tpope/vim-repeat", event = "BufEnter" },
 
 	{
 		"unblevable/quick-scope",
