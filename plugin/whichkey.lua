@@ -198,18 +198,27 @@ local silent_normal_maps = {
 		},
 		l = { ":LspInfo<cr>", "info" },
 	},
+  n = {
+    name = "+notifcations",
+    n = {":Notifications<cr>", "notifcations"},
+    d = {":lua require('notify').dismiss({pending = true, silent = true})<cr>", "dismiss notifcations"}
+  },
 	p = {
-		name = "+packer",
-		i = { ":lua require'common'.install_plugins()<cr>", "install" },
-		u = { ":lua require'common'.update_plugins()<cr>", "update" },
-		c = { ":lua require'common'.clean_plugins()<cr>", "clean" },
-		C = { ":lua require'common'.compile_plugins()<cr>", "compile" },
-		s = { ":lua require'common'.sync_plugins()<cr>", "sync" },
-		S = { ":lua require'common'.packer_status()<cr>", "status" },
+		name = "+plugins",
 		e = {
-			":lua require'edit_module_spec'.edit(require('telescope.themes').get_dropdown())<cr>",
+			":lua require'go_to_plugins':edit()<cr>",
 			"edit plugin spec",
 		},
+    z = {
+      name = "+Lazy",
+      z = {":Lazy home<cr>", "home"},
+      i = {":Lazy install<cr>", "install"},
+      u = {":Lazy update<cr>", "update"},
+      c = {":Lazy check<cr>", "check"},
+      p = {":Lazy profile<cr>", "profile"},
+      l = {":Lazy log<cr>", "log"},
+      x = {":Lazy clean<cr>", "clean"},
+    }
 	},
 	q = {
 		name = "+quickfix",
