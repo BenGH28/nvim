@@ -106,9 +106,10 @@ local function setup_servers()
     "tsserver",
   }
 
+  require("neodev").setup()
   require("mason").setup()
   require("mason-lspconfig").setup { ensure_installed = servers, automatic_installation = true }
-  local installed = require("mason-lspconfig").get_installed_servers()
+  local installed = require("mason-lspconfig").get_installed_servers() or servers
 
   for _, server in pairs(installed) do
     local config = my_setup()

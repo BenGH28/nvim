@@ -35,6 +35,9 @@ return {
       -- diagnostics
       { "folke/trouble.nvim" },
 
+      -- neovim help
+      { "folke/neodev.nvim" },
+
       -- get some snippet support
       {
         "hrsh7th/vim-vsnip",
