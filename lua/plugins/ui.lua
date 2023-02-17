@@ -32,7 +32,7 @@ return {
   },
   {
     "norcalli/nvim-colorizer.lua",
-    event = "BufRead",
+    event = "BufEnter",
     config = function()
       require("colorizer").setup()
     end,

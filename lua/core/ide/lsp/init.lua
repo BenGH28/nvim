@@ -13,39 +13,61 @@ vim.diagnostic.config {
   },
 }
 
+local augroup = vim.api.nvim_create_augroup
+local au = vim.api.nvim_create_autocmd
+
 local function documentHighlight(client, bufnr)
-  if client.server_capabilities.document_highlight then
-    vim.cmd [[
-      hi! LspDiagnosticsVirtualTextInformation term=bold guifg='#51afef' guibg='#202328'
-      hi! LspDiagnosticsVirtualTextWarning term=bold guifg='#ecbe7b' guibg='#202328'
-      hi! LspDiagnosticsVirtualTextHint term=bold guifg='#98c379' guibg='#202328'
-      hi! LspDiagnosticsVirtualTextError term=bold guifg='#ec5f67' guibg='#202328'
-    ]]
-
-    vim.api.nvim_create_augroup("lsp_document_highlight", {
-      clear = false,
-    })
-    vim.api.nvim_clear_autocmds {
-      buffer = bufnr,
-      group = "lsp_document_highlight",
-    }
-
-    vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-      group = "lsp_document_highlight",
-      buffer = bufnr,
-      callback = vim.lsp.buf.document_highlight,
-    })
-    vim.api.nvim_create_autocmd({ "CursorMoved" }, {
-      group = "lsp_document_highlight",
-      buffer = bufnr,
-      callback = vim.lsp.buf.clear_references,
-    })
+  if not client.server_capabilities.documentHighlightProvider then
+    vim.notify_once "not highlight provider"
+    return
   end
+  local hl = vim.api.nvim_set_hl
+  hl(0, "LspDiagnosticsVirtualTextInformation", { bold = true, fg = "#51afef", bg = "#202328" })
+  hl(0, "LspDiagnosticsVirtualTextWarning", { bold = true, fg = "#ecbe7b", bg = "#202328" })
+  hl(0, "LspDiagnosticsVirtualTextHint", { bold = true, fg = "#98c379", bg = "#202328" })
+  hl(0, "LspDiagnosticsVirtualTextError", { bold = true, fg = "#ec5f67", bg = "#202328" })
+
+  local doc_highlight = augroup("lsp_document_highlight", {
+    clear = false,
+  })
+  vim.api.nvim_clear_autocmds {
+    buffer = bufnr,
+    group = doc_highlight,
+  }
+
+  au({ "CursorHold", "CursorHoldI" }, {
+    group = doc_highlight,
+    buffer = bufnr,
+    callback = vim.lsp.buf.document_highlight,
+  })
+  au({ "CursorMoved", "CursorMovedI" }, {
+    group = doc_highlight,
+    buffer = bufnr,
+    callback = vim.lsp.buf.clear_references,
+  })
+end
+
+local function format_on_save(bufnr)
+  local format = augroup("format", { clear = true })
+  vim.api.nvim_clear_autocmds {
+    buffer = bufnr,
+    group = format,
+  }
+
+  -- aha now we have format on save
+  au("BufWritePre", {
+    buffer = 0,
+    callback = function()
+      vim.lsp.buf.format { async = false }
+    end,
+    group = format,
+  })
 end
 
 local function on_attach(client, bufnr)
   documentHighlight(client, bufnr)
   require("nvim-navic").attach(client, bufnr)
+  format_on_save(bufnr)
 end
 
 local lua_settings = {
@@ -102,8 +124,9 @@ local function setup_servers()
     "ltex",
     "jsonls",
     "pyright",
-    "sumneko_lua",
+    "lua_ls",
     "tsserver",
+    "gopls",
   }
 
   require("neodev").setup()
@@ -113,7 +136,7 @@ local function setup_servers()
 
   for _, server in pairs(installed) do
     local config = my_setup()
-    if server == "sumneko_lua" then
+    if server == "lua_ls" then
       config.settings = lua_settings
     elseif server == "clangd" then
       -- get rid of the warnings from null-ls when using clangd
