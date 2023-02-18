@@ -16,9 +16,13 @@ local opts = {
     lazy = true,
   },
 }
+-- setting my personal options
 require "core.options"
+
+-- loading my plugins
 require("lazy").setup("plugins", opts)
 
+-- autocommands
 opts = { clear = true }
 local augroup = vim.api.nvim_create_augroup
 local au = vim.api.nvim_create_autocmd
@@ -57,3 +61,15 @@ au("BufEnter", {
   group = tex,
 })
 
+local hl = vim.api.nvim_set_hl
+-- "need this for lsp diagnostic virtual text
+hl(0, "DiagnosticVirtualTextHint", { fg = "#10B981" })
+hl(0, "DiagnosticVirtualTextWarning", { fg = "#e0af68" })
+hl(0, "DiagnosticVirtualTextError", { fg = "#db4b4b" })
+hl(0, "DiagnosticVirtualTextInformation", { fg = "#0db9d7" })
+
+hl(0, "VirtualTextHint", { fg = "#10B981" })
+hl(0, "VirtualTextWarning", { fg = "#e0af68" })
+hl(0, "VirtualTextError", { fg = "#db4b4b" })
+hl(0, "VirtualTextInformation", { fg = "#0db9d7" })
+hl(0, "VirtualTextInfo", { fg = "#0db9d7" })

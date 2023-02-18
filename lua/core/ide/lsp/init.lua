@@ -18,7 +18,6 @@ local au = vim.api.nvim_create_autocmd
 
 local function documentHighlight(client, bufnr)
   if not client.server_capabilities.documentHighlightProvider then
-    vim.notify_once "not highlight provider"
     return
   end
   local hl = vim.api.nvim_set_hl
