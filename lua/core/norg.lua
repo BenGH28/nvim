@@ -1,6 +1,8 @@
-require("neorg").setup {
+return {
 	load = {
 		["core.defaults"] = {},
+    ["core.export"] = {},
+    ["core.export.markdown"] = {},
 		["core.norg.completion"] = { config = {
 			engine = "nvim-cmp",
 		} },
@@ -8,14 +10,54 @@ require("neorg").setup {
 		["core.keybinds"] = {
 			config = {
 				hook = function(keybinds)
-					keybinds.remap_event("norg", "n", "<leader>nd", "core.norg.qol.todo_items.todo.task_done")
-					keybinds.remap_event("norg", "n", "<leader>nu", "core.norg.qol.todo_items.todo.task_undone")
-					keybinds.remap_event("norg", "n", "<leader>np", "core.norg.qol.todo_items.todo.task_pending")
-					keybinds.remap_event("norg", "n", "<leader>nh", "core.norg.qol.todo_items.todo.task_on_hold")
-					keybinds.remap_event("norg", "n", "<leader>nc", "core.norg.qol.todo_items.todo.task_cancelled")
-					keybinds.remap_event("norg", "n", "<leader>nr", "core.norg.qol.todo_items.todo.task_recurring")
-					keybinds.remap_event("norg", "n", "<leader>ni", "core.norg.qol.todo_items.todo.task_important")
-					keybinds.remap_event("norg", "n", "<leader>nC", "core.norg.qol.todo_items.todo.task_cycle")
+					keybinds.remap(
+						"norg",
+						"n",
+						"<leader>ngd",
+						"<cmd>Neorg keybind norg core.norg.qol.todo_items.todo.task_done<cr>"
+					)
+					keybinds.remap(
+						"norg",
+						"n",
+						"<leader>ngu",
+						"<cmd>Neorg keybind norg core.norg.qol.todo_items.todo.task_undone<cr>"
+					)
+					keybinds.remap(
+						"norg",
+						"n",
+						"<leader>ngp",
+						"<cmd>Neorg keybind norg core.norg.qol.todo_items.todo.task_pending<cr>"
+					)
+					keybinds.remap(
+						"norg",
+						"n",
+						"<leader>ngh",
+						"<cmd>Neorg keybind norg core.norg.qol.todo_items.todo.task_on_hold<cr>"
+					)
+					keybinds.remap(
+						"norg",
+						"n",
+						"<leader>ngc",
+						"<cmd>Neorg keybind norg core.norg.qol.todo_items.todo.task_cancelled<cr>"
+					)
+					keybinds.remap(
+						"norg",
+						"n",
+						"<leader>ngr",
+						"<cmd>Neorg keybind norg core.norg.qol.todo_items.todo.task_recurring<cr>"
+					)
+					keybinds.remap(
+						"norg",
+						"n",
+						"<leader>ngi",
+						"<cmd>Neorg keybind norg core.norg.qol.todo_items.todo.task_important<cr>"
+					)
+					keybinds.remap(
+						"norg",
+						"n",
+						"<leader>ngC",
+						"<cmd>Neorg keybind norg core.norg.qol.todo_items.todo.task_cycle<cr>"
+					)
 				end,
 			},
 		},

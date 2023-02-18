@@ -16,11 +16,10 @@ return {
   {
     "nvim-neorg/neorg",
     ft = "norg",
+    build = ":Neorg sync-parsers",
     dependencies = "nvim-lua/plenary.nvim",
-    config = function()
-      require "core.norg"
-    end,
+    opts = require "core.norg"
   },
 
-  { "fladson/vim-kitty" },
+  { "fladson/vim-kitty", ft = "kitty" },
 }

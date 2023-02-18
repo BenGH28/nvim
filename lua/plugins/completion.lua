@@ -16,9 +16,6 @@ return {
 			-- completion base on the nvim api
 			{ "hrsh7th/cmp-nvim-lua" },
 
-			-- cmdline completion
-			-- { "hrsh7th/cmp-cmdline" },
-
 			-- tmux completion
 			{ "andersevenrud/cmp-tmux" },
 
