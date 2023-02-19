@@ -27,6 +27,7 @@
   "mosel.nvim": { "branch": "main", "commit": "34806ed076533ea9f4916d7541e82f91d68adbcc" },
   "neodev.nvim": { "branch": "main", "commit": "a81e749d0fe8429cd340b2e40f274b344bef42ac" },
   "neorg": { "branch": "main", "commit": "93c40f2e38a0770e9ce95787c8363320344a87c3" },
+  "nightfox.nvim": { "branch": "main", "commit": "be5e53df21c8f41790d25c56cd16cda90137dc63" },
   "null-ls.nvim": { "branch": "main", "commit": "a82aa08c0063843926947f3688b0e61fd71db680" },
   "nvim-autopairs": { "branch": "master", "commit": "bde7a1b4534e0a4c2451a738379cd628ba65eba7" },
   "nvim-bufferline.lua": { "branch": "main", "commit": "5aa803aaa9d8bbbca77d0c8df8ddc0b62c19ff6a" },
