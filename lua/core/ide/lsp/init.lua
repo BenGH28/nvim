@@ -30,32 +30,32 @@ local function documentHighlight(client, bufnr)
     clear = false,
   })
   vim.api.nvim_clear_autocmds {
-    buffer = bufnr,
+    pattern = "*",
     group = doc_highlight,
   }
 
   au({ "CursorHold", "CursorHoldI" }, {
     group = doc_highlight,
-    buffer = bufnr,
+    pattern = "*",
     callback = vim.lsp.buf.document_highlight,
   })
   au({ "CursorMoved", "CursorMovedI" }, {
     group = doc_highlight,
-    buffer = bufnr,
+    pattern = "*",
     callback = vim.lsp.buf.clear_references,
   })
 end
 
-local function format_on_save(bufnr)
+local function format_on_save()
   local format = augroup("format", { clear = true })
   vim.api.nvim_clear_autocmds {
-    buffer = bufnr,
+    pattern = "*",
     group = format,
   }
 
   -- aha now we have format on save
   au("BufWritePre", {
-    buffer = 0,
+    pattern = "*",
     callback = function()
       vim.lsp.buf.format { async = false }
     end,
@@ -66,7 +66,7 @@ end
 local function on_attach(client, bufnr)
   documentHighlight(client, bufnr)
   require("nvim-navic").attach(client, bufnr)
-  format_on_save(bufnr)
+  format_on_save()
 end
 
 local lua_settings = {
