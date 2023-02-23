@@ -17,33 +17,32 @@ local augroup = vim.api.nvim_create_augroup
 local au = vim.api.nvim_create_autocmd
 
 local function documentHighlight(client, bufnr)
-  if not client.server_capabilities.documentHighlightProvider then
-    return
+  if client.server_capabilities.documentHighlightProvider then
+    local hl = vim.api.nvim_set_hl
+    hl(0, "LspDiagnosticsVirtualTextInformation", { bold = true, fg = "#51afef", bg = "#202328" })
+    hl(0, "LspDiagnosticsVirtualTextWarning", { bold = true, fg = "#ecbe7b", bg = "#202328" })
+    hl(0, "LspDiagnosticsVirtualTextHint", { bold = true, fg = "#98c379", bg = "#202328" })
+    hl(0, "LspDiagnosticsVirtualTextError", { bold = true, fg = "#ec5f67", bg = "#202328" })
+
+    local doc_highlight = augroup("lsp_document_highlight", {
+      clear = false,
+    })
+    vim.api.nvim_clear_autocmds {
+      pattern = "*",
+      group = doc_highlight,
+    }
+
+    au({ "CursorHold", "CursorHoldI" }, {
+      group = doc_highlight,
+      pattern = "*",
+      callback = vim.lsp.buf.document_highlight,
+    })
+    au({ "CursorMoved", "CursorMovedI" }, {
+      group = doc_highlight,
+      pattern = "*",
+      callback = vim.lsp.buf.clear_references,
+    })
   end
-  local hl = vim.api.nvim_set_hl
-  hl(0, "LspDiagnosticsVirtualTextInformation", { bold = true, fg = "#51afef", bg = "#202328" })
-  hl(0, "LspDiagnosticsVirtualTextWarning", { bold = true, fg = "#ecbe7b", bg = "#202328" })
-  hl(0, "LspDiagnosticsVirtualTextHint", { bold = true, fg = "#98c379", bg = "#202328" })
-  hl(0, "LspDiagnosticsVirtualTextError", { bold = true, fg = "#ec5f67", bg = "#202328" })
-
-  local doc_highlight = augroup("lsp_document_highlight", {
-    clear = false,
-  })
-  vim.api.nvim_clear_autocmds {
-    pattern = "*",
-    group = doc_highlight,
-  }
-
-  au({ "CursorHold", "CursorHoldI" }, {
-    group = doc_highlight,
-    pattern = "*",
-    callback = vim.lsp.buf.document_highlight,
-  })
-  au({ "CursorMoved", "CursorMovedI" }, {
-    group = doc_highlight,
-    pattern = "*",
-    callback = vim.lsp.buf.clear_references,
-  })
 end
 
 local function format_on_save()
