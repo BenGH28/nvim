@@ -1,5 +1,4 @@
 return {
-
   { "tmux-plugins/vim-tmux" },
 
   {
@@ -18,7 +17,7 @@ return {
     ft = "norg",
     build = ":Neorg sync-parsers",
     dependencies = "nvim-lua/plenary.nvim",
-    opts = require "core.norg"
+    opts = require "core.norg",
   },
 
   { "fladson/vim-kitty", ft = "kitty" },
