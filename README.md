@@ -35,9 +35,9 @@ Languages supported out of the box:
 -   yaml
 -   bash
 -   rust
+-   go
 
 
-Run: `:LspInstall <ServerName>` for others you wish to add later
 
 ## Fonts
 
