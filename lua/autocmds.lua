@@ -45,3 +45,10 @@ au("BufWritePost", {
   end,
   group = norg_readme,
 })
+
+-- local nushell = augroup("nushell", opts)
+-- au("BufEnter", {
+--   pattern = "*.nu",
+--   command = "set ft=nu",
+--   group = nushell,
+-- })

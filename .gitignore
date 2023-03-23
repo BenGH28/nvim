@@ -2,3 +2,4 @@ plugin/packer_compiled.*
 .undo/
 sessions/
 spell/
+.luarc.json

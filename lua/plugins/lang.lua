@@ -1,6 +1,14 @@
 return {
   { "tmux-plugins/vim-tmux" },
-
+  {
+    "LhKipp/nvim-nu",
+    build = ":TSInstall nu",
+    ft = "nu",
+    dependencies = "nvim-lua/plenary.nvim",
+    config = function()
+      require("nu").setup()
+    end,
+  },
   {
     "xuhdev/vim-latex-live-preview",
     ft = "tex",
