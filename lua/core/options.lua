@@ -55,3 +55,5 @@ vim.cmd "filetype plugin indent on"
 vim.cmd ":set cpo-=C"
 -- remove comment chars when joining lines, thanks tpope!
 vim.cmd ":set formatoptions+=j"
+
+vim.g.codeium_disable_bindings = 1
