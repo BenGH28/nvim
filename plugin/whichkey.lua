@@ -212,8 +212,15 @@ local silent_normal_maps = {
   p = {
     name = "+plugins",
     e = {
-      ":lua require'go_to_plugins':edit()<cr>",
-      "edit plugin spec",
+      name = "+edit",
+      p = {
+        ":lua require'go_to_plugins':plugins()<cr>",
+        "edit plugin spec",
+      },
+      c = {
+        ":lua require'go_to_plugins':configs()<cr>",
+        "edit plugin config",
+      },
     },
     z = {
       name = "+Lazy",

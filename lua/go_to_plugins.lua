@@ -22,32 +22,23 @@ local function open_spec_file(path)
   vim.api.nvim_command("e " .. path)
 end
 
-function M.edit_telescope(opts)
+function M.edit_telescope(opts, file_paths, prompt_title)
   opts = opts or {}
 
-  local plugins = vim.fn.stdpath "config" .. "/lua/plugins"
-  local all_mods = vim.fn.globpath(plugins, "*")
+  local all_mods = vim.fn.globpath(file_paths, "**")
   local mods = split_str(all_mods, "\n")
 
   pickers
       .new(opts, {
-        prompt_title = "edit module spec",
+        prompt_title = prompt_title,
         finder = finders.new_table {
           results = mods,
-          -- entry_maker = function(entry)
-          -- 	return {
-          -- 		value = entry,
-          -- 		display = entry[1],
-          -- 		ordinal = entry[1],
-          -- 	}
-          -- end,
         },
         sorter = conf.generic_sorter(opts),
         attach_mappings = function(prompt_bufnr, _)
           actions.select_default:replace(function()
             actions.close(prompt_bufnr)
             local selection = action_state.get_selected_entry()
-            -- print(vim.inspect(selection))
             open_spec_file(selection[1])
           end)
           return true
@@ -56,8 +47,14 @@ function M.edit_telescope(opts)
       :find()
 end
 
-function M:edit()
-  self.edit_telescope(require("telescope.themes").get_dropdown())
+function M:plugins()
+  local plugins = vim.fn.stdpath "config" .. "/lua/plugins"
+  self.edit_telescope(require("telescope.themes").get_dropdown(), plugins, "edit module spec")
+end
+
+function M:configs()
+  local configs = vim.fn.stdpath "config" .. "/lua/core/"
+  self.edit_telescope(require("telescope.themes").get_dropdown(), configs, "edit config")
 end
 
 return M
