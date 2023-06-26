@@ -19,13 +19,6 @@ return {
       -- lsp front end that looks nice
       { "tami5/lspsaga.nvim" },
 
-      {
-        "ray-x/lsp_signature.nvim",
-        config = function()
-          require "core.ide.lsp.signature"
-        end,
-      },
-
       -- add in some nice formatting and linting stuff
       { "jose-elias-alvarez/null-ls.nvim" },
 
@@ -72,7 +65,7 @@ return {
         return vim.fn["codeium#CycleCompletions"](1)
       end, { expr = true })
       vim.keymap.set("i", "<c-,>", function()
-        return vim.fn["codeium#CycleCompletions"](-1)
+        return vim.fn["codeium#CycleCompletions"]( -1)
       end, { expr = true })
       vim.keymap.set("i", "<c-x>", function()
         return vim.fn["codeium#Clear"]()

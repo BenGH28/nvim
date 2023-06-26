@@ -3,7 +3,6 @@ require "core.ide.lsp.lspkind"
 require "core.ide.lsp.lspsaga"
 require "core.ide.lsp.null-ls"
 
--- local signature_config = require "core.ide.lsp.signature"
 local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
