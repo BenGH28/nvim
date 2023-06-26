@@ -25,7 +25,7 @@ end
 function M.edit_telescope(opts, file_paths, prompt_title)
   opts = opts or {}
 
-  local all_mods = vim.fn.globpath(file_paths, "**")
+  local all_mods = vim.fn.globpath(file_paths, "**/*.lua")
   local mods = split_str(all_mods, "\n")
 
   pickers
