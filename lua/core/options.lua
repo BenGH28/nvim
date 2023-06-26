@@ -43,10 +43,10 @@ vim.o.list = true
 vim.o.modeline = true
 vim.o.updatetime = 40
 vim.opt.listchars = {
-  tab = "| ",
-  eol = "⤶",
-  precedes = "«",
-  extends = "»",
+	tab = "| ",
+	eol = "⤶",
+	precedes = "«",
+	extends = "»",
 }
 vim.o.undofile = true
 -- allow us to increment or decrement alphabetical characters

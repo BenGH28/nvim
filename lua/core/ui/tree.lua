@@ -1,2 +1,2 @@
 -- default config is good enough
-require"nvim-tree".setup()
+require("nvim-tree").setup()
