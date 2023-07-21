@@ -3,10 +3,8 @@ return {
 		["core.defaults"] = {},
 		["core.export"] = {},
 		["core.export.markdown"] = {},
-		["core.norg.completion"] = { config = {
-			engine = "nvim-cmp",
-		} },
-		["core.norg.concealer"] = {},
+		["core.completion"] = { config = { engine = "nvim-cmp" } },
+		["core.concealer"] = {},
 		["core.keybinds"] = {
 			config = {
 				hook = function(keybinds)
