@@ -68,27 +68,29 @@ local function on_attach(client, bufnr)
 	format_on_save()
 end
 
-local lua_settings = {
-	Lua = {
-		runtime = {
-			-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-			version = "LuaJIT",
-			-- Setup your lua path
-			path = vim.split(package.path, ";"),
-		},
-		diagnostics = {
-			-- Get the language server to recognize the `vim` global
-			globals = { "vim", "awesome" },
-		},
-		workspace = {
-			-- Make the server aware of Neovim runtime files
-			library = {
-				[vim.fn.expand "$VIMRUNTIME/lua"] = true,
-				[vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
+local function lua_settings()
+	return {
+		Lua = {
+			runtime = {
+				-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+				version = "LuaJIT",
+				-- Setup your lua path
+				path = vim.split(package.path, ";"),
+			},
+			diagnostics = {
+				-- Get the language server to recognize the `vim` global
+				globals = { "vim", "awesome" },
+			},
+			workspace = {
+				-- Make the server aware of Neovim runtime files
+				library = {
+					[vim.fn.expand "$VIMRUNTIME/lua"] = true,
+					[vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
+				},
 			},
 		},
-	},
-}
+	}
+end
 
 local function rust_opts()
 	return {
@@ -120,18 +122,31 @@ local function server_config()
 	}
 end
 
+local function efm_settings()
+	return {
+		languages = {
+			sh = {
+				{ formatCommand = "shfmt -ci -s -bn", formatStdin = true },
+				{ lintCommand = "shellcheck -", lintStdin = true },
+			},
+			python = {
+				{ formatCommand = "black --quiet -", formatStdin = true },
+				{ formatCommand = "isort --quiet -", formatStdin = true },
+				{ lintCommand = "ruff check -", lintStdin = true },
+			},
+			lua = {
+				{ formatCommand = "stylua -", formatStdin = true },
+				{ lintCommand = "selene -", lintStdin = true },
+			},
+		},
+	}
+end
+
 local function setup_servers()
 	local servers = {
-		"rust_analyzer",
 		"bashls",
-		"clangd",
-		"html",
-		"ltex",
-		"jsonls",
-		"pyright",
 		"lua_ls",
-		"tsserver",
-		"gopls",
+		"efm",
 	}
 
 	require("neodev").setup()
@@ -142,7 +157,10 @@ local function setup_servers()
 	for _, server in pairs(installed) do
 		local config = server_config()
 		if server == "lua_ls" then
-			config.settings = lua_settings
+			config.settings = lua_settings()
+		elseif server == "efm" then
+			config.init_options = { documentFormatting = true }
+			config.settings = efm_settings()
 		end
 
 		if server == "rust_analyzer" then
