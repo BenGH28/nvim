@@ -1,7 +1,7 @@
-local pickers = require "telescope.pickers"
+local picker = require "telescope.pickers"
 local finders = require "telescope.finders"
-local conf = require("telescope.config").values
-
+local themes = require "telescope.themes"
+local sorters = require "telescope.sorters"
 local actions = require "telescope.actions"
 local action_state = require "telescope.actions.state"
 
@@ -25,36 +25,38 @@ end
 function M.edit_telescope(opts, file_paths, prompt_title)
 	opts = opts or {}
 
-	local all_mods = vim.fn.globpath(file_paths, "**/*.lua")
-	local mods = split_str(all_mods, "\n")
+	local lua_files = vim.fn.globpath(file_paths, "**/*.lua")
+	local mods = split_str(lua_files, "\n")
 
-	pickers
-		.new(opts, {
-			prompt_title = prompt_title,
-			finder = finders.new_table {
-				results = mods,
-			},
-			sorter = conf.generic_sorter(opts),
-			attach_mappings = function(prompt_bufnr, _)
-				actions.select_default:replace(function()
-					actions.close(prompt_bufnr)
-					local selection = action_state.get_selected_entry()
-					open_spec_file(selection[1])
-				end)
-				return true
-			end,
-		})
-		:find()
+	local function on_select(prompt_bufnr, _)
+		actions.select_default:replace(function()
+			actions.close(prompt_bufnr)
+			local selection = action_state.get_selected_entry()
+			open_spec_file(selection[1])
+		end)
+		return true
+	end
+
+	local params = {
+		prompt_title = prompt_title,
+		finder = finders.new_table {
+			results = mods,
+		},
+		sorter = sorters.get_generic_fuzzy_sorter(),
+		attach_mappings = on_select,
+	}
+	picker.new(opts, params):find()
 end
 
+local dropdown = themes.get_dropdown {}
 function M:plugins()
 	local plugins = vim.fn.stdpath "config" .. "/lua/plugins"
-	self.edit_telescope(require("telescope.themes").get_dropdown(), plugins, "edit module spec")
+	self.edit_telescope(dropdown, plugins, "edit module spec")
 end
 
 function M:configs()
 	local configs = vim.fn.stdpath "config" .. "/lua/core/"
-	self.edit_telescope(require("telescope.themes").get_dropdown(), configs, "edit config")
+	self.edit_telescope(dropdown, configs, "edit config")
 end
 
 return M
