@@ -178,17 +178,15 @@ local silent_normal_maps = {
 			c = { ":Lspsaga show_cursor_diagnostics<cr>", "Show cursor diagnostics" },
 			n = { ":Lspsaga diagnostic_jump_next<cr>", "Next diagnostic" },
 			p = { ":Lspsaga diagnostic_jump_prev<cr>", "Prev diagnostic" },
-			d = { ":lua vim.lsp.diagnostic.set_loclist()<cr>", "Diagnostic list" },
-		},
-		f = {
-			name = "+folder",
-			a = { "lua vim.lsp.buf.add_workspace_folder()", "Add workspace folder" },
-			r = { "lua vim.lsp.buf.remove_workspace_folder()", "Remove workspace folder" },
-			l = { "lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))", "List workspace folders" },
 		},
 		m = {
 			name = "+mason",
 			m = { ":Mason<cr>", "Mason Dashboard" },
+		},
+		y = {
+			name = "+symbols",
+			w = { ":lua require('telescope.builtin').lsp_workspace_symbols()<cr>", "workspace symbols')" },
+			d = { ":lua require('telescope.builtin').lsp_document_symbols()<cr>", "document symbols')" },
 		},
 		t = {
 			name = "+trouble",
@@ -260,6 +258,7 @@ local silent_normal_maps = {
 		v = { ":vs<cr>", "make vertical split" },
 		s = { ":sp<cr>", "make horizontal split" },
 	},
+	y = { ":lua require('telescope.builtin').symbols()<cr>", "+symbols" },
 }
 
 wk.register(silent_normal_maps, silent_normal_opts)
