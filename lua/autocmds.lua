@@ -2,6 +2,7 @@
 local opts = { clear = true }
 local augroup = vim.api.nvim_create_augroup
 local au = vim.api.nvim_create_autocmd
+
 local cmdline_highlights = augroup("cmdline-highlights", opts)
 au("CmdlineLeave", {
 	pattern = "*",
@@ -45,10 +46,3 @@ au("BufWritePost", {
 	end,
 	group = norg_readme,
 })
-
--- local nushell = augroup("nushell", opts)
--- au("BufEnter", {
---   pattern = "*.nu",
---   command = "set ft=nu",
---   group = nushell,
--- })
