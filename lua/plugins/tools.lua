@@ -43,6 +43,7 @@ return {
 		end,
 		dependencies = {
 			{ "nvim-telescope/telescope-file-browser.nvim" },
+			{ "nvim-telescope/telescope-symbols.nvim" },
 			{
 				"ahmedkhalf/project.nvim",
 				config = function()
