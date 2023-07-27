@@ -1,20 +1,20 @@
-require "core.ide.lsp.vsnip"
-require "core.ide.lsp.lspkind"
-require "core.ide.lsp.lspsaga"
+require("core.ide.lsp.vsnip")
+require("core.ide.lsp.lspkind")
+require("core.ide.lsp.lspsaga")
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-vim.diagnostic.config {
+vim.diagnostic.config({
 	virtual_text = {
 		prefix = "●",
 	},
-}
+})
 
 local augroup = vim.api.nvim_create_augroup
 local au = vim.api.nvim_create_autocmd
 
-local function documentHighlight(client, bufnr)
+local function documentHighlight(client, _)
 	if client.server_capabilities.documentHighlightProvider then
 		local hl = vim.api.nvim_set_hl
 		hl(0, "LspDiagnosticsVirtualTextInformation", { bold = true, fg = "#51afef", bg = "#202328" })
@@ -23,12 +23,12 @@ local function documentHighlight(client, bufnr)
 		hl(0, "LspDiagnosticsVirtualTextError", { bold = true, fg = "#ec5f67", bg = "#202328" })
 
 		local doc_highlight = augroup("lsp_document_highlight", {
-			clear = false,
+			clear = true,
 		})
-		vim.api.nvim_clear_autocmds {
+		vim.api.nvim_clear_autocmds({
 			pattern = "*",
 			group = doc_highlight,
-		}
+		})
 
 		au({ "CursorHold", "CursorHoldI" }, {
 			group = doc_highlight,
@@ -45,16 +45,16 @@ end
 
 local function format_on_save()
 	local format = augroup("format", { clear = true })
-	vim.api.nvim_clear_autocmds {
+	vim.api.nvim_clear_autocmds({
 		pattern = "*",
 		group = format,
-	}
+	})
 
 	-- aha now we have format on save
 	au("BufWritePre", {
 		pattern = "*",
 		callback = function()
-			vim.lsp.buf.format { async = false }
+			vim.lsp.buf.format({ async = false })
 		end,
 		group = format,
 	})
@@ -84,8 +84,8 @@ local function lua_settings()
 			workspace = {
 				-- Make the server aware of Neovim runtime files
 				library = {
-					[vim.fn.expand "$VIMRUNTIME/lua"] = true,
-					[vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
+					[vim.fn.expand("$VIMRUNTIME/lua")] = true,
+					[vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
 				},
 			},
 		},
@@ -151,7 +151,7 @@ local function setup_servers()
 
 	require("neodev").setup()
 	require("mason").setup()
-	require("mason-lspconfig").setup { ensure_installed = servers, automatic_installation = true }
+	require("mason-lspconfig").setup({ ensure_installed = servers, automatic_installation = true })
 	local installed = require("mason-lspconfig").get_installed_servers() or servers
 
 	for _, server in pairs(installed) do
