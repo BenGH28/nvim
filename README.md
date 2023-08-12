@@ -30,16 +30,6 @@ Ensure you have the following tools available for automatic installation of some
 - gzip
 - tar
 
-Languages supported out of the box:
-- python
-- lua
-- c++
-- json
-- yaml
-- bash
-- rust
-- go
-
 
 ## Fonts
 
