@@ -1,5 +1,8 @@
 local saga = require("lspsaga")
-saga.init_lsp_saga({
+saga.setup({
+  symbols_in_winbar = {
+    enable = true,
+  },
   use_saga_diagnostic_sign = true,
   error_sign = "E",
   warn_sign = "W",
