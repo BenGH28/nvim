@@ -161,6 +161,7 @@ local function setup_servers()
 		elseif server == "efm" then
 			config.init_options = { documentFormatting = true }
 			config.settings = efm_settings()
+			config.filetypes = { "python", "sh", "lua" }
 		end
 
 		if server == "rust_analyzer" then
