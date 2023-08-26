@@ -3,6 +3,21 @@ local opts = { clear = true }
 local augroup = vim.api.nvim_create_augroup
 local au = vim.api.nvim_create_autocmd
 
+local ignition = augroup("ignition", opts)
+au("LspAttach", {
+	pattern = "code.py",
+	group = ignition,
+	callback = function(args)
+		local client = vim.lsp.get_client_by_id(args.data.client_id)
+		if client.name == "pyright" then
+			-- update the python interpreter path once pyright loads
+			vim.defer_fn(function()
+				vim.cmd [[PyrightSetPythonPath C:\\Python27\\python.exe]]
+			end, 10)
+		end
+	end,
+})
+
 local cmdline_highlights = augroup("cmdline-highlights", opts)
 au("CmdlineLeave", {
 	pattern = "*",
