@@ -1,4 +1,3 @@
-local cmd = vim.api.nvim_command
 local M = {}
 
 function M.set_default_tab(filetype)
@@ -17,13 +16,13 @@ end
 
 function M.edit_lua_file(file)
 	local path = vim.fn.stdpath "config" .. "/lua/" .. file .. ".lua"
-	cmd("edit " .. path)
+	vim.cmd("edit " .. path)
 end
 
 -- @param file must hand in the extension
 function M.edit_plugin_file(file)
 	local path = vim.fn.stdpath "config" .. "/plugin/" .. file
-	cmd("edit " .. path)
+	vim.cmd("edit " .. path)
 end
 
 function M.scratch_buffer_below()
