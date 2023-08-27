@@ -135,7 +135,7 @@ local function efm_settings()
 				{ lintCommand = "ruff check -", lintStdin = true },
 			},
 			lua = {
-				{ formatCommand = "stylua -", formatStdin = true },
+				-- { formatCommand = "stylua -", formatStdin = true },
 				{ lintCommand = "selene -", lintStdin = true },
 			},
 		},
