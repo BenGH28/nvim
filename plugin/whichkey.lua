@@ -150,7 +150,7 @@ local silent_normal_maps = {
 		q = { ":q<cr>", "quit" },
 		p = { ":Telescope projects<cr>", "projects" },
 		s = { ":lua require'common'.scratch_buffer_below()<cr>", "scratch buffer" },
-		["."] = { ":source % | echo 'file sourced'<cr>", "source current file" },
+		["."] = { ":source % | lua vim.notify('file sourced')<cr>", "source current file" },
 	},
 	g = {
 		name = "+git",
