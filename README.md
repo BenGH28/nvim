@@ -1,6 +1,6 @@
 # nvim
 
- 
+
   ![image](https://user-images.githubusercontent.com/45215137/161371967-2ca62397-01ec-4555-85fc-9e117073f2d1.png)
 
 
@@ -12,7 +12,7 @@ Bootstrap.sh will clone this config into `$HOME/.config/nvim`
 backing up any pre-existing config to `$HOME/.config/nvim.bak`.
 
 ```bash
-curl https://raw.githubusercontent.com/BenGH28/nvim/main/bootstrap.sh | sh 
+curl https://raw.githubusercontent.com/BenGH28/nvim/main/bootstrap.sh | sh
 ```
 
 All plugins will install on initial startup of neovim thanks to [lazy.nvim](https://github.com/folke/lazy.nvim).

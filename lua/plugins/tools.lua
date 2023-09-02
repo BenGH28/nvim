@@ -23,6 +23,14 @@ return {
 			vim.notify = require "notify"
 		end,
 	},
+	{
+		"echasnovski/mini.nvim",
+		version = "*",
+		config = function()
+			require("mini.trailspace").setup()
+			require("mini.splitjoin").setup()
+		end,
+	},
 
 	{ "lambdalisue/suda.vim", cmd = { "SudaRead", "SudaWrite" } },
 	{ "moll/vim-bbye", cmd = "Bdelete" },

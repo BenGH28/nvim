@@ -4,6 +4,10 @@
 -- alias the long function
 local setmap = vim.api.nvim_set_keymap
 
+-- move you selections in visual mode
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+
 local noremap = { noremap = true }
 local silence = { noremap = true, silent = true }
 
@@ -54,9 +58,30 @@ local gmaps = {
 	l = { ":HopLine<cr>", "hop line" },
 	p = { ":HopPattern<cr>", "hop pattern" },
 	w = { ":HopWord<cr>", "hop word" },
-	d = { ":lua vim.lsp.buf.definition()<CR>", "go to definition" },
-	I = { ":lua vim.lsp.buf.implementation()<CR>", "go to implementation" },
-	r = { ":lua vim.lsp.buf.references()<CR>", "go to references" },
+	d = {
+		function()
+			vim.lsp.buf.definition()
+		end,
+		"go to definition",
+	},
+	I = {
+		function()
+			vim.lsp.buf.implementation()
+		end,
+		"go to implementation",
+	},
+	r = {
+		function()
+			vim.lsp.buf.references()
+		end,
+		"go to references",
+	},
+	s = {
+		function()
+			require("mini.splitjoin").toggle()
+		end,
+		"go to references",
+	},
 	h = { ":Lspsaga finder<cr>", "lsp finder" },
 	n = { ":Lspsaga rename<cr>", "rename" },
 }
@@ -75,9 +100,9 @@ local loud_normal_maps = {
 	b = {
 		s = {
 			name = "+substitute",
-			-- need to register this here other wise it will have a silent mapping which then won't appear in the cmdline area until user types
 			g = { [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], "substitute word in file" },
 			l = { [[:s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], "substitute word in line" },
+			-- need to register this here other wise it will have a silent mapping which then won't appear in the cmdline area until user types
 		},
 	},
 }
@@ -117,14 +142,28 @@ local silent_normal_maps = {
 		n = { ":BufferLineCycleNext<cr>", "next" },
 		p = { ":BufferLineCyclePrev<cr>", "previous" },
 		d = { ":Bdelete!<cr>", "delete" },
-		f = { ":lua vim.lsp.buf.format({async = true})<cr>", "format" },
-		l = { ":lua require('telescope.builtin').buffers()<cr>", "list buffers" },
+		f = {
+			function()
+				vim.lsp.buf.format { async = true }
+			end,
+			"format",
+		},
+		l = {
+			function()
+				require("telescope.builtin").buffers()
+			end,
+			"list buffers",
+		},
+		t = {
+			function()
+				require("mini.trailspace").trim()
+			end,
+			"trim whitespace",
+		},
 		b = {
 			name = "+background",
 			l = { ":set background=light<cr>", "light" },
 			d = { ":set background=dark<cr>", "dark" },
-			m = { ":call MyFunctions#ToggleAlacrittyTheme()<cr>", "match alacritty" },
-			t = { ":call MyFunctions#ToggleTransparentBackground()<cr>", "toggle transparency" },
 		},
 	},
 	d = {
@@ -139,35 +178,120 @@ local silent_normal_maps = {
 			v = { ":e $MYVIMRC<cr>", "open init.lua" },
 			-- not sure this binding does anything (major) now
 			s = { ":so $MYVIMRC<cr>", "reload vimrc" },
-			o = { ":lua require'common'.edit_lua_file('core/options')<cr>", "edit nvim options" },
-			m = { ":lua require'common'.edit_plugin_file('whichkey.lua')<cr>", "edit mappings" },
+			o = {
+				function()
+					require("common").edit_lua_file "core/options"
+				end,
+				"edit nvim options",
+			},
+			m = {
+				function()
+					require("common").edit_plugin_file "whichkey.lua"
+				end,
+				"edit mappings",
+			},
 		},
-		f = { ":lua require'telescope.builtin'.find_files()<cr>", "find files" },
-		g = { ":lua require'telescope.builtin'.git_files()<cr>", "git files" },
-		["/"] = { ":lua require'telescope.builtin'.live_grep()<cr>", "search project" },
-		h = { ":lua require'telescope.builtin'.oldfiles()<cr>", "history" },
+		f = {
+			function()
+				require("telescope.builtin").find_files()
+			end,
+			"find files",
+		},
+		g = {
+			function()
+				require("telescope.builtin").git_files()
+			end,
+			"git files",
+		},
+		["/"] = {
+			function()
+				require("telescope.builtin").live_grep()
+			end,
+			"search project",
+		},
+		h = {
+			function()
+				require("telescope.builtin").oldfiles()
+			end,
+			"history",
+		},
 		j = { ":w!<cr>", "save" },
 		q = { ":q<cr>", "quit" },
 		p = { ":Telescope projects<cr>", "projects" },
-		s = { ":lua require'common'.scratch_buffer_below()<cr>", "scratch buffer" },
+		s = {
+			function()
+				require("common").scratch_buffer_below()
+			end,
+			"scratch buffer",
+		},
 		["."] = { ":source % | lua vim.notify('file sourced')<cr>", "source current file" },
 	},
 	g = {
 		name = "+git",
 		l = { ":LazyGit<cr>", "lazygit" },
-		s = { ":lua require'gitsigns'.stage_hunk()<cr>", "stage hunk" },
-		u = { ":lua require'gitsigns'.undo_stage_hunk()<cr>", "undo stage hunk" },
-		r = { ":lua require'gitsigns'.reset_hunk()<cr>", "reset hunk" },
-		R = { ":lua require'gitsigns'.reset_buffer()<cr>", "reset buffer" },
-		p = { ":lua require'gitsigns'.preview_hunk()<cr>", "preview hunk" },
-		b = { ":lua require'gitsigns'.blame_line()<cr>", "blame line" },
-		S = { ":lua require'gitsigns'.stage_buffer()<cr>", "stage buffer" },
-		U = { ":lua require'gitsigns'.reset_buffer_index()<cr>", "reset buffer index" },
+		s = {
+			function()
+				require("gitsigns").stage_hunk()
+			end,
+			"stage hunk",
+		},
+		u = {
+			function()
+				require("gitsigns").undo_stage_hunk()
+			end,
+			"undo stage hunk",
+		},
+		r = {
+			function()
+				require("gitsigns").reset_hunk()
+			end,
+			"reset hunk",
+		},
+		R = {
+			function()
+				require("gitsigns").reset_buffer()
+			end,
+			"reset buffer",
+		},
+		p = {
+			function()
+				require("gitsigns").preview_hunk()
+			end,
+			"preview hunk",
+		},
+		b = {
+			function()
+				require("gitsigns").blame_line()
+			end,
+			"blame line",
+		},
+		S = {
+			function()
+				require("gitsigns").stage_buffer()
+			end,
+			"stage buffer",
+		},
+		U = {
+			function()
+				require("gitsigns").reset_buffer_index()
+			end,
+			"reset buffer index",
+		},
 	},
 	h = {
 		name = "+help",
-		h = { ":lua require('telescope.builtin').help_tags()<cr>", "help docs" },
-		m = { ":lua require('telescope.builtin').man_pages()<cr>", "man pages" },
+		h = {
+			function()
+				require("telescope.builtin").help_tags()
+			end,
+			"help docs",
+		},
+		m = {
+			function()
+				require("telescope.builtin").man_pages()
+			end,
+			"man pages",
+		},
 	},
 	l = {
 		name = "+lsp",
@@ -178,6 +302,8 @@ local silent_normal_maps = {
 			c = { ":Lspsaga show_cursor_diagnostics<cr>", "Show cursor diagnostics" },
 			n = { ":Lspsaga diagnostic_jump_next<cr>", "Next diagnostic" },
 			p = { ":Lspsaga diagnostic_jump_prev<cr>", "Prev diagnostic" },
+			w = { ":Lspsaga show_workspace_diagnostics<cr>", "workspace diagnostics" },
+			b = { ":Lspsaga show_buf_diagnostics<cr>", "buffer diagnostics" },
 		},
 		m = {
 			name = "+mason",
@@ -185,8 +311,18 @@ local silent_normal_maps = {
 		},
 		y = {
 			name = "+symbols",
-			w = { ":lua require('telescope.builtin').lsp_workspace_symbols()<cr>", "workspace symbols')" },
-			d = { ":lua require('telescope.builtin').lsp_document_symbols()<cr>", "document symbols')" },
+			w = {
+				function()
+					require("telescope.builtin").lsp_workspace_symbols()
+				end,
+				"workspace symbols",
+			},
+			d = {
+				function()
+					require("telescope.builtin").lsp_document_symbols()
+				end,
+				"document symbols",
+			},
 		},
 		t = {
 			name = "+trouble",
@@ -195,8 +331,18 @@ local silent_normal_maps = {
 			d = { ":TroubleToggle document_diagnostics<cr>", "document diagnostics" },
 			q = { ":TroubleToggle quickfix<cr>", "quickfix" },
 			l = { ":TroubleToggle loclist<cr>", "loclist" },
-			n = { ":lua require'trouble'.next({skip_groups = true, jump = true})<cr>", "next" },
-			p = { ":lua require'trouble'.previous({skip_groups = true, jump = true})<cr>", "previous" },
+			n = {
+				function()
+					require("trouble").next { skip_groups = true, jump = true }
+				end,
+				"next",
+			},
+			p = {
+				function()
+					require("trouble").previous { skip_groups = true, jump = true }
+				end,
+				"previous",
+			},
 		},
 		o = { ":Lspsaga outline<cr>", "outline" },
 		l = { ":LspInfo<cr>", "info" },
@@ -206,18 +352,27 @@ local silent_normal_maps = {
 	n = {
 		name = "+notifcations",
 		n = { ":Notifications<cr>", "notifcations" },
-		d = { ":lua require('notify').dismiss({pending = true, silent = true})<cr>", "dismiss notifcations" },
+		d = {
+			function()
+				require("notify").dismiss { pending = true, silent = true }
+			end,
+			"dismiss notifcations",
+		},
 	},
 	p = {
 		name = "+plugins",
 		e = {
 			name = "+edit",
 			p = {
-				":lua require'go_to_plugins':plugins()<cr>",
+				function()
+					require("go_to_plugins"):plugins()
+				end,
 				"edit plugin spec",
 			},
 			c = {
-				":lua require'go_to_plugins':configs()<cr>",
+				function()
+					require("go_to_plugins"):configs()
+				end,
 				"edit plugin config",
 			},
 		},
@@ -240,9 +395,24 @@ local silent_normal_maps = {
 	},
 	s = {
 		name = "+sessions",
-		c = { ":lua require'persistence'.load{}<cr>", "load current directory session" },
-		l = { ":lua require'persistence'.load{last = true}<cr>", "load last session" },
-		s = { ":lua require'persistence'.stop{}<cr>", "stop" },
+		c = {
+			function()
+				require("persistence").load {}
+			end,
+			"load current directory session",
+		},
+		l = {
+			function()
+				require("persistence").load { last = true }
+			end,
+			"load last session",
+		},
+		s = {
+			function()
+				require("persistence").stop {}
+			end,
+			"stop",
+		},
 	},
 	t = {
 		name = "+terminal",
@@ -259,7 +429,12 @@ local silent_normal_maps = {
 		v = { ":vs<cr>", "make vertical split" },
 		s = { ":sp<cr>", "make horizontal split" },
 	},
-	y = { ":lua require('telescope.builtin').symbols()<cr>", "+symbols" },
+	y = {
+		function()
+			require("telescope.builtin").symbols()
+		end,
+		"+symbols",
+	},
 }
 
 wk.register(silent_normal_maps, silent_normal_opts)
