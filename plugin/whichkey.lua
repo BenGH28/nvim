@@ -80,7 +80,7 @@ local gmaps = {
 		function()
 			require("mini.splitjoin").toggle()
 		end,
-		"go to references",
+		"split join",
 	},
 	h = { ":Lspsaga finder<cr>", "lsp finder" },
 	n = { ":Lspsaga rename<cr>", "rename" },
