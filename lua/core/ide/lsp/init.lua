@@ -131,8 +131,8 @@ local function efm_settings()
 			},
 			python = {
 				{ formatCommand = "black --quiet -", formatStdin = true },
-				{ formatCommand = "isort --quiet -", formatStdin = true },
-				{ lintCommand = "ruff check -", lintStdin = true },
+				{ formatCommand = "isort -", formatStdin = true },
+				{ lintCommand = "ruff check --ignore E501 -", lintStdin = true },
 			},
 			lua = {
 				-- { formatCommand = "stylua -", formatStdin = true },
