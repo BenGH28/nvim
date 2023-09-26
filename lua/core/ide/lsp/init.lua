@@ -6,6 +6,7 @@ local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protoc
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 vim.diagnostic.config {
+	update_in_insert = true,
 	virtual_text = {
 		prefix = "●",
 	},
@@ -62,9 +63,6 @@ end
 
 local function on_attach(client, bufnr)
 	documentHighlight(client, bufnr)
-	if client.server_capabilities.documentSymbolsProvider then
-		require("nvim-navic").attach(client, bufnr)
-	end
 	format_on_save()
 end
 
