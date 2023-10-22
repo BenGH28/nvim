@@ -66,15 +66,26 @@ return {
   },
 
   -- colorscheme
-  { "Domeee/mosel.nvim", lazy = false },
+  {
+    "Domeee/mosel.nvim",
+    lazy = false,
+  },
   {
     "EdenEast/nightfox.nvim",
     lazy = false,
   },
   {
+    "cpea2506/one_monokai.nvim",
+    lazy = false,
+  },
+  {
+    "adisen99/apprentice.nvim",
+    lazy = false,
+  },
+  {
     "navarasu/onedark.nvim",
     lazy = false,
-    priority = 1000,
+    priority = 3000,
     config = function()
       require "core.ui.onedark"
     end,
