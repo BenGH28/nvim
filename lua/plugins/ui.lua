@@ -8,7 +8,7 @@ return {
         exclude = {
           buftypes = { "terminal", "help", "startify", "nofile", "NvimTree" },
           filetypes = { "help", "packer", "startify", "NvimTree", "alpha", "norg" },
-        }
+        },
       }
     end,
   },
@@ -66,7 +66,7 @@ return {
   },
 
   -- colorscheme
-  { "Domeee/mosel.nvim",   lazy = false },
+  { "Domeee/mosel.nvim", lazy = false },
   {
     "EdenEast/nightfox.nvim",
     lazy = false,
