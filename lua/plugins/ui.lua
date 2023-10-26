@@ -77,6 +77,14 @@ return {
   {
     "cpea2506/one_monokai.nvim",
     lazy = false,
+    config = function()
+      require("one_monokai").setup({
+        transparent = false,
+        colors = {},
+        italics = true,
+      })
+    end
+
   },
   {
     "adisen99/apprentice.nvim",
@@ -86,8 +94,8 @@ return {
     "navarasu/onedark.nvim",
     lazy = false,
     priority = 3000,
-    config = function()
-      require "core.ui.onedark"
-    end,
+    -- config = function()
+    --   require "core.ui.onedark"
+    -- end,
   },
 }

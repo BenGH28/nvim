@@ -17,7 +17,7 @@ require "core.options"
 local opts = {
   install = {
     missing = true,
-    colorscheme = { "onedark" },
+    colorscheme = { "one_monokai" },
   },
   defaults = {
     lazy = true,
