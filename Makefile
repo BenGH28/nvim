@@ -19,5 +19,6 @@ lint:
 format:
 	@echo "Running formatting tool..."
 	$(FORMAT_TOOL) $(HERE)
+	shfmt -i 4 -w -ci -s -bn ./bootstrap.sh
 
 # vim: noexpandtab tabstop=4 shiftwidth=4
