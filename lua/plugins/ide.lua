@@ -22,7 +22,12 @@ return {
       { "rafamadriz/friendly-snippets" },
 
       -- pictograms for the lsp
-      { "onsails/lspkind-nvim" },
+      {
+        "onsails/lspkind-nvim",
+        config = function()
+          require("lspkind").init()
+        end,
+      },
 
       -- lsp front end that looks nice
       { "nvimdev/lspsaga.nvim" },
