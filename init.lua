@@ -15,6 +15,10 @@ vim.opt.rtp:prepend(lazypath)
 require "core.options"
 
 local opts = {
+  install = {
+    missing = true,
+    colorscheme = { "onedark" },
+  },
   defaults = {
     lazy = true,
   },
