@@ -1,5 +1,4 @@
 require "core.ide.lsp.vsnip"
-require "core.ide.lsp.lspkind"
 require "core.ide.lsp.lspsaga"
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
@@ -119,7 +118,7 @@ local function efm_settings()
   return {
     languages = {
       sh = {
-        { formatCommand = "shfmt -ci -s -bn", formatStdin = true },
+        { formatCommand = "shfmt -i 4 -ci -s -bn", formatStdin = true },
         { lintCommand = "shellcheck -", lintStdin = true },
       },
       python = {
