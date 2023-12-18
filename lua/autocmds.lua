@@ -68,3 +68,15 @@ au("BufWritePost", {
   end,
   group = norg_readme,
 })
+
+local relative_numbers = augroup("relative-numbers", opts)
+au("InsertEnter", {
+  pattern = "*",
+  command = "set norelativenumber",
+  group = relative_numbers,
+})
+au("InsertLeave", {
+  pattern = "*",
+  command = "set relativenumber",
+  group = relative_numbers,
+})
