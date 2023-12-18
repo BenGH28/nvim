@@ -121,9 +121,12 @@ local function efm_settings()
         { lintCommand = "shellcheck -",            lintStdin = true },
       },
       python = {
-        { formatCommand = "black --quiet -",          formatStdin = true },
+        { formatCommand = "ruff format -",            formatStdin = true },
         { formatCommand = "isort -",                  formatStdin = true },
         { lintCommand = "ruff check --ignore E501 -", lintStdin = true },
+      },
+      markdown = {
+        { formatCommand = "mdformat -", formatStdin = true },
       },
       lua = {
         -- { formatCommand = "stylua -", formatStdin = true },
@@ -152,7 +155,7 @@ local function setup_servers()
     elseif server == "efm" then
       config.init_options = { documentFormatting = true }
       config.settings = efm_settings()
-      config.filetypes = { "python", "sh", "lua" }
+      config.filetypes = { "python", "sh", "lua", "markdown" }
     end
 
     if server == "rust_analyzer" then
