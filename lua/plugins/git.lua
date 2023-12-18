@@ -19,9 +19,15 @@ return {
 
   {
     "APZelos/blamer.nvim",
+    cond = vim.loop.os_uname().sysname == "Linux",
+    config = function()
+      require("blamer").setup()
+    end,
+
     event = "BufEnter",
+    commit = "afd2fde1989b84f4a69639f25d8f4f60519b5cc7",
     init = function()
-      vim.g.blamer_enabled = 1
+      vim.g.blamer_enabled = true
     end,
   },
 }
