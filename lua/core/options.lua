@@ -22,7 +22,7 @@ vim.o.expandtab = true
 vim.o.startofline = false -- stop certain movements from going to the first character of the line
 vim.o.confirm = false     -- ask to save file before quit
 vim.o.laststatus = 3
-vim.o.showmode = false    -- gets rid of the redundant --insert--
+vim.o.showmode = true     -- show --insert--, etc.
 vim.o.mouse = "a"         -- allow mouse use in all modes
 vim.o.cmdheight = 1       -- command window height to 1 lines
 vim.o.timeoutlen = 500
@@ -54,6 +54,6 @@ vim.cmd ":set nrformats+=alpha"
 vim.cmd "filetype plugin indent on"
 vim.cmd ":set cpo-=C"
 -- remove comment chars when joining lines, thanks tpope!
-vim.cmd ":set formatoptions+=j"
-
+vim.o.formatoptions = vim.o.formatoptions .. "j"
+vim.o.colorcolumn = "100"
 vim.g.codeium_disable_bindings = 1
