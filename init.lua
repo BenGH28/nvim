@@ -15,6 +15,9 @@ vim.opt.rtp:prepend(lazypath)
 require "core.options"
 
 local opts = {
+  change_detection = {
+    notify = false,
+  },
   install = {
     missing = true,
     colorscheme = { "one_monokai" },

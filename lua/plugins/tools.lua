@@ -33,10 +33,12 @@ return {
   },
 
   { "lambdalisue/suda.vim", cmd = { "SudaRead", "SudaWrite" } },
-  { "moll/vim-bbye", cmd = "Bdelete" },
+  { "moll/vim-bbye",        cmd = "Bdelete" },
 
   {
     "phaazon/hop.nvim",
+    -- I need to work on my relative line jumps
+    enabled = false,
     cmd = { "HopLine", "HopPattern", "HopWord" },
     config = function()
       require("hop").setup { keys = "etovxqpdygfblzhckisuran", term_seq_bias = 1.5 }
@@ -63,8 +65,8 @@ return {
 
   -- tpope
   { "tpope/vim-commentary", event = "BufEnter" },
-  { "tpope/vim-surround", event = "BufEnter" },
-  { "tpope/vim-repeat", event = "BufEnter" },
+  { "tpope/vim-surround",   event = "BufEnter" },
+  { "tpope/vim-repeat",     event = "BufEnter" },
 
   {
     "unblevable/quick-scope",

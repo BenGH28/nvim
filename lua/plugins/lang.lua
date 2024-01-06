@@ -1,14 +1,5 @@
 return {
-  { "tmux-plugins/vim-tmux" },
-  {
-    "LhKipp/nvim-nu",
-    build = ":TSInstall nu",
-    ft = "nu",
-    dependencies = "nvim-lua/plenary.nvim",
-    config = function()
-      require("nu").setup()
-    end,
-  },
+  "tmux-plugins/vim-tmux",
   {
     "xuhdev/vim-latex-live-preview",
     ft = "tex",
@@ -28,5 +19,5 @@ return {
     opts = require "core.norg",
   },
 
-  { "fladson/vim-kitty", ft = "kitty" },
+  { "fladson/vim-kitty",                    ft = "kitty" },
 }

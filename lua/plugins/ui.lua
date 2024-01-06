@@ -41,15 +41,6 @@ return {
   },
 
   {
-    "akinsho/nvim-bufferline.lua",
-    event = "VeryLazy",
-    version = "v2.*",
-    config = function()
-      require "core.ui.bufferline"
-    end,
-  },
-
-  {
     "nvim-lualine/lualine.nvim",
     event = "VeryLazy",
     config = function()
@@ -59,21 +50,13 @@ return {
 
   {
     "kyazdani42/nvim-tree.lua",
+    enabled = false,
     cmd = "NvimTreeToggle",
     config = function()
       require "core.ui.tree"
     end,
   },
 
-  -- colorscheme
-  {
-    "Domeee/mosel.nvim",
-    lazy = false,
-  },
-  {
-    "EdenEast/nightfox.nvim",
-    lazy = false,
-  },
   {
     "cpea2506/one_monokai.nvim",
     lazy = false,
@@ -84,18 +67,10 @@ return {
         italics = true,
       })
     end
-
-  },
-  {
-    "adisen99/apprentice.nvim",
-    lazy = false,
   },
   {
     "navarasu/onedark.nvim",
     lazy = false,
     priority = 3000,
-    -- config = function()
-    --   require "core.ui.onedark"
-    -- end,
   },
 }

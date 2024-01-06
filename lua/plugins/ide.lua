@@ -1,8 +1,8 @@
 return {
-
   {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
+    build = ":MasonUpdate",
     config = function()
       require "core.ide.lsp"
     end,
@@ -11,7 +11,7 @@ return {
       {
         "williamboman/mason.nvim",
         build = ":MasonUpdate",
-        cmd = "MasonUpdate",
+        cmd = { "MasonUpdate", "Mason" }
       },
 
       {
@@ -84,6 +84,7 @@ return {
 
   {
     "windwp/nvim-autopairs",
+    enabled = false,
     event = "InsertEnter",
     config = function()
       require "core.ide.autopairs"

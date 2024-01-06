@@ -2,11 +2,11 @@
 -- {{{ regular maps
 
 -- alias the long function
-local setmap = vim.api.nvim_set_keymap
+local setmap = vim.keymap.set
 
 -- move you selections in visual mode
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+setmap("v", "J", ":m '>+1<CR>gv=gv")
+setmap("v", "K", ":m '<-2<CR>gv=gv")
 
 local noremap = { noremap = true }
 local silence = { noremap = true, silent = true }
@@ -55,35 +55,26 @@ wk.setup {
 }
 --{{{ g mappings
 local gmaps = {
-  l = { ":HopLine<cr>", "hop line" },
-  p = { ":HopPattern<cr>", "hop pattern" },
-  w = { ":HopWord<cr>", "hop word" },
   d = {
-    function()
-      vim.lsp.buf.definition()
-    end,
+    vim.lsp.buf.definition,
     "go to definition",
   },
   I = {
-    function()
-      vim.lsp.buf.implementation()
-    end,
+    vim.lsp.buf.implementation(),
     "go to implementation",
   },
   r = {
-    function()
-      vim.lsp.buf.references()
-    end,
+    vim.lsp.buf.references,
     "go to references",
   },
   s = {
-    function()
-      require("mini.splitjoin").toggle()
-    end,
+    require("mini.splitjoin").toggle,
     "split join",
   },
-  h = { ":Lspsaga finder<cr>", "lsp finder" },
-  n = { ":Lspsaga rename<cr>", "rename" },
+  n = {
+    vim.lsp.buf.rename,
+    "rename"
+  },
 }
 
 local g_opts = {
@@ -128,19 +119,10 @@ local silent_normal_opts = {
 local silent_normal_maps = {
   ["."] = { ":tabn<cr>", "next" },
   [","] = { ":tabp<cr>", "previous" },
-  ["1"] = { ":BufferLineGoToBuffer 1<cr>", "Goto buffer 1" },
-  ["2"] = { ":BufferLineGoToBuffer 2<cr>", "Goto buffer 2" },
-  ["3"] = { ":BufferLineGoToBuffer 3<cr>", "Goto buffer 3" },
-  ["4"] = { ":BufferLineGoToBuffer 4<cr>", "Goto buffer 4" },
-  ["5"] = { ":BufferLineGoToBuffer 5<cr>", "Goto buffer 5" },
-  ["6"] = { ":BufferLineGoToBuffer 6<cr>", "Goto buffer 6" },
-  ["7"] = { ":BufferLineGoToBuffer 7<cr>", "Goto buffer 7" },
-  ["8"] = { ":BufferLineGoToBuffer 8<cr>", "Goto buffer 8" },
-  ["9"] = { ":BufferLineGoToBuffer 9<cr>", "Goto buffer 9" },
   b = {
     name = "+buffers",
-    n = { ":BufferLineCycleNext<cr>", "next" },
-    p = { ":BufferLineCyclePrev<cr>", "previous" },
+    n = { ":bnext<cr>", "next" },
+    p = { ":bprev<cr>", "previous" },
     d = { ":Bdelete!<cr>", "delete" },
     f = {
       function()
@@ -148,16 +130,8 @@ local silent_normal_maps = {
       end,
       "format",
     },
-    l = {
-      function()
-        require("telescope.builtin").buffers()
-      end,
-      "list buffers",
-    },
     t = {
-      function()
-        require("mini.trailspace").trim()
-      end,
+      require("mini.trailspace").trim,
       "trim whitespace",
     },
     b = {
@@ -192,104 +166,77 @@ local silent_normal_maps = {
       },
     },
     f = {
-      function()
-        require("telescope.builtin").find_files()
-      end,
+      require("telescope.builtin").find_files,
       "find files",
     },
+    l = {
+      require("telescope.builtin").buffers,
+      "buffers",
+    },
     g = {
-      function()
-        require("telescope.builtin").git_files()
-      end,
+      require("telescope.builtin").git_files,
       "git files",
     },
     ["/"] = {
-      function()
-        require("telescope.builtin").live_grep()
-      end,
+      require("telescope.builtin").live_grep,
       "search project",
     },
     h = {
-      function()
-        require("telescope.builtin").oldfiles()
-      end,
+      require("telescope.builtin").oldfiles,
       "history",
     },
     j = { ":w!<cr>", "save" },
     q = { ":q<cr>", "quit" },
     p = { ":Telescope projects<cr>", "projects" },
     s = {
-      function()
-        require("common").scratch_buffer_below()
-      end,
+      require("common").scratch_buffer_below,
       "scratch buffer",
     },
     ["."] = { ":source % | lua vim.notify('file sourced')<cr>", "source current file" },
   },
   g = {
     name = "+git",
-    l = { ":LazyGit<cr>", "lazygit" },
     s = {
-      function()
-        require("gitsigns").stage_hunk()
-      end,
+      require("gitsigns").stage_hunk,
       "stage hunk",
     },
     u = {
-      function()
-        require("gitsigns").undo_stage_hunk()
-      end,
+      require("gitsigns").undo_stage_hunk,
       "undo stage hunk",
     },
     r = {
-      function()
-        require("gitsigns").reset_hunk()
-      end,
+      require("gitsigns").reset_hunk,
       "reset hunk",
     },
     R = {
-      function()
-        require("gitsigns").reset_buffer()
-      end,
+      require("gitsigns").reset_buffer,
       "reset buffer",
     },
     p = {
-      function()
-        require("gitsigns").preview_hunk()
-      end,
+      require("gitsigns").preview_hunk,
       "preview hunk",
     },
     b = {
-      function()
-        require("gitsigns").blame_line()
-      end,
+      require("gitsigns").blame_line,
       "blame line",
     },
     S = {
-      function()
-        require("gitsigns").stage_buffer()
-      end,
+      require("gitsigns").stage_buffer,
       "stage buffer",
     },
     U = {
-      function()
-        require("gitsigns").reset_buffer_index()
-      end,
+      require("gitsigns").reset_buffer_index,
       "reset buffer index",
     },
   },
   h = {
     name = "+help",
     h = {
-      function()
-        require("telescope.builtin").help_tags()
-      end,
+      require("telescope.builtin").help_tags,
       "help docs",
     },
     m = {
-      function()
-        require("telescope.builtin").man_pages()
-      end,
+      require("telescope.builtin").man_pages,
       "man pages",
     },
   },
@@ -312,15 +259,11 @@ local silent_normal_maps = {
     y = {
       name = "+symbols",
       w = {
-        function()
-          require("telescope.builtin").lsp_workspace_symbols()
-        end,
+        require("telescope.builtin").lsp_workspace_symbols,
         "workspace symbols",
       },
       d = {
-        function()
-          require("telescope.builtin").lsp_document_symbols()
-        end,
+        require("telescope.builtin").lsp_document_symbols,
         "document symbols",
       },
     },
@@ -378,13 +321,15 @@ local silent_normal_maps = {
     },
     z = {
       name = "+Lazy",
-      z = { ":Lazy home<cr>", "home" },
-      i = { ":Lazy install<cr>", "install" },
-      u = { ":Lazy update<cr>", "update" },
       c = { ":Lazy check<cr>", "check" },
-      p = { ":Lazy profile<cr>", "profile" },
+      i = { ":Lazy install<cr>", "install" },
       l = { ":Lazy log<cr>", "log" },
+      p = { ":Lazy profile<cr>", "profile" },
+      r = { ":Lazy reload<cr>", "reload" },
+      s = { ":Lazy sync<cr>", "sync" },
+      u = { ":Lazy update<cr>", "update" },
       x = { ":Lazy clean<cr>", "clean" },
+      z = { ":Lazy home<cr>", "home" },
     },
   },
   q = {
@@ -396,9 +341,7 @@ local silent_normal_maps = {
   s = {
     name = "+sessions",
     c = {
-      function()
-        require("persistence").load {}
-      end,
+      require("persistence").load,
       "load current directory session",
     },
     l = {
@@ -409,7 +352,7 @@ local silent_normal_maps = {
     },
     s = {
       function()
-        require("persistence").stop {}
+        require("persistence").stop()
       end,
       "stop",
     },
@@ -430,9 +373,7 @@ local silent_normal_maps = {
     s = { ":sp<cr>", "make horizontal split" },
   },
   y = {
-    function()
-      require("telescope.builtin").symbols()
-    end,
+    require("telescope.builtin").symbols,
     "+symbols",
   },
 }

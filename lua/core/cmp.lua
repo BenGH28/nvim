@@ -81,6 +81,7 @@ cmp.setup {
     },
   },
   sorting = {
+    priority_weight = 100,
     comparators = {
       cmp.config.compare.offset,
       cmp.config.compare.exact,
@@ -95,7 +96,8 @@ cmp.setup {
   },
 
   formatting = {
-    -- fields = { "kind", "abbr" },
+    fields = { "kind", "abbr", "menu" },
+    expandable_indicator = true,
     format = function(entry, vim_item)
       local exists, lspkind = pcall(require, "lspkind")
       local opts = {
@@ -116,33 +118,8 @@ cmp.setup {
         return lspkind.cmp_format {
           mode = "text_symbol",
           menu = opts,
-        }(entry, vim_item)
+        } (entry, vim_item)
       end
     end,
   },
 }
-
--- -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
--- cmp.setup.cmdline("/", {
--- 	mapping = cmp.mapping.preset.cmdline {
--- 		["<CR>"] = cmp.mapping.confirm { select = true },
--- 	},
--- 	sources = {
--- 		{ name = "buffer" },
--- 	},
--- })
-
--- -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
--- cmp.setup.cmdline(":", {
--- 	mapping = cmp.mapping.preset.cmdline {
-
--- 		["<C-n>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
--- 		["<CR>"] = cmp.mapping.confirm { select = true },
--- 	},
-
--- 	sources = cmp.config.sources({
--- 		{ name = "path" },
--- 	}, {
--- 		{ name = "cmdline" },
--- 	}),
--- })

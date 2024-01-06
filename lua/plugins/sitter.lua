@@ -4,7 +4,6 @@ return {
     event = "VeryLazy",
     build = ":TSUpdate",
     dependencies = {
-      "nvim-treesitter/playground",
       "windwp/nvim-ts-autotag",
       "p00f/nvim-ts-rainbow",
       "nvim-treesitter/nvim-treesitter-textobjects",
