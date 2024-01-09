@@ -20,7 +20,7 @@ setmap("i", "<C-h>", "<C-w>", noremap)
 -- I really want this to work too but alas no dice
 -- setmap("c", "<C-BS>", "<C-w>", noremap)
 
-setmap("n", "<C-n>", ":NvimTreeToggle<CR>", silence)
+-- setmap("n", "<C-n>", ":NvimTreeToggle<CR>", silence)
 
 setmap("n", "Y", "y$", noremap)
 setmap("n", "0", "0^", noremap)
@@ -147,6 +147,7 @@ local silent_normal_maps = {
   },
   f = {
     name = "+files",
+    e = { ":Explore<cr>", "netrw" },
     v = {
       name = "+nvim config",
       v = { ":e $MYVIMRC<cr>", "open init.lua" },
@@ -291,6 +292,7 @@ local silent_normal_maps = {
     l = { ":LspInfo<cr>", "info" },
     s = { ":LspStart<cr>", "start" },
     r = { ":LspRestart<cr>", "restart" },
+    p = { ":LspStop<cr>", "stop" },
   },
   n = {
     name = "+notifcations",
