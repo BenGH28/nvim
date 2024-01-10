@@ -1,4 +1,5 @@
 return {
+
   {
     "rcarriga/nvim-notify",
     lazy = false,
@@ -34,16 +35,6 @@ return {
 
   { "lambdalisue/suda.vim", cmd = { "SudaRead", "SudaWrite" } },
   { "moll/vim-bbye",        cmd = "Bdelete" },
-
-  {
-    "phaazon/hop.nvim",
-    -- I need to work on my relative line jumps
-    enabled = false,
-    cmd = { "HopLine", "HopPattern", "HopWord" },
-    config = function()
-      require("hop").setup { keys = "etovxqpdygfblzhckisuran", term_seq_bias = 1.5 }
-    end,
-  },
 
   {
     "nvim-telescope/telescope.nvim",

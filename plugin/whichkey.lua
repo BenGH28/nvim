@@ -140,6 +140,12 @@ local silent_normal_maps = {
       d = { ":set background=dark<cr>", "dark" },
     },
   },
+  c = {
+    function()
+      require("telescope.builtin").colorscheme({ enable_preview = true })
+    end,
+    "colorschemes",
+  },
   d = {
     name = "+docs",
     d = { ":Dox<cr>", "Doxygen" },

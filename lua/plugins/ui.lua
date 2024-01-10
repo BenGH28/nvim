@@ -35,9 +35,7 @@ return {
   {
     "norcalli/nvim-colorizer.lua",
     event = "BufEnter",
-    config = function()
-      require("colorizer").setup()
-    end,
+    opts = {}
   },
 
   {
@@ -45,15 +43,6 @@ return {
     event = "VeryLazy",
     config = function()
       require "core.ui.lualine"
-    end,
-  },
-
-  {
-    "kyazdani42/nvim-tree.lua",
-    enabled = false,
-    cmd = "NvimTreeToggle",
-    config = function()
-      require "core.ui.tree"
     end,
   },
 
@@ -71,6 +60,5 @@ return {
   {
     "navarasu/onedark.nvim",
     lazy = false,
-    priority = 3000,
   },
 }

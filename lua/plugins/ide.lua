@@ -2,7 +2,6 @@ return {
   {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
-    build = ":MasonUpdate",
     config = function()
       require "core.ide.lsp"
     end,
@@ -10,7 +9,6 @@ return {
     dependencies = {
       {
         "williamboman/mason.nvim",
-        build = ":MasonUpdate",
         cmd = { "MasonUpdate", "Mason" }
       },
 
@@ -95,8 +93,6 @@ return {
   {
     "folke/persistence.nvim",
     event = "BufReadPre", -- this will only start session saving when an actual file was opened
-    config = function()
-      require("persistence").setup()
-    end,
+    opts = {},
   },
 }
