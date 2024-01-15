@@ -11,4 +11,4 @@ vim.api.nvim_create_user_command("TSPurgeAndRefreshLang", function(args)
     os.execute("rm -f" .. query)
   end
   vim.cmd("TSInstall! " .. lang)
-end)
+end, { force = true, nargs = 1 })

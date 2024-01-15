@@ -57,3 +57,6 @@ vim.cmd ":set cpo-=C"
 vim.o.formatoptions = vim.o.formatoptions .. "j"
 vim.o.colorcolumn = "100"
 vim.g.codeium_disable_bindings = 1
+if vim.g.neovide then
+  vim.o.guifont = "FiraCode Nerd Font Mono:h12"
+end

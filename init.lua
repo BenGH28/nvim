@@ -30,6 +30,7 @@ local opts = {
 require("lazy").setup("plugins", opts)
 
 require "autocmds"
+require "cmds"
 
 local hl = vim.api.nvim_set_hl
 -- "need this for lsp diagnostic virtual text
