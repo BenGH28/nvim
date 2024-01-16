@@ -8,10 +8,6 @@ return {
 
     dependencies = {
       {
-        "VidocqH/lsp-lens.nvim",
-        opts = {}
-      },
-      {
         "williamboman/mason.nvim",
         cmd = { "MasonUpdate", "Mason" }
       },
