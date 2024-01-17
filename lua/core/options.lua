@@ -43,7 +43,7 @@ vim.o.list = true
 vim.o.modeline = true
 vim.o.updatetime = 40
 vim.opt.listchars = {
-  tab = ">.",
+  tab = "▸ ",
   eol = "⤶",
   precedes = "«",
   extends = "»",
@@ -58,5 +58,5 @@ vim.o.formatoptions = vim.o.formatoptions .. "j"
 vim.o.colorcolumn = "100"
 vim.g.codeium_disable_bindings = 1
 if vim.g.neovide then
-  vim.o.guifont = "FiraCode Nerd Font Mono:h12"
+  vim.o.guifont = "JetBrainsMono Nerd Font:h8"
 end
