@@ -1,5 +1,9 @@
 return {
 
+
+  {
+    "LunarVim/bigfile.nvim",
+  },
   {
     "rcarriga/nvim-notify",
     lazy = false,
