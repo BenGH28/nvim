@@ -58,5 +58,11 @@ vim.o.formatoptions = vim.o.formatoptions .. "j"
 vim.o.colorcolumn = "100"
 vim.g.codeium_disable_bindings = 1
 if vim.g.neovide then
-  vim.o.guifont = "JetBrainsMono Nerd Font:h8"
+  local font = "JetBrainsMono Nerd Font Mono"
+  if vim.fn.has "win32" then
+    font = font .. ":h11"
+  else
+    font = font .. ":h8"
+  end
+  vim.o.guifont = font
 end

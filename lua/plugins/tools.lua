@@ -72,9 +72,10 @@ return {
       vim.api.nvim_set_hl(0, "QuickScopeSecondary", { underline = true, fg = "#98d379" })
     end,
   },
+
   {
     "ggandor/leap.nvim",
-    lazy = false,
+    enabled = false,
     config = function()
       require("leap").add_default_mappings()
     end,

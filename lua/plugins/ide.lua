@@ -17,7 +17,7 @@ return {
       },
 
       -- snippet fill
-      { "rafamadriz/friendly-snippets" },
+      { "rafamadriz/friendly-snippets", enabled = false },
 
       -- pictograms for the lsp
       {
