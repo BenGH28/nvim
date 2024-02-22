@@ -3,6 +3,8 @@ return {
 
   {
     "LunarVim/bigfile.nvim",
+    event = "VeryLazy",
+    opts = {},
   },
   {
     "rcarriga/nvim-notify",
@@ -78,11 +80,9 @@ return {
   },
 
   {
-    "ggandor/leap.nvim",
-    enabled = false,
-    config = function()
-      require("leap").add_default_mappings()
-    end,
-
-  }
+    'smoka7/hop.nvim',
+    version = "*",
+    opts = {},
+    event = "BufEnter",
+  },
 }

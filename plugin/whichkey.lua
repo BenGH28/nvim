@@ -189,8 +189,14 @@ local silent_normal_maps = {
       "search project",
     },
     h = {
+      function()
+        vim.cmd ":HopWord"
+      end,
+      "hop word",
+    },
+    r = {
       require("telescope.builtin").oldfiles,
-      "history",
+      "recent files",
     },
     j = { ":w!<cr>", "save" },
     q = { ":q<cr>", "quit" },
