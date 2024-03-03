@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 
-my_nvim="$HOME/.config/nvim"
-backup="$HOME/.config/nvim.backup"
-
-clone_my_nvim_repo() {
+main() {
+    my_nvim="$HOME/.config/nvim"
+    backup="$HOME/.config/nvim.backup"
     if [ -d "$HOME/.config/nvim" ]; then
         echo "backing up your old config"
         mv "$my_nvim" "$backup"
@@ -12,4 +11,4 @@ clone_my_nvim_repo() {
     git clone https://github.com/BenGH28/nvim.git "$my_nvim"
 }
 
-clone_my_nvim_repo
+main
