@@ -1,8 +1,6 @@
 require "core.ide.lsp.vsnip"
 require "core.ide.lsp.lspsaga"
 
-local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
-capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 vim.diagnostic.config {
   update_in_insert = true,
@@ -106,12 +104,7 @@ local function rust_opts()
   }
 end
 
-local function server_config()
-  return {
-    capabilities = capabilities,
-    on_attach = on_attach,
-  }
-end
+
 
 local function efm_settings()
   return {
@@ -147,6 +140,16 @@ local function setup_servers()
   require("mason").setup()
   require("mason-lspconfig").setup { ensure_installed = servers, automatic_installation = true }
   local installed = require("mason-lspconfig").get_installed_servers() or servers
+
+  local function server_config()
+    local client_capabilites = vim.lsp.protocol.make_client_capabilities()
+    local capabilities = require("cmp_nvim_lsp").default_capabilities(client_capabilites)
+    capabilities.textDocument.completion.completionItem.snippetSupport = true
+    return {
+      capabilities = capabilities,
+      on_attach = on_attach,
+    }
+  end
 
   for _, server in pairs(installed) do
     local config = server_config()
