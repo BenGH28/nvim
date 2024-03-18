@@ -72,7 +72,7 @@ local gmaps = {
     "split join",
   },
   n = {
-    vim.lsp.buf.rename,
+    ":Lspsaga rename<cr>",
     "rename"
   },
 }
