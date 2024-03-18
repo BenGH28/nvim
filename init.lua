@@ -20,7 +20,6 @@ local opts = {
   },
   install = {
     missing = true,
-    colorscheme = { "one_monokai" },
   },
   defaults = {
     lazy = true,
@@ -28,6 +27,7 @@ local opts = {
 }
 -- loading my plugins
 require("lazy").setup("plugins", opts)
+vim.cmd.colorscheme("onedark")
 
 require "autocmds"
 require "cmds"
