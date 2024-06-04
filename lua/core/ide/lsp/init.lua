@@ -114,9 +114,7 @@ local function efm_settings()
         { lintCommand = "shellcheck -",            lintStdin = true },
       },
       python = {
-        { formatCommand = "ruff format -",            formatStdin = true },
-        { formatCommand = "isort -",                  formatStdin = true },
-        { lintCommand = "ruff check --ignore E501 -", lintStdin = true },
+        { formatCommand = "isort -", formatStdin = true },
       },
       markdown = {
         { formatCommand = "mdformat -", formatStdin = true },
@@ -159,6 +157,24 @@ local function setup_servers()
       config.init_options = { documentFormatting = true }
       config.settings = efm_settings()
       config.filetypes = { "python", "sh", "lua", "markdown" }
+    elseif server == "pylsp" then
+      config.settings = {
+        pylsp = {
+          plugins = {
+            jedi = { environment = "C:\\Python27\\python.exe" },
+            jedi_completion = {
+              fuzzy = true,
+              eager = true,
+              include_class_objects = true,
+              include_params = true,
+            },
+            pycodestyle = {
+              ignore = { "E501" },
+              maxLineLength = 100,
+            },
+          },
+        },
+      }
     end
 
     if server == "rust_analyzer" then

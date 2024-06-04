@@ -31,8 +31,7 @@ setmap("n", "<C-j>", ":wincmd j<CR>", silence)
 setmap("n", "<C-k>", ":wincmd k<CR>", silence)
 setmap("n", "<C-l>", ":wincmd l<CR>", silence)
 
--- think of J but for K... very obvious I know
-setmap("n", "K", "Dk$p", silence)
+setmap("n", "K", ":Lspsaga hover_doc<cr>", silence)
 
 --terminal escape
 --need to escape \ in the lua api
@@ -348,6 +347,7 @@ local silent_normal_maps = {
   },
   q = {
     name = "+quickfix",
+    o = { ":copen<cr>", "open" },
     n = { ":cnext<cr>", "next" },
     p = { ":cprevious<cr>", "previous" },
     c = { ":cclose<cr>", "close" },
