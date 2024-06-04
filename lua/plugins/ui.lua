@@ -48,19 +48,15 @@ return {
 
   {
     "cpea2506/one_monokai.nvim",
-    lazy = false,
-    config = function()
-      require("one_monokai").setup({
-        transparent = false,
-        colors = {},
-        italics = true,
-      })
-    end
+    lazy = true,
   },
-  -- Lazy
+
   {
     "olimorris/onedarkpro.nvim",
     lazy = false,
     priority = 1000, -- Ensure it loads first
+    config = function()
+      vim.cmd.colorscheme("onedark")
+    end,
   },
 }
