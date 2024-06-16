@@ -1,4 +1,3 @@
--- Eviline config for lualine
 -- Author: shadmansaleh
 -- Credit: glepnir
 local lualine = require "lualine"
@@ -107,7 +106,7 @@ ins_left {
       t = colors.red,
     }
     vim.api.nvim_command("hi! LualineMode guifg=" .. mode_color[vim.fn.mode()] .. " guibg=" .. colors.bg)
-    return "  "
+    return string.upper(vim.api.nvim_get_mode().mode)
   end,
   color = "LualineMode",
   padding = { right = 1 },
@@ -126,7 +125,9 @@ ins_left {
 }
 
 ins_left {
-  "filename",
+  function()
+    return vim.fn.expand('%')
+  end,
   cond = conditions.buffer_not_empty,
   color = { fg = colors.magenta, gui = "bold" },
 }
@@ -147,16 +148,17 @@ ins_right {
   -- Lsp server name .
   function()
     local msg = "No Active Lsp"
-    local buf_ft = vim.api.nvim_buf_get_option(0, "filetype")
-    local clients = vim.lsp.get_active_clients()
+    local clients = vim.lsp.get_clients({ bufnr = 0 })
     if next(clients) == nil then
       return msg
     end
-    for _, client in ipairs(clients) do
-      local filetypes = client.config.filetypes
-      if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 and client.name ~= "null-ls" then
-        return client.name
-      end
+
+    local names = {}
+    for _, client in pairs(clients) do
+      table.insert(names, client.name)
+    end
+    if next(names) then
+      return table.concat(names, '|')
     end
     return msg
   end,

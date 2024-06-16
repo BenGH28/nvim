@@ -11,12 +11,5 @@ return {
 
   { "davidgranstrom/nvim-markdown-preview", ft = "markdown" },
 
-  {
-    "nvim-neorg/neorg",
-    build = ":Neorg sync-parsers",
-    dependencies = "nvim-lua/plenary.nvim",
-    opts = require "core.norg",
-  },
-
   { "fladson/vim-kitty",                    ft = "kitty" },
 }
