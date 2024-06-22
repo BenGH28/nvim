@@ -34,7 +34,10 @@ return {
       { "simrat39/rust-tools.nvim" },
 
       -- diagnostics
-      { "folke/trouble.nvim" },
+      {
+        "folke/trouble.nvim",
+        opts = {}
+      },
 
       -- neovim help
       { "folke/neodev.nvim" },

@@ -281,23 +281,10 @@ local silent_normal_maps = {
     },
     t = {
       name = "+trouble",
-      x = { ":TroubleToggle<cr>", "toggle" },
-      w = { ":TroubleToggle workspace_diagnostics<cr>", "workspace diagnostics" },
-      d = { ":TroubleToggle document_diagnostics<cr>", "document diagnostics" },
-      q = { ":TroubleToggle quickfix<cr>", "quickfix" },
-      l = { ":TroubleToggle loclist<cr>", "loclist" },
-      n = {
-        function()
-          require("trouble").next { skip_groups = true, jump = true }
-        end,
-        "next",
-      },
-      p = {
-        function()
-          require("trouble").previous { skip_groups = true, jump = true }
-        end,
-        "previous",
-      },
+      w = { ":Trouble diagnostics<cr>", "diagnostics" },
+      d = { ":Trouble lsp_document_symbols<cr>", "document diagnostics" },
+      q = { ":Trouble quickfix<cr>", "quickfix" },
+      l = { ":Trouble loclist<cr>", "loclist" },
     },
     o = { ":Lspsaga outline<cr>", "outline" },
     l = { ":LspInfo<cr>", "info" },
