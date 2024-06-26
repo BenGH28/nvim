@@ -58,7 +58,7 @@ return {
     lazy = false,
     priority = 1000, -- Ensure it loads first
     config = function()
-      vim.cmd.colorscheme("onedark")
+      require "core.ui.onedark"
     end,
   },
 }
