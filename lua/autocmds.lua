@@ -3,10 +3,10 @@ local opts = { clear = true }
 local augroup = vim.api.nvim_create_augroup
 local au = vim.api.nvim_create_autocmd
 
-local trim_whitespace = augroup("trim_whitespace", opts)
+local trim_whitespace = augroup("trim-whitespace", opts)
 au("BufWritePre", {
   pattern = "*",
-  callback = require("mini.trailspace").trim,
+  command = [[%s/\s\+$//ge]],
   group = trim_whitespace
 })
 
