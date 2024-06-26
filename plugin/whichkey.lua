@@ -20,7 +20,6 @@ setmap("i", "<C-h>", "<C-w>", noremap)
 -- I really want this to work too but alas no dice
 -- setmap("c", "<C-BS>", "<C-w>", noremap)
 
--- setmap("n", "<C-n>", ":NvimTreeToggle<CR>", silence)
 
 setmap("n", "Y", "y$", noremap)
 setmap("n", "0", "0^", noremap)
@@ -360,7 +359,18 @@ local silent_normal_maps = {
   },
   t = {
     name = "+terminal",
-    n = { ":10 sp | terminal<cr>", "new terminal" },
+    n = {
+      function()
+        local term = ""
+        if vim.fn.has("win32") then
+          term = "terminal nu"
+        else
+          term = "terminal"
+        end
+        local cmd = ":10 sp | " .. term
+        vim.cmd(cmd)
+      end,
+      "new terminal" },
   },
   w = {
     name = "+window",
