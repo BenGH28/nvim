@@ -2,7 +2,7 @@ local lualine = require "lualine"
 
 local lsp_component = {
   function()
-    local msg = "No Active Lsp"
+    local msg = ""
     local clients = vim.lsp.get_clients({ bufnr = 0 })
     if next(clients) == nil then
       return msg
