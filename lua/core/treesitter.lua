@@ -116,4 +116,4 @@ vim.api.nvim_create_user_command("TSRefreshLang", function(args)
   end
 
   vim.cmd("TSInstall! " .. lang)
-end, { force = true, nargs = 1 })
+end, { force = true, nargs = 1, complete = "custom,nvim_treesitter#installable_parsers" })
