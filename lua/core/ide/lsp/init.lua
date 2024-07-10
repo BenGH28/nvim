@@ -52,7 +52,9 @@ local function format_on_save()
   au("BufWritePre", {
     pattern = "*",
     callback = function()
-      vim.lsp.buf.format { async = false }
+      if #vim.lsp.get_clients({ bufnr = 0 }) > 0 then
+        vim.lsp.buf.format { async = false }
+      end
     end,
     group = format,
   })

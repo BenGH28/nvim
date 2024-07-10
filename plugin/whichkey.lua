@@ -124,7 +124,9 @@ local silent_normal_maps = {
     d = { ":Bdelete!<cr>", "delete" },
     f = {
       function()
-        vim.lsp.buf.format { async = true }
+        if #vim.lsp.get_clients({ bufnr = 0 }) > 0 then
+          vim.lsp.buf.format { async = true }
+        end
       end,
       "format",
     },
