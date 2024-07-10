@@ -83,15 +83,6 @@ return {
     end,
   },
 
-  {
-    "windwp/nvim-autopairs",
-    enabled = false,
-    event = "InsertEnter",
-    config = function()
-      require "core.ide.autopairs"
-    end,
-  },
-
   -- Session persistence
   {
     "folke/persistence.nvim",
