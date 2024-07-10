@@ -13,11 +13,11 @@ local lsp_component = {
       table.insert(names, client.name)
     end
     if next(names) then
-      return table.concat(names, '|')
+      return '{' .. table.concat(names, ',') .. '}'
     end
     return msg
   end,
-  icon = ' ',
+  icon = '',
 }
 
 
@@ -44,7 +44,7 @@ lualine.setup {
     lualine_a = { 'mode' },
     lualine_b = { { 'branch', icon = '󰊢' }, 'diff', 'diagnostics' },
     lualine_c = { { 'filename', path = 1 } },
-    lualine_x = { 'encoding', 'fileformat', 'filetype', },
+    lualine_x = { lsp_component, 'fileformat', 'filetype', },
     lualine_y = { 'progress', },
     lualine_z = { 'location' }
   },
@@ -55,14 +55,6 @@ lualine.setup {
     lualine_x = { 'location' },
     lualine_y = {},
     lualine_z = {}
-  },
-  tabline = {
-    lualine_a = { 'buffers' },
-    lualine_b = { lsp_component },
-    lualine_c = {},
-    lualine_x = {},
-    lualine_y = {},
-    lualine_z = { 'tabs' }
   },
   winbar = {},
   inactive_winbar = {},
