@@ -13,6 +13,9 @@ local lsp_component = {
       table.insert(names, client.name)
     end
     if next(names) then
+      table.sort(names, function(left, right)
+        return left < right
+      end)
       return '{' .. table.concat(names, ',') .. '}'
     end
     return msg
