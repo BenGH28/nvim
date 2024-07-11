@@ -26,6 +26,19 @@ function M.edit_plugin_file(file)
 end
 
 function M.scratch_buffer_below()
+  -- Check if a buffer named 'scratch' exists
+  local bufs = vim.api.nvim_list_bufs()
+  for _, buf in ipairs(bufs) do
+    local path = vim.api.nvim_buf_get_name(buf)
+
+    local name = vim.fn.fnamemodify(path, ":t")
+    if name == "scratch" then
+      -- Switch to the scratch buffer
+      vim.api.nvim_set_current_buf(buf)
+      return
+    end
+  end
+  -- otherwise make a new one
   vim.api.nvim_command "new"
   vim.opt_local.buftype = "nofile"
   vim.opt_local.bufhidden = "hide"
