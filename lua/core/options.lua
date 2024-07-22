@@ -66,3 +66,9 @@ if vim.g.neovide then
   end
   vim.o.guifont = font
 end
+
+if vim.fn.has("win32") == 1 then
+  vim.opt.shell = "powershell"
+else
+  vim.opt.shell = "zsh"
+end
