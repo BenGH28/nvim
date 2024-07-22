@@ -363,14 +363,7 @@ local silent_normal_maps = {
     name = "+terminal",
     n = {
       function()
-        local term = { ":10 sp" }
-        local windows = vim.fn.has("win32") == 1
-        if windows then
-          table.insert(term, "terminal nu")
-        else
-          table.insert(term, "terminal")
-        end
-        vim.cmd(table.concat(term, " | "))
+        vim.cmd(":10 sp | terminal")
       end,
       "new terminal" },
   },
