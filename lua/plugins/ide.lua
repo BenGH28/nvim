@@ -26,6 +26,14 @@ return {
           require("lspkind").init()
         end,
       },
+      {
+        "TheLeoP/powershell.nvim",
+        ---@type powershell.user_config
+        opts = {
+          bundle_path = vim.fn.stdpath "data" .. "/mason/packages/powershell-editor-services",
+          shell = "powershell.exe",
+        }
+      },
 
       -- lsp front end that looks nice
       { "nvimdev/lspsaga.nvim" },

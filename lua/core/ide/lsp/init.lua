@@ -4,6 +4,8 @@ require "core.ide.lsp.lspsaga"
 
 vim.diagnostic.config {
   update_in_insert = true,
+  signs = true,
+  underline = true,
   virtual_text = {
     prefix = "●",
   },
@@ -11,6 +13,22 @@ vim.diagnostic.config {
 
 local augroup = vim.api.nvim_create_augroup
 local au = vim.api.nvim_create_autocmd
+
+
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = augroup('lsp_attach_disable_ruff_hover', { clear = true }),
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if client == nil then
+      return
+    end
+    if client.name == 'ruff' then
+      -- Disable hover in favor of Pyright
+      client.server_capabilities.hoverProvider = false
+    end
+  end,
+  desc = 'LSP: Disable hover capability from Ruff',
+})
 
 local function documentHighlight(client, _)
   if client.server_capabilities.documentHighlightProvider then
@@ -78,11 +96,7 @@ local function lua_settings()
         checkThirdParty = false,
         library = {
           vim.env.VIMRUNTIME
-          -- "${3rd}/luv/library"
-          -- "${3rd}/busted/library",
         }
-        -- or pull in all of 'runtimepath'. NOTE: this is a lot slower
-        -- library = vim.api.nvim_get_runtime_file("", true)
       }
     }
   }
@@ -114,9 +128,6 @@ local function efm_settings()
       sh = {
         { formatCommand = "shfmt -i 4 -ci -s -bn", formatStdin = true },
         { lintCommand = "shellcheck -",            lintStdin = true },
-      },
-      python = {
-        { formatCommand = "isort -", formatStdin = true },
       },
       markdown = {
         { formatCommand = "mdformat -", formatStdin = true },
@@ -158,22 +169,17 @@ local function setup_servers()
     elseif server == "efm" then
       config.init_options = { documentFormatting = true }
       config.settings = efm_settings()
-      config.filetypes = { "python", "sh", "lua", "markdown" }
-    elseif server == "pylsp" then
+      config.filetypes = { "sh", "lua", "markdown" }
+    elseif server == "pyright" then
       config.settings = {
-        pylsp = {
-          plugins = {
-            jedi = { environment = "C:\\Python27\\python.exe" },
-            jedi_completion = {
-              fuzzy = true,
-              eager = true,
-              include_class_objects = true,
-              include_params = true,
-            },
-            pycodestyle = {
-              ignore = { "E501" },
-              maxLineLength = 100,
-            },
+        pyright = {
+          -- Using Ruff's import organizer
+          disableOrganizeImports = true,
+        },
+        python = {
+          analysis = {
+            -- Ignore all files for analysis to exclusively use Ruff for linting
+            ignore = { '*' },
           },
         },
       }
@@ -181,9 +187,12 @@ local function setup_servers()
 
     if server == "rust_analyzer" then
       require("rust-tools").setup(rust_opts())
+    elseif server == "powershell_es" then
+      goto continue
     else
       require("lspconfig")[server].setup(config)
     end
+    ::continue::
   end
 end
 

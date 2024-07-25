@@ -52,13 +52,16 @@ return {
     "cpea2506/one_monokai.nvim",
     lazy = true,
   },
-
+  {
+    "ellisonleao/gruvbox.nvim",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      vim.cmd.colorscheme("gruvbox")
+    end
+  },
   {
     "olimorris/onedarkpro.nvim",
     lazy = false,
-    priority = 1000, -- Ensure it loads first
-    config = function()
-      require "core.ui.onedark"
-    end,
   },
 }
