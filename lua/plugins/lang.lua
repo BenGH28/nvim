@@ -1,5 +1,8 @@
 return {
-  "tmux-plugins/vim-tmux",
+  {
+    "tmux-plugins/vim-tmux",
+    ft = "tmux"
+  },
   {
     "xuhdev/vim-latex-live-preview",
     ft = "tex",

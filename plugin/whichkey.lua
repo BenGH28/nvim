@@ -46,347 +46,333 @@ if not good then
   return
 end
 
-wk.setup {
-  layout = {
-    align = "center",
-  },
-}
 --{{{ g mappings
 local gmaps = {
-  d = {
+  mode = "n",
+  {
+    "gd",
     vim.lsp.buf.definition,
-    "go to definition",
+    desc = "go to definition",
   },
-  I = {
-    vim.lsp.buf.implementation(),
-    "go to implementation",
+  {
+    "gi",
+    vim.lsp.buf.implementation,
+    desc = "go to implementation",
   },
-  r = {
+  {
+    "gr",
     vim.lsp.buf.references,
-    "go to references",
+    desc = "go to references",
   },
-  s = {
+  {
+    "gj",
     require("mini.splitjoin").toggle,
-    "split join",
+    desc = "split join",
   },
-  n = {
+  {
+    "gn",
     ":Lspsaga rename<cr>",
-    "rename"
+    desc = "rename"
   },
 }
 
-local g_opts = {
-  prefix = "g",
-}
 
-wk.register(gmaps, g_opts)
+wk.add(gmaps)
 --}}} g
 
---{{{normal mappings
 
---{{{loud normal mappings
-local loud_normal_maps = {
-  b = {
-    s = {
-      name = "+substitute",
-      g = { [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], "substitute word in file" },
-      l = { [[:s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], "substitute word in line" },
-      -- need to register this here other wise it will have a silent mapping which then won't appear in the cmdline area until user types
-    },
+wk.add(
+  {
+    mode = 'n',
+    { "<leader>bs",  group = "+substitute" },
+    { "<leader>bsg", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], desc = "substitute word in file" },
+    { "<leader>bsl", [[:s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],  desc = "substitute word in line" },
+  }
+)
+
+
+wk.add({
+  mode = 'n',
+  { '<leader>.', ":tabn<cr>", desc = "next" },
+  { '<leader>,', ":tabp<cr>", desc = "previous" }
+}
+)
+
+wk.add({
+  mode = 'n',
+  { "<leader>b",  group = "+buffers" },
+  { "leader>bn",  ":bnext<cr>",      desc = "next" },
+  { "<leader>bp", ":bprev<cr>",      desc = "previous" },
+  { "<leader>bd", ":Bdelete!<cr>",   desc = "delete" },
+  {
+    "<leader>bf",
+    function()
+      if #vim.lsp.get_clients({ bufnr = 0 }) > 0 then
+        vim.lsp.buf.format { async = true }
+      end
+    end,
+    desc = "format",
   },
-}
-local loud_normal_opts = {
-  silent = false,
-  prefix = "<Leader>",
-}
-
-wk.register(loud_normal_maps, loud_normal_opts)
---}}} loud
-
---{{{ silent normal mappings
-
-local silent_normal_opts = {
-  prefix = "<Leader>",
+})
+wk.add {
   mode = "n",
-  buffer = nil,
-  silent = true,
-  noremap = true,
-  nowait = false,
-}
-
-local silent_normal_maps = {
-  ["."] = { ":tabn<cr>", "next" },
-  [","] = { ":tabp<cr>", "previous" },
-  b = {
-    name = "+buffers",
-    n = { ":bnext<cr>", "next" },
-    p = { ":bprev<cr>", "previous" },
-    d = { ":Bdelete!<cr>", "delete" },
-    f = {
-      function()
-        if #vim.lsp.get_clients({ bufnr = 0 }) > 0 then
-          vim.lsp.buf.format { async = true }
-        end
-      end,
-      "format",
-    },
-    t = {
-      require("mini.trailspace").trim,
-      "trim whitespace",
-    },
-    b = {
-      name = "+background",
-      l = { ":set background=light<cr>", "light" },
-      d = { ":set background=dark<cr>", "dark" },
-    },
-  },
-  c = {
+  {
+    "<leader>c",
     function()
       require("telescope.builtin").colorscheme({ enable_preview = true })
     end,
-    "colorschemes",
-  },
-  d = {
-    name = "+docs",
-    d = { ":Dox<cr>", "Doxygen" },
-    k = { ":Lspsaga hover_doc<cr>", "hover doc" },
-  },
-  f = {
-    name = "+files",
-    e = { ":Explore<cr>", "netrw" },
-    v = {
-      name = "+nvim config",
-      v = { ":e $MYVIMRC<cr>", "open init.lua" },
-      -- not sure this binding does anything (major) now
-      s = { ":so $MYVIMRC<cr>", "reload vimrc" },
-      o = {
-        function()
-          require("common").edit_lua_file "core/options"
-        end,
-        "edit nvim options",
-      },
-      m = {
-        function()
-          require("common").edit_plugin_file "whichkey.lua"
-        end,
-        "edit mappings",
-      },
-    },
-    f = {
-      require("telescope.builtin").find_files,
-      "find files",
-    },
-    l = {
-      require("telescope.builtin").buffers,
-      "buffers",
-    },
-    g = {
-      require("telescope.builtin").git_files,
-      "git files",
-    },
-    ["/"] = {
-      require("telescope.builtin").live_grep,
-      "search project",
-    },
-    h = {
-      function()
-        vim.cmd ":HopWord"
-      end,
-      "hop word",
-    },
-    r = {
-      require("telescope.builtin").oldfiles,
-      "recent files",
-    },
-    j = { ":w!<cr>", "save" },
-    q = { ":q<cr>", "quit" },
-    p = { ":Telescope projects<cr>", "projects" },
-    s = {
-      require("common").scratch_buffer_below,
-      "scratch buffer",
-    },
-    ["."] = { ":source % | lua vim.notify('file sourced')<cr>", "source current file" },
-  },
-  g = {
-    name = "+git",
-    s = {
-      require("gitsigns").stage_hunk,
-      "stage hunk",
-    },
-    u = {
-      require("gitsigns").undo_stage_hunk,
-      "undo stage hunk",
-    },
-    r = {
-      require("gitsigns").reset_hunk,
-      "reset hunk",
-    },
-    R = {
-      require("gitsigns").reset_buffer,
-      "reset buffer",
-    },
-    p = {
-      require("gitsigns").preview_hunk,
-      "preview hunk",
-    },
-    b = {
-      require("gitsigns").blame_line,
-      "blame line",
-    },
-    S = {
-      require("gitsigns").stage_buffer,
-      "stage buffer",
-    },
-    U = {
-      require("gitsigns").reset_buffer_index,
-      "reset buffer index",
-    },
-  },
-  h = {
-    name = "+help",
-    h = {
-      require("telescope.builtin").help_tags,
-      "help docs",
-    },
-    m = {
-      require("telescope.builtin").man_pages,
-      "man pages",
-    },
-  },
-  l = {
-    name = "+lsp",
-    c = { ":Lspsaga code_action<cr>", "code action" },
-    d = {
-      name = "+diagnostics",
-      l = { ":Lspsaga show_line_diagnostics<cr>", "Show line diagnostics" },
-      c = { ":Lspsaga show_cursor_diagnostics<cr>", "Show cursor diagnostics" },
-      n = { ":Lspsaga diagnostic_jump_next<cr>", "Next diagnostic" },
-      p = { ":Lspsaga diagnostic_jump_prev<cr>", "Prev diagnostic" },
-      w = { ":Lspsaga show_workspace_diagnostics<cr>", "workspace diagnostics" },
-      b = { ":Lspsaga show_buf_diagnostics<cr>", "buffer diagnostics" },
-    },
-    m = {
-      name = "+mason",
-      m = { ":Mason<cr>", "Mason Dashboard" },
-    },
-    y = {
-      name = "+symbols",
-      w = {
-        require("telescope.builtin").lsp_workspace_symbols,
-        "workspace symbols",
-      },
-      d = {
-        require("telescope.builtin").lsp_document_symbols,
-        "document symbols",
-      },
-    },
-    t = {
-      name = "+trouble",
-      w = { ":Trouble diagnostics<cr>", "diagnostics" },
-      d = { ":Trouble lsp_document_symbols<cr>", "document diagnostics" },
-      q = { ":Trouble quickfix<cr>", "quickfix" },
-      l = { ":Trouble loclist<cr>", "loclist" },
-    },
-    o = { ":Lspsaga outline<cr>", "outline" },
-    l = { ":LspInfo<cr>", "info" },
-    s = { ":LspStart<cr>", "start" },
-    r = { ":LspRestart<cr>", "restart" },
-    p = { ":LspStop<cr>", "stop" },
-  },
-  n = {
-    name = "+notifcations",
-    n = { ":Notifications<cr>", "notifcations" },
-    d = {
-      function()
-        require("notify").dismiss { pending = true, silent = true }
-      end,
-      "dismiss notifcations",
-    },
-  },
-  p = {
-    name = "+plugins",
-    e = {
-      name = "+edit",
-      p = {
-        function()
-          require("go_to_plugins"):plugins()
-        end,
-        "edit plugin spec",
-      },
-      c = {
-        function()
-          require("go_to_plugins"):configs()
-        end,
-        "edit plugin config",
-      },
-    },
-    z = {
-      name = "+Lazy",
-      c = { ":Lazy check<cr>", "check" },
-      i = { ":Lazy install<cr>", "install" },
-      l = { ":Lazy log<cr>", "log" },
-      p = { ":Lazy profile<cr>", "profile" },
-      r = { ":Lazy reload<cr>", "reload" },
-      s = { ":Lazy sync<cr>", "sync" },
-      u = { ":Lazy update<cr>", "update" },
-      x = { ":Lazy clean<cr>", "clean" },
-      z = { ":Lazy home<cr>", "home" },
-    },
-  },
-  q = {
-    name = "+quickfix",
-    o = { ":copen<cr>", "open" },
-    n = { ":cnext<cr>", "next" },
-    p = { ":cprevious<cr>", "previous" },
-    c = { ":cclose<cr>", "close" },
-  },
-  s = {
-    name = "+sessions",
-    c = {
-      require("persistence").load,
-      "load current directory session",
-    },
-    l = {
-      function()
-        require("persistence").load { last = true }
-      end,
-      "load last session",
-    },
-    s = {
-      function()
-        require("persistence").stop()
-      end,
-      "stop",
-    },
-  },
-  t = {
-    name = "+terminal",
-    n = {
-      function()
-        vim.cmd(":10 sp | terminal")
-      end,
-      "new terminal" },
-  },
-  w = {
-    name = "+window",
-    h = { ":vertical resize -3<CR>", "decrease width" },
-    j = { ":resize -3<CR>", "decrease height" },
-    k = { ":resize +3<CR>", "increase height" },
-    l = { ":vertical resize +3<CR>", "increase height" },
-    ["="] = { "<C-W>=<cr>", "balance" },
-    o = { ":on<cr>", "show only current window" },
-    v = { ":vs<cr>", "make vertical split" },
-    s = { ":sp<cr>", "make horizontal split" },
-  },
-  y = {
-    require("telescope.builtin").symbols,
-    "+symbols",
-  },
+    desc = "colorschemes",
+  }
 }
 
-wk.register(silent_normal_maps, silent_normal_opts)
---}}} silent
+wk.add({
+  mode = "n",
+  { "<leader>d",  group = "+docs" },
+  { "<leader>dd", ":Dox<cr>",               desc = "Doxygen" },
+  { "<leader>dk", ":Lspsaga hover_doc<cr>", desc = "hover doc" },
+})
 
---}}} normals
+wk.add({
+  mode = "n",
+  { "<leader>f",  group = "+files" },
+  { "<leader>ff", ":Telescope find_files<cr>",   desc = "find files" },
+  { "<leader>fj", ":w!<cr>",                     desc = "write file" },
+  { "<leader>f/", ":Telescope live_grep<cr>",    desc = "live grep" },
+  { "<leader>fl", ":Telescope buffers<cr>",      desc = "buffers" },
+  { "<leader>fb", ":Telescope file_browser<cr>", desc = "file browser" },
+  {
+    "<leader>f.",
+    function()
+      vim.cmd("source %")
+      vim.notify("sourced " .. vim.fn.expand "%")
+    end,
+    desc = "source current file"
+  },
+  {
+    "<leader>fs",
+    require("common").scratch_buffer_below,
+    desc = "scratch buffer",
+  },
+  {
+    "<leader>fr",
+    require("telescope.builtin").oldfiles,
+    desc = "recent files",
+  },
+  {
+    "<leader>fg",
+    require("telescope.builtin").git_files,
+    desc = "git files",
+  },
+  { "<leader>fp", ":Telescope projects<cr>", desc = "projects" },
+})
 
---}}} which-key
+wk.add({
+  mode = "n",
+  { "<leader>fv",  group = "+config" },
+  {
+    "<leader>fvm",
+    function()
+      require("common").edit_plugin_file "whichkey.lua"
+    end,
+    desc = "edit mappings",
+  },
+  {
+    "<leader>fvo",
+    function()
+      require("common").edit_lua_file "core/options"
+    end,
+    desc = "edit nvim options",
+  },
+  { "<leader>fvv", ":e $MYVIMRC<cr>", desc = "open init.lua" },
+})
+
+wk.add({
+  mode = "n",
+  { "<leader>g", group = "+git" },
+  {
+    "<leader>gs",
+    require("gitsigns").stage_hunk,
+    desc = "stage hunk",
+  },
+  {
+    "<leader>gu",
+    require("gitsigns").undo_stage_hunk,
+    desc = "undo stage hunk",
+  },
+  {
+    "<leader>gr",
+    require("gitsigns").reset_hunk,
+    desc = "reset hunk",
+  },
+  {
+    "<leader>gR",
+    require("gitsigns").reset_buffer,
+    desc = "reset buffer",
+  },
+  {
+    "<leader>gp",
+    require("gitsigns").preview_hunk,
+    desc = "preview hunk",
+  },
+  {
+    "<leader>gb",
+    require("gitsigns").blame_line,
+    desc = "blame line",
+  },
+  {
+    "<leader>gS",
+    require("gitsigns").stage_buffer,
+    desc = "stage buffer",
+  },
+  {
+    "<leader>gU",
+    require("gitsigns").reset_buffer_index,
+    desc = "reset buffer index",
+  },
+})
+wk.add({
+  mode = "n",
+  { "<leader>h", group = "+help" },
+  {
+    "<leader>hh",
+    require("telescope.builtin").help_tags,
+    desc = "help docs",
+  },
+  {
+    "<leader>hm",
+    require("telescope.builtin").man_pages,
+    desc = "man pages",
+  },
+})
+
+wk.add({
+  mode = "n",
+  { "<leader>l",  group = "+lsp" },
+  { "<leader>lc", ":Lspsaga code_action<cr>", desc = "code action" },
+  { "<leader>lo", ":Lspsaga outline<cr>",     desc = "outline" },
+  { "<leader>li", ":LspInfo<cr>",             desc = "info" },
+  { "<leader>ls", ":LspStart<cr>",            desc = "start" },
+  { "<leader>lr", ":LspRestart<cr>",          desc = "restart" },
+  { "<leader>lp", ":LspStop<cr>",             desc = "stop" },
+})
+wk.add({
+  mode = "n",
+  { "<leader>ld",  group = "+diagnostics" },
+  { "<leader>ldd", ":Lspsaga show_line_diagnostics<cr>",      desc = "Show line diagnostics" },
+  { "<leader>ldc", ":Lspsaga show_cursor_diagnostics<cr>",    desc = "Show cursor diagnostics" },
+  { "<leader>ldn", ":Lspsaga diagnostic_jump_next<cr>",       desc = "Next diagnostic" },
+  { "<leader>ldp", ":Lspsaga diagnostic_jump_prev<cr>",       desc = "Prev diagnostic" },
+  { "<leader>ldw", ":Lspsaga show_workspace_diagnostics<cr>", desc = "workspace diagnostics" },
+  { "<leader>ldb", ":Lspsaga show_buf_diagnostics<cr>",       desc = "buffer diagnostics" },
+})
+wk.add({
+  mode = "n",
+  { "<leader>lm",  group = "+mason" },
+  { "<leader>lmm", ":Mason<cr>",       desc = "Dashboard" },
+  { "<leader>lmi", ":MasonInstall",    desc = "Install" },
+  { "<leader>lmu", ":MasonUpdate<cr>", desc = "Update" },
+  { "<leader>lml", ":MasonLog<cr>",    desc = "Log" },
+})
+wk.add({
+  mode = "n",
+  { "<leader>ly", group = "+symbols" },
+  {
+    "<leader>lyw",
+    require("telescope.builtin").lsp_workspace_symbols,
+    desc = "workspace symbols",
+  },
+  {
+    "<leader>lyd",
+    require("telescope.builtin").lsp_document_symbols,
+    desc = "document symbols",
+  },
+})
+wk.add({
+  mode = "n",
+  { "<leader>lt",  group = "+trouble" },
+  { "<leader>ltd", ":Trouble diagnostics<cr>",          desc = "diagnostics" },
+  { "<leader>lty", ":Trouble lsp_document_symbols<cr>", desc = "document diagnostics" },
+  { "<leader>ltq", ":Trouble quickfix<cr>",             desc = "quickfix" },
+  { "<leader>ltl", ":Trouble loclist<cr>",              desc = "loclist" },
+})
+wk.add {
+  mode = "n",
+  { "<leader>n",  group = "+notifcations" },
+  { "<leader>nn", ":Notifications<cr>",   desc = "notifcations" },
+  {
+    "<leader>nd",
+    function()
+      require("notify").dismiss { pending = true, silent = true }
+    end,
+    desc = "dismiss notifcations",
+  },
+}
+wk.add {
+  mode = "n",
+  { "<leader>p", group = "+plugins" },
+}
+wk.add {
+  mode = "n",
+  { "<leader>pe", group = "+edit", },
+  {
+    "<leader>pes",
+    function()
+      require("go_to_plugins"):plugins()
+    end,
+    desc = "edit plugin spec",
+  },
+  {
+    "<leader>pec",
+    function()
+      require("go_to_plugins"):configs()
+    end,
+    desc = "edit plugin config",
+  },
+}
+wk.add {
+  mode = "n",
+  { "<leader>pz",  group = "+Lazy", },
+  { "<leader>pzc", ":Lazy check<cr>",   desc = "check" },
+  { "<leader>pzi", ":Lazy install<cr>", desc = "install" },
+  { "<leader>pzl", ":Lazy log<cr>",     desc = "log" },
+  { "<leader>pzp", ":Lazy profile<cr>", desc = "profile" },
+  { "<leader>pzr", ":Lazy reload<cr>",  desc = "reload" },
+  { "<leader>pzs", ":Lazy sync<cr>",    desc = "sync" },
+  { "<leader>pzu", ":Lazy update<cr>",  desc = "update" },
+  { "<leader>pzC", ":Lazy clean<cr>",   desc = "clean" },
+  { "<leader>pzz", ":Lazy home<cr>",    desc = "home" },
+}
+wk.add {
+  mode = "n",
+  { "<leader>q",  group = "+quickfix" },
+  { "<leader>qq", ":copen<cr>",       desc = "open" },
+  { "<leader>qn", ":cnext<cr>",       desc = "next" },
+  { "<leader>qp", ":cprevious<cr>",   desc = "previous" },
+  { "<leader>qc", ":cclose<cr>",      desc = "close" },
+}
+wk.add {
+  mode = "n",
+  { "<leader>t", group = "+terminal" },
+  { "<leader>tn",
+    function()
+      vim.cmd(":10 sp | terminal")
+    end,
+    desc = "new terminal" },
+}
+wk.add {
+  mode = "n",
+  { "<leader>w",  group = "+window" },
+  { "<leader>wh", ":vertical resize -3<CR>", desc = "decrease width" },
+  { "<leader>wj", ":resize -3<CR>",          desc = "decrease height" },
+  { "<leader>wk", ":resize +3<CR>",          desc = "increase height" },
+  { "<leader>wl", ":vertical resize +3<CR>", desc = "increase height" },
+  { "<leader>wh", "<C-W>=<cr>",              desc = "balance" },
+  { "<leader>wo", ":on<cr>",                 desc = "show only current window" },
+  { "<leader>wv", ":vs<cr>",                 desc = "make vertical split" },
+  { "<leader>ws", ":sp<cr>",                 desc = "make horizontal split" },
+  {
+    "<leader>wy",
+    require("telescope.builtin").symbols,
+    desc = "symbols",
+  },
+}
