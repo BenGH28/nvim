@@ -16,6 +16,7 @@ au("CmdlineLeave", {
   command = "set nohlsearch",
   group = cmdline_highlights,
 })
+
 au("CmdlineEnter", {
   pattern = "*",
   command = "set hlsearch",
@@ -50,13 +51,4 @@ au("BufEnter", {
   pattern = "*.service",
   command = "set ft=ini",
   group = systemd_units,
-})
-
-local norg_readme = augroup("norg-readme", opts)
-au("BufWritePost", {
-  pattern = "README.norg",
-  callback = function()
-    vim.cmd [[Neorg export to-file README.md markdown]]
-  end,
-  group = norg_readme,
 })
