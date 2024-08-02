@@ -177,6 +177,20 @@ wk.add({
     desc = "edit mappings",
   },
   {
+    "<leader>fvn",
+    function()
+      require("go_to_plugins").configs({ netrw = true })
+    end,
+    desc = "goto neovim config in Netrw",
+  },
+  {
+    "<leader>fvt",
+    function()
+      require("go_to_plugins").configs({ netrw = false })
+    end,
+    desc = "goto any neovim file using Telescope",
+  },
+  {
     "<leader>fvo",
     function()
       require("common").edit_lua_file "core/options"
@@ -309,38 +323,16 @@ wk.add {
 }
 wk.add {
   mode = "n",
-  { "<leader>p", group = "+plugins" },
-}
-wk.add {
-  mode = "n",
-  { "<leader>pe", group = "+edit", },
-  {
-    "<leader>pes",
-    function()
-      require("go_to_plugins"):plugins()
-    end,
-    desc = "edit plugin spec",
-  },
-  {
-    "<leader>pec",
-    function()
-      require("go_to_plugins"):configs()
-    end,
-    desc = "edit plugin config",
-  },
-}
-wk.add {
-  mode = "n",
-  { "<leader>pz",  group = "+Lazy", },
-  { "<leader>pzc", ":Lazy check<cr>",   desc = "check" },
-  { "<leader>pzi", ":Lazy install<cr>", desc = "install" },
-  { "<leader>pzl", ":Lazy log<cr>",     desc = "log" },
-  { "<leader>pzp", ":Lazy profile<cr>", desc = "profile" },
-  { "<leader>pzr", ":Lazy reload<cr>",  desc = "reload" },
-  { "<leader>pzs", ":Lazy sync<cr>",    desc = "sync" },
-  { "<leader>pzu", ":Lazy update<cr>",  desc = "update" },
-  { "<leader>pzC", ":Lazy clean<cr>",   desc = "clean" },
-  { "<leader>pzz", ":Lazy home<cr>",    desc = "home" },
+  { "<leader>z",  group = "+Lazy", },
+  { "<leader>zc", ":Lazy check<cr>",   desc = "check" },
+  { "<leader>zi", ":Lazy install<cr>", desc = "install" },
+  { "<leader>zl", ":Lazy log<cr>",     desc = "log" },
+  { "<leader>zp", ":Lazy profile<cr>", desc = "profile" },
+  { "<leader>zr", ":Lazy reload<cr>",  desc = "reload" },
+  { "<leader>zs", ":Lazy sync<cr>",    desc = "sync" },
+  { "<leader>zu", ":Lazy update<cr>",  desc = "update" },
+  { "<leader>zC", ":Lazy clean<cr>",   desc = "clean" },
+  { "<leader>zz", ":Lazy home<cr>",    desc = "home" },
 }
 wk.add {
   mode = "n",

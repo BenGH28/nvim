@@ -1,11 +1,12 @@
-local picker = require "telescope.pickers"
-local finders = require "telescope.finders"
-local themes = require "telescope.themes"
-local sorters = require "telescope.sorters"
-local actions = require "telescope.actions"
+local picker       = require "telescope.pickers"
+local finders      = require "telescope.finders"
+local themes       = require "telescope.themes"
+local sorters      = require "telescope.sorters"
+local actions      = require "telescope.actions"
 local action_state = require "telescope.actions.state"
+local previewers   = require "telescope.previewers"
 
-M = {}
+M                  = {}
 
 local function split_str(input, sep)
   if sep == nil then
@@ -19,11 +20,11 @@ local function split_str(input, sep)
 end
 
 local function open_spec_file(path)
-  vim.api.nvim_command("e " .. path)
+  vim.cmd("e " .. path)
 end
 
-function M.edit_telescope(opts, file_paths, prompt_title)
-  opts = opts or {}
+local function edit_telescope(theme, file_paths, prompt_title)
+  theme = theme or {}
 
   local lua_files = vim.fn.globpath(file_paths, "**/*.lua")
   local mods = split_str(lua_files, "\n")
@@ -44,19 +45,32 @@ function M.edit_telescope(opts, file_paths, prompt_title)
     },
     sorter = sorters.get_generic_fuzzy_sorter(),
     attach_mappings = on_select,
+    previewer = previewers.cat.new {}
   }
-  picker.new(opts, params):find()
+  picker.new(theme, params):find()
 end
 
-local dropdown = themes.get_dropdown {}
-function M:plugins()
-  local plugins = vim.fn.stdpath "config" .. "/lua/plugins"
-  self.edit_telescope(dropdown, plugins, "edit module spec")
-end
-
-function M:configs()
-  local configs = vim.fn.stdpath "config" .. "/lua/core/"
-  self.edit_telescope(dropdown, configs, "edit config")
+function M.configs(opts)
+  local defaults = {
+    netrw = true,
+    direction = "bottom" -- "left", "right", "top", "bottom", "tab", "full"
+  }
+  -- override defaults with user opts
+  opts = vim.tbl_deep_extend("force", defaults, opts)
+  local explore = {
+    left = "Lexplore",
+    right = "Lexplore!",
+    bottom = "Hexplore",
+    top = "Hexplore!",
+    tabbed = "Texplore",
+    full = "Explore",
+  }
+  local configs = vim.fn.stdpath "config"
+  if opts.netrw == true then
+    vim.cmd(explore[opts.direction] .. " " .. configs)
+  else
+    edit_telescope({}, configs, "edit config")
+  end
 end
 
 return M
