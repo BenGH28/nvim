@@ -52,3 +52,10 @@ au("BufEnter", {
   command = "set ft=ini",
   group = systemd_units,
 })
+
+local sql_comments = augroup("sql-comments", opts)
+au("Filetype", {
+  pattern = "*sql",
+  command = "set commentstring=--%s",
+  group = sql_comments,
+})
