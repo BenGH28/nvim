@@ -354,17 +354,23 @@ wk.add {
 wk.add {
   mode = "n",
   { "<leader>w",  group = "+window" },
-  { "<leader>wh", ":vertical resize -3<CR>", desc = "decrease width" },
-  { "<leader>wj", ":resize -3<CR>",          desc = "decrease height" },
-  { "<leader>wk", ":resize +3<CR>",          desc = "increase height" },
-  { "<leader>wl", ":vertical resize +3<CR>", desc = "increase height" },
-  { "<leader>wh", "<C-W>=<cr>",              desc = "balance" },
-  { "<leader>wo", ":on<cr>",                 desc = "show only current window" },
-  { "<leader>wv", ":vs<cr>",                 desc = "make vertical split" },
-  { "<leader>ws", ":sp<cr>",                 desc = "make horizontal split" },
+  { "<leader>wh", ":vertical resize -10<CR>", desc = "decrease width" },
+  { "<leader>wj", ":resize -10<CR>",          desc = "decrease height" },
+  { "<leader>wk", ":resize +10<CR>",          desc = "increase height" },
+  { "<leader>wl", ":vertical resize +10<CR>", desc = "increase width" },
+  { "<leader>wh", "<C-W>=<cr>",               desc = "balance" },
+  { "<leader>wo", ":on<cr>",                  desc = "show only current window" },
+  { "<leader>wv", ":vs<cr>",                  desc = "make vertical split" },
+  { "<leader>ws", ":sp<cr>",                  desc = "make horizontal split" },
+}
+
+wk.add {
   {
-    "<leader>wy",
+    "<leader>y",
     require("telescope.builtin").symbols,
     desc = "symbols",
   },
+}
+wk.setup {
+  preset = "modern"
 }
