@@ -101,7 +101,7 @@ wk.add({
 wk.add({
   mode = 'n',
   { "<leader>b",  group = "+buffers" },
-  { "leader>bn",  ":bnext<cr>",      desc = "next" },
+  { "<leader>bn", ":bnext<cr>",      desc = "next" },
   { "<leader>bp", ":bprev<cr>",      desc = "previous" },
   { "<leader>bd", ":Bdelete!<cr>",   desc = "delete" },
   {
