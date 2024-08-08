@@ -84,6 +84,7 @@ wk.add(gmaps)
 wk.add(
   {
     mode = 'n',
+    silent = false,
     { "<leader>bs",  group = "+substitute" },
     { "<leader>bsg", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], desc = "substitute word in file" },
     { "<leader>bsl", [[:s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],  desc = "substitute word in line" },
@@ -93,8 +94,8 @@ wk.add(
 
 wk.add({
   mode = 'n',
-  { '<leader>.', ":tabn<cr>", desc = "next" },
-  { '<leader>,', ":tabp<cr>", desc = "previous" }
+  { '<leader>.', ":tabn<cr>", desc = "next tab" },
+  { '<leader>,', ":tabp<cr>", desc = "previous tab" }
 }
 )
 
@@ -127,8 +128,8 @@ wk.add {
 
 wk.add({
   mode = "n",
-  { "<leader>d",  group = "+docs" },
-  { "<leader>dd", ":Dox<cr>",               desc = "Doxygen" },
+  { "<leader>d", group = "+docs", icon = "󱔘" },
+  { "<leader>dd", ":Dox<cr>", desc = "Doxygen" },
   { "<leader>dk", ":Lspsaga hover_doc<cr>", desc = "hover doc" },
 })
 
@@ -246,7 +247,7 @@ wk.add({
 })
 wk.add({
   mode = "n",
-  { "<leader>h", group = "+help" },
+  { "<leader>h", group = "+help", icon = "󰋖" },
   {
     "<leader>hh",
     require("telescope.builtin").help_tags,
@@ -323,16 +324,16 @@ wk.add {
 }
 wk.add {
   mode = "n",
-  { "<leader>z",  group = "+Lazy", },
-  { "<leader>zc", ":Lazy check<cr>",   desc = "check" },
+  { "<leader>z", group = "+lazy", icon = "💤" },
+  { "<leader>zc", ":Lazy check<cr>", desc = "check" },
   { "<leader>zi", ":Lazy install<cr>", desc = "install" },
-  { "<leader>zl", ":Lazy log<cr>",     desc = "log" },
+  { "<leader>zl", ":Lazy log<cr>", desc = "log" },
   { "<leader>zp", ":Lazy profile<cr>", desc = "profile" },
-  { "<leader>zr", ":Lazy reload<cr>",  desc = "reload" },
-  { "<leader>zs", ":Lazy sync<cr>",    desc = "sync" },
-  { "<leader>zu", ":Lazy update<cr>",  desc = "update" },
-  { "<leader>zC", ":Lazy clean<cr>",   desc = "clean" },
-  { "<leader>zz", ":Lazy home<cr>",    desc = "home" },
+  { "<leader>zr", ":Lazy reload<cr>", desc = "reload" },
+  { "<leader>zs", ":Lazy sync<cr>", desc = "sync" },
+  { "<leader>zu", ":Lazy update<cr>", desc = "update" },
+  { "<leader>zC", ":Lazy clean<cr>", desc = "clean" },
+  { "<leader>zz", ":Lazy home<cr>", desc = "home" },
 }
 wk.add {
   mode = "n",
@@ -370,6 +371,15 @@ wk.add {
     require("telescope.builtin").symbols,
     desc = "symbols",
   },
+}
+wk.add {
+  {
+    "<leader>D",
+    function()
+      vim.cmd("tab DBUI")
+    end,
+    desc = "launch DBUI in a new tab"
+  }
 }
 wk.setup {
   preset = "modern"
