@@ -359,7 +359,7 @@ wk.add {
   { "<leader>wj", ":resize -10<CR>",          desc = "decrease height" },
   { "<leader>wk", ":resize +10<CR>",          desc = "increase height" },
   { "<leader>wl", ":vertical resize +10<CR>", desc = "increase width" },
-  { "<leader>wh", "<C-W>=<cr>",               desc = "balance" },
+  { "<leader>w=", "<C-W>=<cr>",               desc = "balance" },
   { "<leader>wo", ":on<cr>",                  desc = "show only current window" },
   { "<leader>wv", ":vs<cr>",                  desc = "make vertical split" },
   { "<leader>ws", ":sp<cr>",                  desc = "make horizontal split" },
