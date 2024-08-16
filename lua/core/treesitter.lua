@@ -1,21 +1,27 @@
 local parser_configs = require("nvim-treesitter.parsers").get_parser_configs()
 
 local languages = {
+  "bash",
   "c",
   "cpp",
-  "lua",
-  "rust",
-  "bash",
-  "toml",
-  "typescript",
-  "tsx",
-  "nu",
-  "yaml",
-  "python",
-  "javascript",
   "css",
+  "git_config",
+  "git_rebase",
+  "gitattributes",
+  "gitcommit",
+  "gitignore",
   "html",
+  "javascript",
+  "lua",
   "markdown",
+  "nu",
+  "python",
+  "rust",
+  "sql",
+  "toml",
+  "tsx",
+  "typescript",
+  "yaml",
 }
 
 local opts = {
