@@ -141,6 +141,7 @@ wk.add({
   { "<leader>f/", ":Telescope live_grep<cr>",    desc = "live grep" },
   { "<leader>fl", ":Telescope buffers<cr>",      desc = "buffers" },
   { "<leader>fb", ":Telescope file_browser<cr>", desc = "file browser" },
+  { "<leader>fe", ":Explore<cr>",                desc = "netrw" },
   {
     "<leader>f.",
     function()
