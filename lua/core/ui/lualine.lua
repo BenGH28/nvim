@@ -47,7 +47,14 @@ lualine.setup {
     lualine_a = { 'mode' },
     lualine_b = { { 'branch', icon = '󰊢' }, 'diff', 'diagnostics' },
     lualine_c = { { 'filename', path = 1 } },
-    lualine_x = { lsp_component, 'fileformat', 'filetype', },
+    lualine_x = { lsp_component, {
+      'fileformat',
+      symbols = {
+        unix = '', -- e712
+        dos = '󰍲', -- e70f
+        mac = '', -- e711
+      }
+    }, 'filetype', },
     lualine_y = { 'progress', },
     lualine_z = { 'location' }
   },
