@@ -26,7 +26,7 @@ end
 local function edit_telescope(theme, file_paths, prompt_title)
   theme = theme or {}
 
-  local lua_files = vim.fn.globpath(file_paths, "**/*.lua")
+  local lua_files = vim.fn.globpath(file_paths, "**/*")
   local mods = split_str(lua_files, "\n")
 
   local function on_select(prompt_bufnr, _)
