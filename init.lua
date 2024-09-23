@@ -4,6 +4,7 @@ require "core.options"
 -- lazy.nvim
 require "mylazy"
 
+require "cmd"
 -- autocommands
 require "autocmds"
 
