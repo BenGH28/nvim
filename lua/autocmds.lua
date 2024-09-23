@@ -6,7 +6,7 @@ local au = vim.api.nvim_create_autocmd
 local trim_whitespace = augroup("trim-whitespace", opts)
 au("BufWritePre", {
   pattern = "*",
-  command = [[%s/\s\+$//ge]],
+  command = "TrimSpace",
   group = trim_whitespace
 })
 
