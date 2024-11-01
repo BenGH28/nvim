@@ -3,7 +3,6 @@
 -- Basics
 -- =======================
 vim.g.mapleader = " "
-vim.g.python3_host_prog = "/bin/python3"
 vim.o.termguicolors = true -- for accurate colors
 vim.o.number = true
 vim.o.relativenumber = true
@@ -69,6 +68,8 @@ end
 
 if vim.fn.has("win32") == 1 then
   vim.opt.shell = "powershell"
+  vim.g.python3_host_prog = "C:\\Users\\bhunt\\scoop\\shims\\python3.exe"
 else
   vim.opt.shell = "zsh"
+  vim.g.python3_host_prog = "/bin/python3"
 end
