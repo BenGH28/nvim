@@ -3,6 +3,7 @@
 -- Basics
 -- =======================
 vim.g.mapleader = " "
+vim.o.background = "dark"
 vim.o.termguicolors = true -- for accurate colors
 vim.o.number = true
 vim.o.relativenumber = true
@@ -20,7 +21,7 @@ vim.o.smartindent = true
 vim.o.expandtab = true
 vim.o.startofline = false -- stop certain movements from going to the first character of the line
 vim.o.confirm = false     -- ask to save file before quit
-vim.o.laststatus = 3
+vim.o.laststatus = 3      -- only the last window will have status line
 vim.o.showmode = false    -- show --insert--, etc.
 vim.o.mouse = "a"         -- allow mouse use in all modes
 vim.o.cmdheight = 1       -- command window height to 1 lines
