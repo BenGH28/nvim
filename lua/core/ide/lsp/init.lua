@@ -181,12 +181,9 @@ local function setup_servers()
 
     if server == "rust_analyzer" then
       require("rust-tools").setup(rust_opts())
-    elseif server == "powershell_es" then
-      goto continue
     else
       require("lspconfig")[server].setup(config)
     end
-    ::continue::
   end
 end
 
