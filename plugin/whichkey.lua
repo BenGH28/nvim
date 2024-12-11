@@ -34,7 +34,7 @@ setmap("n", "K", ":Lspsaga hover_doc<cr>", silence)
 
 --terminal escape
 --need to escape \ in the lua api
-setmap("t", "<Esc>", "<C-\\><C-n>", noremap)
+-- setmap("t", "<C<Esc>", "<C-\\><C-n>", noremap)
 
 -- }}} regular
 
@@ -181,14 +181,16 @@ wk.add({
   {
     "<leader>fvn",
     function()
-      require("go_to_plugins").configs({ netrw = true })
+      require("go_to_plugins").configs({})
     end,
     desc = "goto neovim config in Netrw",
   },
   {
     "<leader>fvt",
     function()
-      require("go_to_plugins").configs({ netrw = false })
+      require "telescope.builtin".find_files({
+        cwd = vim.fn.stdpath("config")
+      })
     end,
     desc = "goto any neovim file using Telescope",
   },
