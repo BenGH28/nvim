@@ -59,3 +59,14 @@ au("Filetype", {
   command = "set commentstring=--%s",
   group = sql_comments,
 })
+
+
+-- autocmd TextYankPost * silent! lua vim.highlight.on_yank {higroup='Visual', timeout=300}
+local hi_yank = augroup("highlights-yank", opts)
+au("TextYankPost", {
+  pattern = "*",
+  callback = function()
+    vim.highlight.on_yank { higroup = 'Visual', timeout = 300 }
+  end,
+  group = hi_yank,
+})
