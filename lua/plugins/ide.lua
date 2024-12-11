@@ -3,6 +3,7 @@ return {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
     config = function()
+      require('venom').setup()
       require "core.ide.lsp"
     end,
 
@@ -12,6 +13,8 @@ return {
         cmd = { "MasonUpdate", "Mason" }
       },
 
+      { 'folke/neoconf.nvim',           cmd = 'Neoconf', config = true },
+      'rafi/neoconf-venom.nvim',
       {
         "williamboman/mason-lspconfig.nvim",
       },
@@ -73,7 +76,7 @@ return {
 
   {
     "Exafunction/codeium.vim",
-    cmd = "Codeium",
+    cmd = { "Codeium", "CodeiumEnable", "CodeiumToggle" },
     config = function()
       -- Change '<C-g>' here to any keycode you like.
       vim.keymap.set("i", "<C-g>", function()
@@ -96,5 +99,11 @@ return {
     "folke/persistence.nvim",
     event = "BufReadPre", -- this will only start session saving when an actual file was opened
     opts = {},
+  },
+
+
+  {
+    'rafi/neoconf-venom.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim', 'folke/neoconf.nvim' },
   },
 }
