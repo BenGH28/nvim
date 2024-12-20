@@ -1,6 +1,23 @@
 local actions = require "telescope.actions"
 
+local theme = "ivy"
 require("telescope").setup {
+  pickers = {
+    -- TODO: find a better way to set the default theme
+    live_grep = {
+      theme = theme
+    },
+    find_files = {
+      theme = theme
+    },
+    oldfiles = {
+      theme = theme
+    },
+    git_files = {
+      theme = theme
+    }
+  },
+
   defaults = {
     mappings = {
       i = {
