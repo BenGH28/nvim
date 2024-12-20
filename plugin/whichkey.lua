@@ -186,6 +186,24 @@ wk.add({
     desc = "goto neovim config in Netrw",
   },
   {
+    "<leader>fvg",
+    function()
+      require "telescope.builtin".live_grep({
+        cwd = vim.fn.stdpath("config")
+      })
+    end,
+    desc = "grep a word in nvim config",
+  },
+  {
+    "<leader>fvt",
+    function()
+      require "telescope.builtin".find_files({
+        cwd = vim.fn.stdpath("config")
+      })
+    end,
+    desc = "goto any neovim file using Telescope",
+  },
+  {
     "<leader>fvt",
     function()
       require "telescope.builtin".find_files({
