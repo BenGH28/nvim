@@ -8,6 +8,11 @@ require("telescope").setup {
       theme = theme
     },
     find_files = {
+      theme = theme,
+      hidden = true,
+    },
+    buffers = { theme = theme },
+    help_tags = {
       theme = theme
     },
     oldfiles = {
