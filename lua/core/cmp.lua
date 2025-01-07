@@ -1,6 +1,7 @@
 -- Setup nvim-cmp.
 local cmp = require "cmp"
 
+
 local kind_icons = {
   Text = "",
   Method = "",
@@ -32,20 +33,25 @@ local kind_icons = {
 -- local win_ui = { "Normal:Pmenu,FloatBorder:Pmenu,Search:None", col_offset = 1, side_padding = 0 }
 local win_ui = cmp.config.window.bordered()
 cmp.setup {
-  entries = {
-    name = "custom",
-    selection_order = "near_cursor",
+  view =
+  {
+    entries = {
+      name = "custom",
+      selection_order = "near_cursor",
+    },
   },
-
   window = {
     completion = win_ui,
     documentation = win_ui,
   },
+  preselect = cmp.PreselectMode.None,
+
   snippet = {
     expand = function(args)
       vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
     end,
   },
+
   mapping = cmp.mapping.preset.insert {
     ["<C-n>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
     ["<C-p>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
