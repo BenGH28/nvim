@@ -30,6 +30,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
   desc = 'LSP: Disable hover capability from Ruff',
 })
 
+---@param client vim.lsp.Client
+---@param _ any
 local function documentHighlight(client, _)
   if client.server_capabilities.documentHighlightProvider then
     local hl = vim.api.nvim_set_hl
@@ -169,7 +171,7 @@ local function setup_servers()
     elseif server == "efm" then
       config.init_options = { documentFormatting = true }
       config.settings = efm_settings()
-      config.filetypes = { "sh", "lua", "markdown" }
+      config.filetypes = vim.tbl_keys(efm_settings().languages)
     elseif server == "pyright" then
       config.settings = {
         pyright = {
