@@ -29,7 +29,7 @@ return {
     lazy = false,
     dependencies = { "kyazdani42/nvim-web-devicons" },
     config = function()
-      require("alpha").setup(require("alpha.themes.startify").config)
+      require "core.ui.startify"
     end,
   },
   {
