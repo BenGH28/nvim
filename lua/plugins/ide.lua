@@ -1,17 +1,23 @@
 return {
   {
+    "williamboman/mason.nvim",
+    lazy = false,
+    opts = {}
+  },
+  {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
     config = function()
-      require('venom').setup()
+      local venom, err = pcall(require, 'venom')
+      if not err then
+        venom.setup()
+      end
+
       require "core.ide.lsp"
     end,
 
     dependencies = {
-      {
-        "williamboman/mason.nvim",
-        cmd = { "MasonUpdate", "Mason" }
-      },
+
 
       { 'folke/neoconf.nvim',           cmd = 'Neoconf', config = true },
       'rafi/neoconf-venom.nvim',

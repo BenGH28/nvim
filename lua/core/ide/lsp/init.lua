@@ -127,6 +127,9 @@ end
 local function efm_settings()
   return {
     languages = {
+      html = {
+        { formatCommand = "prettier ${--tab-width:tabWidth} ${--single-quote:singleQuote} --parser html", formatStdin = true }
+      },
       sh = {
         { formatCommand = "shfmt -i 4 -ci -s -bn", formatStdin = true },
         { lintCommand = "shellcheck -",            lintStdin = true },
