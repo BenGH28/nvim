@@ -57,7 +57,9 @@ return {
     lazy = false,
     priority = 1000,
     config = function()
-      require "core.ui.gruv"
+      if not vim.g.neovide then
+        require "core.ui.gruv"
+      end
     end
   },
   {
