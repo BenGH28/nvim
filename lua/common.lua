@@ -1,5 +1,6 @@
 local M = {}
 
+---@param filetype string
 function M.set_default_tab(filetype)
   -- get the ftplugin directory path
   local ftplugin = vim.fn.stdpath "config" .. "/ftplugin/"
@@ -14,12 +15,13 @@ function M.set_default_tab(filetype)
   end
 end
 
+---@param file string
 function M.edit_lua_file(file)
   local path = vim.fn.stdpath "config" .. "/lua/" .. file .. ".lua"
   vim.cmd("edit " .. path)
 end
 
--- @param file must hand in the extension
+---@param file string The filename must have the extension
 function M.edit_plugin_file(file)
   local path = vim.fn.stdpath "config" .. "/plugin/" .. file
   vim.cmd("edit " .. path)
