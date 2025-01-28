@@ -30,8 +30,6 @@ local opts = {
   indent = { enable = true },
   highlight = { enable = true },
   -- plugin modules
-  autotag = { enable = true },
-  rainbow = { enable = true, extended_mode = true },
   playground = {
     enable = true,
     disable = {},
@@ -115,7 +113,6 @@ vim.api.nvim_create_user_command("TSRefreshLang", function(args)
       os.execute(cmd)
     end
   end
-
   for _, query in ipairs(queries) do
     local cmd = "rm -f " .. query
     os.execute(cmd)
