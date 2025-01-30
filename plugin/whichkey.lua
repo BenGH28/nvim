@@ -290,6 +290,7 @@ wk.add({
   { "<leader>ls", ":LspStart<cr>",            desc = "start" },
   { "<leader>lr", ":LspRestart<cr>",          desc = "restart" },
   { "<leader>lp", ":LspStop<cr>",             desc = "stop" },
+  { "<leader>ll", ":LspLog<cr>",              desc = "log" },
 })
 wk.add({
   mode = "n",
