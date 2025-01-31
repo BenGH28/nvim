@@ -36,4 +36,5 @@ cmd("CleanShada", function()
   -- Remove matching files
   remove_matching_files(directory, pattern)
 end, { nargs = 0 })
+
 cmd("TrimSpace", [[:%s/\s\+$//ge]], { nargs = 0 })
