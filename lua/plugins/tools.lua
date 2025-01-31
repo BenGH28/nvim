@@ -1,5 +1,12 @@
 return {
   {
+    "BenGH28/koin.nvim",
+    cmd = { "Koin", "KoinLast", "KoinClear" },
+    config = function()
+      require "koin".setup()
+    end
+  },
+  {
     "LunarVim/bigfile.nvim",
     event = "VeryLazy",
     opts = {},
