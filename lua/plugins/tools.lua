@@ -4,7 +4,15 @@ return {
     cmd = { "Koin", "KoinLast", "KoinClear" },
     config = function()
       require "koin".setup()
-    end
+    end,
+    keys = {
+      {
+        "<leader>gl",
+        "<cmd>Koin lazygit<cr>",
+        desc = "lazygit"
+      }
+    }
+
   },
   {
     "LunarVim/bigfile.nvim",
