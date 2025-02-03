@@ -1,5 +1,11 @@
 return {
   {
+    "m4xshen/hardtime.nvim",
+    cmd = "Hardtime",
+    dependencies = { "MunifTanjim/nui.nvim" },
+    opts = {}
+  },
+  {
     "BenGH28/koin.nvim",
     cmd = { "Koin", "KoinLast", "KoinClear" },
     config = function()
