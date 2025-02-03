@@ -13,9 +13,9 @@ local show = function(lines)
   local col = (width - win_width) / 2
 
   local config = {
-    relative = "editor",
-    row = cursor[1],
-    col = cursor[2],
+    relative = "cursor",
+    row = 1,
+    col = 0,
     width = win_width,
     height = win_height,
     border = "rounded",
@@ -31,6 +31,7 @@ local show = function(lines)
 
   vim.api.nvim_buf_set_option(bufnr, "ft", "python")
   vim.api.nvim_buf_set_option(bufnr, "number", true)
+  vim.api.nvim_buf_set_option(bufnr, "relativenumber", true)
   vim.api.nvim_buf_set_option(bufnr, "modifiable", false)
 
   vim.keymap.set("n", "qq", function()
@@ -49,20 +50,27 @@ local decode = function(str)
   end)
 end
 
+local show_script = function()
+  local line = vim.api.nvim_get_current_line()
+  local decoded = decode(line)
+  local splits = vim.split(decoded, ":")
+
+  table.remove(splits, 1)
+  local subbed = table.concat(splits, ":")
+  subbed = subbed:sub(3, -2):gsub('"$', ""):gsub("%s+$", "")
+
+  local lines = vim.split(subbed, "\\n")
+  show(lines)
+end
+
+local script_qfx = function()
+  vim.cmd [[ :vim /"\(code\|script\)":/g % ]]
+  vim.cmd(":copen")
+end
 vim.api.nvim_create_autocmd("BufEnter", {
   pattern = "view.json",
   callback = function()
-    vim.keymap.set("n", "<leader>s", function()
-      local line = vim.api.nvim_get_current_line()
-      local decoded = decode(line)
-      local splits = vim.split(decoded, ":")
-
-      table.remove(splits, 1)
-      local subbed = table.concat(splits, ":")
-      subbed = subbed:sub(3, -2):gsub('"$', ""):gsub("%s+$", "")
-
-      local lines = vim.split(subbed, "\\n")
-      show(lines)
-    end, { buffer = true, desc = "open script window" })
+    vim.keymap.set("n", "<leader>ss", show_script, { buffer = true, desc = "show script" })
+    vim.keymap.set("n", "<leader>sq", script_qfx, { buffer = true, desc = "script quick fix" })
   end
 })
