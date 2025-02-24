@@ -34,7 +34,7 @@ setmap("n", "K", ":Lspsaga hover_doc<cr>", silence)
 
 --terminal escape
 --need to escape \ in the lua api
--- setmap("t", "<C<Esc>", "<C-\\><C-n>", noremap)
+setmap("t", "<Esc><Esc>", "<C-\\><C-n>", noremap)
 
 -- }}} regular
 
@@ -45,6 +45,7 @@ local good, wk = pcall(require, "which-key")
 if not good then
   return
 end
+
 
 --{{{ g mappings
 local gmaps = {
