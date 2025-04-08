@@ -72,6 +72,7 @@ return {
       { "nvim-telescope/telescope-symbols.nvim" },
       {
         "ahmedkhalf/project.nvim",
+        enabled = false,
         config = function()
           require "core.project"
         end,
@@ -117,7 +118,7 @@ return {
       vim.g.qs_max_chars = 150
     end,
     config = function()
-      -- need to have this after the plugin loads and not before which now I think of it should be obvious
+      -- need to have this after the plugin loads and not before
       vim.api.nvim_set_hl(0, "QuickScopePrimary", { underline = true, fg = "#61afe0" })
       vim.api.nvim_set_hl(0, "QuickScopeSecondary", { underline = true, fg = "#98d379" })
     end,

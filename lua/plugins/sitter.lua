@@ -16,7 +16,6 @@ return {
       },
       "nvim-treesitter/nvim-treesitter-textobjects",
       "nvim-treesitter/nvim-treesitter-context",
-      "nushell/tree-sitter-nu",
     },
     config = function()
       require "core.treesitter"

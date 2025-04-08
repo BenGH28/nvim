@@ -233,7 +233,7 @@ wk.add({
   },
   {
     "<leader>gu",
-    require("gitsigns").undo_stage_hunk,
+    require("gitsigns").stage_hunk,
     desc = "undo stage hunk",
   },
   {
