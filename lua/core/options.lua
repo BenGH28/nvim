@@ -42,19 +42,21 @@ vim.o.completeopt = "menu,menuone,noselect"
 vim.o.list = true
 vim.o.modeline = true
 vim.o.updatetime = 40
+
 vim.opt.listchars = {
   tab = "▸ ",
   eol = "⤶",
   precedes = "«",
   extends = "»",
 }
+
 vim.o.undofile = true
 -- allow us to increment or decrement alphabetical characters
 vim.cmd ":set nrformats+=alpha"
 vim.cmd "filetype plugin indent on"
 vim.cmd ":set cpo-=C"
 -- remove comment chars when joining lines, thanks tpope!
-vim.o.formatoptions = vim.o.formatoptions .. "j"
+vim.opt.formatoptions:append("j")
 vim.o.colorcolumn = "100"
 vim.g.codeium_disable_bindings = 1
 if vim.g.neovide then
@@ -68,7 +70,9 @@ if vim.g.neovide then
 end
 
 if vim.fn.has("win32") == 1 then
-  vim.opt.shell = "powershell"
+  vim.opt.shell = "pwsh.exe"
+  vim.opt.shellcmdflag = "-nologo -noprofile -ExecutionPolicy RemoteSigned -command"
+  vim.opt.shellxquote = ''
   vim.g.python3_host_prog = "C:\\Users\\bhunt\\scoop\\shims\\python3.exe"
 else
   vim.opt.shell = "zsh"
