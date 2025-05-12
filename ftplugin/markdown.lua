@@ -5,6 +5,6 @@ local glow = function()
   koin.show(cmd)
 end
 
-vim.keymap.set("n", "<leader>fm", glow)
+vim.keymap.set("n", "<leader>fm", glow, { desc = "render markdown with glow" })
 
 vim.api.nvim_buf_create_user_command(0, "Glow", glow, {})
