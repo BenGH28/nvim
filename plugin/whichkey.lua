@@ -137,7 +137,15 @@ wk.add({
 wk.add({
   mode = "n",
   { "<leader>f",  group = "+files" },
-  { "<leader>ff", ":Telescope find_files<cr>",   desc = "find files" },
+  {
+    "<leader>ff",
+    function()
+      require("telescope.builtin").find_files({
+        hidden = false
+      })
+    end,
+    desc = "find files"
+  },
   { "<leader>fj", ":w!<cr>",                     desc = "write file" },
   { "<leader>f/", ":Telescope live_grep<cr>",    desc = "live grep" },
   { "<leader>fl", ":Telescope buffers<cr>",      desc = "buffers" },
