@@ -154,7 +154,7 @@ local function setup_servers()
 
   require("neodev").setup()
   require("mason").setup()
-  require("mason-lspconfig").setup { ensure_installed = servers, automatic_installation = true }
+  require("mason-lspconfig").setup { ensure_installed = servers, automatic_installation = true, automatic_enable = false }
   local installed = require("mason-lspconfig").get_installed_servers() or servers
 
   local function server_config()
