@@ -78,3 +78,5 @@ else
   vim.opt.shell = "zsh"
   vim.g.python3_host_prog = "/bin/python3"
 end
+
+vim.o.grepprg = "rg --vimgrep"
