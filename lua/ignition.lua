@@ -63,7 +63,7 @@ local script_qfx = function()
 end
 
 vim.api.nvim_create_autocmd("BufEnter", {
-  pattern = "view.json",
+  pattern = { "view.json", "props.json" },
   callback = function()
     vim.keymap.set("n", "<leader>ss", show_script, { buffer = true, desc = "show script" })
     vim.keymap.set("n", "<leader>sq", script_qfx, { buffer = true, desc = "script quick fix" })
