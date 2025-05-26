@@ -181,6 +181,13 @@ local function setup_servers()
           -- Using Ruff's import organizer
           disableOrganizeImports = true,
         },
+        python = {
+          analysis = {
+            diagnosticSeverityOverrides = {
+              reportUndefinedVariable = 'none'
+            }
+          }
+        },
       }
     end
 
