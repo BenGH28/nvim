@@ -62,10 +62,20 @@ local script_qfx = function()
   vim.cmd(":copen")
 end
 
+local set_keys = function()
+  vim.keymap.set("n", "<leader>ss", show_script, { buffer = true, desc = "show script" })
+  vim.keymap.set("n", "<leader>sq", script_qfx, { buffer = true, desc = "script quick fix" })
+end
+
+local del_keys = function()
+  vim.keymap.del("n", "<leader>ss")
+  vim.keymap.del("n", "<leader>sq")
+end
+
 vim.api.nvim_create_autocmd("BufEnter", {
-  pattern = { "view.json", "props.json" },
-  callback = function()
-    vim.keymap.set("n", "<leader>ss", show_script, { buffer = true, desc = "show script" })
-    vim.keymap.set("n", "<leader>sq", script_qfx, { buffer = true, desc = "script quick fix" })
-  end
+  pattern = { "view.json", "props.json", "tags.json", "tag-groups.json" },
+  callback = set_keys
 })
+
+vim.api.nvim_buf_create_user_command(0, "FlameOn", set_keys, {})
+vim.api.nvim_buf_create_user_command(0, "FlameOff", del_keys, {})

@@ -61,7 +61,6 @@ au("Filetype", {
 })
 
 
--- autocmd TextYankPost * silent! lua vim.highlight.on_yank {higroup='Visual', timeout=300}
 local hi_yank = augroup("highlights-yank", opts)
 au("TextYankPost", {
   pattern = "*",
