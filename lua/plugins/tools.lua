@@ -70,13 +70,8 @@ return {
     dependencies = {
       { "nvim-telescope/telescope-file-browser.nvim" },
       { "nvim-telescope/telescope-symbols.nvim" },
-      {
-        "ahmedkhalf/project.nvim",
-        enabled = false,
-        config = function()
-          require "core.project"
-        end,
-      },
+      { "nvim-telescope/telescope-ui-select.nvim" },
+
     },
   },
 
