@@ -1,5 +1,5 @@
 local gruvbox = require("gruvbox")
-grey = "#555555"
+local grey = "#555555"
 gruvbox.setup({
   terminal_colors = true, -- add neovim terminal colors
   undercurl = true,
