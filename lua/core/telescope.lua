@@ -9,7 +9,7 @@ require("telescope").setup {
     },
     find_files = {
       theme = theme,
-      hidden = true,
+      hidden = false,
     },
     buffers = { theme = theme },
     help_tags = {

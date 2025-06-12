@@ -139,11 +139,7 @@ wk.add({
   { "<leader>f",  group = "+files" },
   {
     "<leader>ff",
-    function()
-      require("telescope.builtin").find_files({
-        hidden = false
-      })
-    end,
+    require("telescope.builtin").find_files,
     desc = "find files"
   },
   { "<leader>fj", ":w!<cr>",                     desc = "write file" },
