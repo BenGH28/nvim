@@ -31,8 +31,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
 })
 
 ---@param client vim.lsp.Client
----@param _ any
-local function documentHighlight(client, _)
+---@param bufnr integer
+local function documentHighlight(client, bufnr)
   if client.server_capabilities.documentHighlightProvider then
     local hl = vim.api.nvim_set_hl
     hl(0, "LspDiagnosticsVirtualTextInformation", { bold = true, fg = "#51afef", bg = "#202328" })
@@ -40,22 +40,22 @@ local function documentHighlight(client, _)
     hl(0, "LspDiagnosticsVirtualTextHint", { bold = true, fg = "#98c379", bg = "#202328" })
     hl(0, "LspDiagnosticsVirtualTextError", { bold = true, fg = "#ec5f67", bg = "#202328" })
 
-    local doc_highlight = augroup("lsp_document_highlight", {
+    local doc_highlight = augroup("lsp_document_highlight_" .. bufnr, {
       clear = true,
     })
     vim.api.nvim_clear_autocmds {
-      pattern = "*",
+      buffer = bufnr,
       group = doc_highlight,
     }
 
     au({ "CursorHold", "CursorHoldI" }, {
       group = doc_highlight,
-      pattern = "*",
+      buffer = bufnr,
       callback = vim.lsp.buf.document_highlight,
     })
     au({ "CursorMoved", "CursorMovedI" }, {
+      buffer = bufnr,
       group = doc_highlight,
-      pattern = "*",
       callback = vim.lsp.buf.clear_references,
     })
   end
