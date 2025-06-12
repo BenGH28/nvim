@@ -37,4 +37,16 @@ cmd("CleanShada", function()
   remove_matching_files(directory, pattern)
 end, { nargs = 0 })
 
+cmd("Make", function(t)
+  local result = vim.system({ "git", "rev-parse", "--show-toplevel" }, { text = true }):wait()
+  if result.code == 0 then
+    local dir = vim.trim(result.stdout)
+    vim.print(dir)
+
+    if vim.fn.getcwd() ~= dir then
+      vim.cmd("cd " .. dir)
+    end
+    vim.cmd.make({ args = { t.args } })
+  end
+end, { nargs = "*" })
 cmd("TrimSpace", [[:%s/\s\+$//ge]], { nargs = 0 })
