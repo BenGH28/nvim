@@ -142,6 +142,13 @@ wk.add({
     require("telescope.builtin").find_files,
     desc = "find files"
   },
+  {
+    "<leader>fw",
+    function()
+      require("telescope.builtin").grep_string({ grep_open_files = true })
+    end,
+    desc = "word search"
+  },
   { "<leader>fj", ":w!<cr>",                     desc = "write file" },
   { "<leader>f/", ":Telescope live_grep<cr>",    desc = "live grep" },
   { "<leader>fl", ":Telescope buffers<cr>",      desc = "buffers" },
@@ -170,7 +177,6 @@ wk.add({
     require("telescope.builtin").git_files,
     desc = "git files",
   },
-  { "<leader>fp", ":Telescope projects<cr>", desc = "projects" },
 })
 
 wk.add({

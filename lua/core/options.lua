@@ -71,7 +71,7 @@ end
 
 if vim.fn.has("win32") == 1 then
   vim.opt.shell = "pwsh.exe"
-  vim.opt.shellcmdflag = "-nologo -noprofile -ExecutionPolicy RemoteSigned -command"
+  vim.opt.shellcmdflag = "-noprofile"
   vim.opt.shellxquote = ''
   vim.g.python3_host_prog = "C:\\Users\\bhunt\\scoop\\shims\\python3.exe"
 else

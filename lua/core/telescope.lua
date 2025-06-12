@@ -2,6 +2,11 @@ local actions = require "telescope.actions"
 
 local theme = "ivy"
 require("telescope").setup {
+  extensions = {
+    ["ui-select"] = {
+      require("telescope.themes").get_dropdown {}
+    },
+  },
   pickers = {
     -- TODO: find a better way to set the default theme
     live_grep = {
@@ -31,6 +36,7 @@ require("telescope").setup {
         ["<C-j>"] = actions.move_selection_next,
         ["<C-k>"] = actions.move_selection_previous,
         ["<esc>"] = actions.close,
+        ["<C-q>"] = actions.send_to_qflist,
       },
     },
     vimgrep_arguments = {
