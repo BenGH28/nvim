@@ -7,7 +7,7 @@ local function remove_matching_files(directory, pattern)
   -- Open the directory
   local dir = uv.fs_opendir(directory, nil, 100)
   if not dir then
-    print("Failed to open directory: " .. directory)
+    vim.print("Failed to open directory: " .. directory)
     return
   end
 
@@ -41,12 +41,15 @@ cmd("Make", function(t)
   local result = vim.system({ "git", "rev-parse", "--show-toplevel" }, { text = true }):wait()
   if result.code == 0 then
     local dir = vim.trim(result.stdout)
-    vim.print(dir)
-
     if vim.fn.getcwd() ~= dir then
       vim.cmd("cd " .. dir)
     end
-    vim.cmd.make({ args = { t.args } })
+    if #t.args > 0 then
+      vim.cmd.make({ args = { t.args }, bang = t.bang })
+    else
+      vim.cmd.make({ bang = t.bang })
+    end
   end
-end, { nargs = "*" })
+end, { nargs = "*", bang = true })
+
 cmd("TrimSpace", [[:%s/\s\+$//ge]], { nargs = 0 })
