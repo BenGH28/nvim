@@ -55,7 +55,11 @@ return {
     config = function()
       require("mini.trailspace").setup()
       require("mini.splitjoin").setup()
+      require("mini.jump2d").setup()
     end,
+    keys = {
+      { "<leader>mj", "<cmd>lua MiniJump2d.start()<enter>", desc = "mini jump2d" }
+    }
   },
 
   { "lambdalisue/suda.vim", cmd = { "SudaRead", "SudaWrite" } },
