@@ -26,7 +26,7 @@ return {
       },
 
       -- snippet fill
-      { "rafamadriz/friendly-snippets", enabled = false },
+      { "rafamadriz/friendly-snippets", enabled = true },
 
       -- pictograms for the lsp
       {
@@ -39,7 +39,7 @@ return {
         "TheLeoP/powershell.nvim",
         opts = {
           bundle_path = vim.fn.stdpath "data" .. "/mason/packages/powershell-editor-services",
-          shell = "powershell.exe",
+          shell = "pwsh.exe",
         }
       },
 
@@ -61,8 +61,8 @@ return {
       -- get some snippet support
       {
         "hrsh7th/vim-vsnip",
-        setup = function()
-          vim.g.vsnip_snippet_dir = vim.fn.stdpath "config" .. "/vsnip"
+        init = function()
+          vim.g.vsnip_snippet_dir = vim.fn.stdpath("config") .. "/vsnip"
         end,
       },
       {

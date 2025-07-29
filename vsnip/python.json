@@ -1,0 +1,11 @@
+{
+  "dunder init": {
+    "prefix": "init",
+    "body": [
+      "def __init__(self, $1):",
+      "    # type: ($2) -> None",
+      "    $3"
+    ],
+    "description": "add __init__ method"
+  }
+}
