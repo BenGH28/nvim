@@ -29,8 +29,12 @@ setmap("n", "<C-h>", ":wincmd h<CR>", silence)
 setmap("n", "<C-j>", ":wincmd j<CR>", silence)
 setmap("n", "<C-k>", ":wincmd k<CR>", silence)
 setmap("n", "<C-l>", ":wincmd l<CR>", silence)
+setmap("n", "n", "nzz", silence)
+setmap("n", "N", "Nzz", silence)
 
-setmap("n", "K", ":Lspsaga hover_doc<cr>", silence)
+setmap("n", "K", function()
+  vim.lsp.buf.hover({ border = 'rounded' })
+end, silence)
 
 --terminal escape
 --need to escape \ in the lua api
