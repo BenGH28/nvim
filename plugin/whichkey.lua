@@ -135,7 +135,6 @@ wk.add({
   mode = "n",
   { "<leader>d", group = "+docs", icon = "󱔘" },
   { "<leader>dd", ":Dox<cr>", desc = "Doxygen" },
-  { "<leader>dk", ":Lspsaga hover_doc<cr>", desc = "hover doc" },
 })
 
 wk.add({
