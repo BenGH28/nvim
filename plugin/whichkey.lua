@@ -279,6 +279,11 @@ wk.add({
     require("gitsigns").reset_buffer_index,
     desc = "reset buffer index",
   },
+  {
+    "<leader>gg",
+    ":Git<cr>",
+    desc = "fugitive",
+  },
 })
 wk.add({
   mode = "n",
