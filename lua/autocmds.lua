@@ -69,3 +69,12 @@ au("TextYankPost", {
   end,
   group = hi_yank,
 })
+
+local ignition = augroup("ignition", opts)
+au("BufEnter", {
+  pattern = "code.py",
+  callback = function()
+    require("ignition")
+  end,
+  group = ignition,
+})

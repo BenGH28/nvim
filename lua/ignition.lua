@@ -1,6 +1,3 @@
-vim.bo.shiftwidth = 2
-vim.bo.tabstop = 2
-
 local show = function(lines)
   local default_size = 0.85
   local win_height = math.floor(#lines + 3)
@@ -74,8 +71,25 @@ end
 
 vim.api.nvim_create_autocmd("BufEnter", {
   pattern = { "view.json", "props.json", "tags.json", "tag-groups.json" },
-  callback = set_keys
+  callback = function()
+    vim.bo.shiftwidth = 2
+    vim.bo.tabstop = 2
+    set_keys()
+    vim.api.nvim_buf_create_user_command(0, "FlameOn", set_keys, {})
+    vim.api.nvim_buf_create_user_command(0, "FlameOff", del_keys, {})
+  end
 })
 
-vim.api.nvim_buf_create_user_command(0, "FlameOn", set_keys, {})
-vim.api.nvim_buf_create_user_command(0, "FlameOff", del_keys, {})
+local flame_find = function()
+  local telescope = require("telescope.builtin")
+  local path = "C:\\Program Files\\Inductive Automation\\Ignition\\data\\projects"
+  local opts = {
+    cwd = path,
+    find_command = { "rg", "--files", "--color", "never", "-g", "*.py", "-g", "*.json" }
+  }
+  telescope.find_files(opts)
+end
+
+vim.api.nvim_create_user_command("FlameFind", flame_find, { desc = "Find files in ignition directory" })
+
+vim.keymap.set("n", "<leader>fi", flame_find, { desc = "find ignition files" })
