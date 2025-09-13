@@ -20,3 +20,5 @@ hl(0, "VirtualTextWarning", { link = "DiagnosticVirtualTextWarning" })
 hl(0, "VirtualTextError", { link = "DiagnosticVirtualTextError" })
 hl(0, "VirtualTextInformation", { link = "DiagnosticVirtualTextInformation" })
 hl(0, "VirtualTextInfo", { link = "DiagnosticVirtualTextInformation" })
+
+require "theme"

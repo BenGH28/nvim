@@ -49,8 +49,8 @@ return {
   },
 
   {
-    "cpea2506/one_monokai.nvim",
-    lazy = true,
+    "JoosepAlviste/palenightfall.nvim",
+    lazy = false
   },
   {
     "ellisonleao/gruvbox.nvim",
@@ -60,8 +60,11 @@ return {
       require "core.ui.gruv"
     end
   },
-  {
-    "olimorris/onedarkpro.nvim",
-    lazy = false,
-  },
+  { "catppuccin/nvim",             lazy = false, },
+  { "dracula/vim",                 lazy = false, },
+  { "shaunsingh/nord.nvim",        lazy = false, },
+  { "folke/tokyonight.nvim",       lazy = false, },
+  { "marko-cerovac/material.nvim", lazy = false, },
+  { "Shatur/neovim-ayu",           lazy = false, },
+  { "olimorris/onedarkpro.nvim",   lazy = false, },
 }

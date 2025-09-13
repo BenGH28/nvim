@@ -61,10 +61,10 @@ vim.o.colorcolumn = "100"
 vim.g.codeium_disable_bindings = 1
 if vim.g.neovide then
   local font = "JetBrainsMono Nerd Font Mono"
-  if vim.fn.has "win32" then
+  if vim.fn.has "win32" == 1 then
     font = font .. ":h11"
   else
-    font = font .. ":h8"
+    font = font .. ":h9"
   end
   vim.o.guifont = font
 end
