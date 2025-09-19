@@ -29,7 +29,7 @@ return {
     "rcarriga/nvim-notify",
     lazy = false,
     config = function()
-      require("notify").setup {
+      require("notify").setup({
         background_color = "#282c34",
         fps = 30,
         icons = {
@@ -45,7 +45,8 @@ return {
         stages = "static",
         timeout = 5000,
         top_down = true,
-      }
+        merge_duplicates = true,
+      })
       vim.notify = require "notify"
     end,
   },
