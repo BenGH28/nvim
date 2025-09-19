@@ -78,3 +78,15 @@ au("BufEnter", {
   end,
   group = ignition,
 })
+
+au("BufWritePre", {
+  pattern = "*.py",
+  callback = function()
+    if #vim.lsp.get_clients({ bufnr = 0 }) > 0 then
+      vim.lsp.buf.code_action({
+        context = { only = { "source.organizeImports" } },
+        apply = true
+      })
+    end
+  end,
+})
