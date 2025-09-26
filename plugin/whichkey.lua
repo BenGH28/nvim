@@ -107,9 +107,9 @@ wk.add({
 wk.add({
   mode = 'n',
   { "<leader>b",  group = "+buffers" },
-  { "<leader>bn", ":bnext<cr>",      desc = "next" },
-  { "<leader>bp", ":bprev<cr>",      desc = "previous" },
-  { "<leader>bd", ":Bdelete!<cr>",   desc = "delete" },
+  { "<leader>bn", ":bnext<cr>",                      desc = "next" },
+  { "<leader>bp", ":bprev<cr>",                      desc = "previous" },
+  { "<leader>bd", ":lua MiniBufremove.delete()<cr>", desc = "delete" },
   {
     "<leader>bf",
     function()

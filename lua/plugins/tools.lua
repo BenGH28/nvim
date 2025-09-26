@@ -56,12 +56,12 @@ return {
     config = function()
       require("mini.trailspace").setup()
       require("mini.splitjoin").setup()
+      require("mini.bufremove").setup()
       require("mini.jump2d").setup({ mappings = { start_jumping = "<leader>mj" } })
     end,
   },
 
   { "lambdalisue/suda.vim", cmd = { "SudaRead", "SudaWrite" } },
-  { "moll/vim-bbye",        cmd = "Bdelete" },
 
   {
     "nvim-telescope/telescope.nvim",
@@ -120,12 +120,5 @@ return {
       vim.api.nvim_set_hl(0, "QuickScopePrimary", { underline = true, fg = "#61afe0" })
       vim.api.nvim_set_hl(0, "QuickScopeSecondary", { underline = true, fg = "#98d379" })
     end,
-  },
-
-  {
-    'smoka7/hop.nvim',
-    version = "*",
-    opts = {},
-    event = "BufEnter",
   },
 }
