@@ -194,7 +194,8 @@ local function setup_servers()
     if server == "rust_analyzer" then
       require("rust-tools").setup(rust_opts())
     else
-      require("lspconfig")[server].setup(config)
+      vim.lsp.config(server, config)
+      vim.lsp.enable(server)
     end
   end
 end
