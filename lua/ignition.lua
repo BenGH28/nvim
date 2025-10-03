@@ -20,10 +20,10 @@ local show = function(lines)
 
   vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, lines)
 
-  vim.api.nvim_buf_set_option(bufnr, "ft", "python")
-  vim.api.nvim_buf_set_option(bufnr, "number", true)
-  vim.api.nvim_buf_set_option(bufnr, "relativenumber", true)
-  vim.api.nvim_buf_set_option(bufnr, "modifiable", false)
+  vim.api.nvim_set_option_value("ft", "python", { buf = bufnr })
+  vim.api.nvim_set_option_value("number", true, { buf = bufnr })
+  vim.api.nvim_set_option_value("relativenumber", true, { buf = bufnr })
+  vim.api.nvim_set_option_value("modifiable", false, { buf = bufnr })
 
   vim.keymap.set("n", "qq", function()
     vim.api.nvim_buf_delete(bufnr, {})

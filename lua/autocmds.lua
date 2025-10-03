@@ -34,7 +34,7 @@ local tabstops = augroup("tabstops", opts)
 au("BufEnter", {
   pattern = "*",
   callback = function()
-    require("common").set_default_tab(vim.api.nvim_buf_get_option(0, "filetype"))
+    require("common").set_default_tab(vim.api.nvim_get_option_value("filetype", { buf = 0 }))
   end,
   group = tabstops,
 })
