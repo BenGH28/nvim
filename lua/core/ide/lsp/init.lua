@@ -200,4 +200,5 @@ local function setup_servers()
   end
 end
 
+vim.keymap.set("n", "<leader>ldq", vim.diagnostic.setqflist, { desc = "diagnostics in quickfix list" })
 setup_servers()
