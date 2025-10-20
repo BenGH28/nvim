@@ -80,9 +80,11 @@ vim.api.nvim_create_autocmd("BufEnter", {
   end
 })
 
+local data_path = function() return "C:\\Program Files\\Inductive Automation\\Ignition\\data" end
+
 local flame_find = function()
   local telescope = require("telescope.builtin")
-  local path = "C:\\Program Files\\Inductive Automation\\Ignition\\data\\projects"
+  local path = data_path() .. "\\projects"
   local opts = {
     cwd = path,
     find_command = { "rg", "--files", "--color", "never", "-g", "*.py", "-g", "*.json" }
@@ -93,3 +95,25 @@ end
 vim.api.nvim_create_user_command("FlameFind", flame_find, { desc = "Find files in ignition directory" })
 
 vim.keymap.set("n", "<leader>fi", flame_find, { desc = "find ignition files" })
+
+
+local flame_scan = function()
+  local url = "http://localhost:8088/data/api/v1/scan/projects"
+  local secret_path = data_path() .. "\\secrets.json"
+  local contents = vim.fn.readfile(secret_path)
+
+  local json_str = table.concat(contents, '\n')
+  local results = vim.json.decode(json_str)
+  local header = "X-Ignition-API-Token: " .. results.ignition
+  local response = vim.fn.system {
+    "curl",
+    "-XPOST",
+    "-s",
+    "-H",
+    header,
+    url,
+  }
+  vim.notify(response)
+end
+
+vim.api.nvim_create_user_command("FlameScan", flame_scan, { desc = "Trigger scan of ignition files" })
