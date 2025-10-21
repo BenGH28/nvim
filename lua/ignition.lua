@@ -113,7 +113,8 @@ local flame_scan = function()
     header,
     url,
   }
-  vim.notify(response)
+  vim.notify(response, vim.log.levels.INFO, { title = "Ignition" })
 end
 
 vim.api.nvim_create_user_command("FlameScan", flame_scan, { desc = "Trigger scan of ignition files" })
+vim.keymap.set("n", "<leader>is", flame_scan, { desc = "scan ignition" })
