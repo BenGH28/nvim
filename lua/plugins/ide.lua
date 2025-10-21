@@ -66,6 +66,12 @@ return {
         end,
       },
       {
+        "j-hui/fidget.nvim",
+        version = "*",
+        opts = {
+        },
+      },
+      {
         "mfussenegger/nvim-dap",
       },
     },
