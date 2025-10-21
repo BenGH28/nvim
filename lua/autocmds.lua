@@ -79,6 +79,7 @@ au("BufEnter", {
   group = ignition,
 })
 
+local python = augroup("python", opts)
 au("BufWritePre", {
   pattern = "*.py",
   callback = function()
@@ -89,4 +90,5 @@ au("BufWritePre", {
       })
     end
   end,
+  group = python
 })
