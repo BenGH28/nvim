@@ -409,7 +409,11 @@ wk.add {
 wk.add {
   {
     "<leader>y",
-    require("telescope.builtin").symbols,
+    function()
+      local builtin = require('telescope.builtin')
+      local themes = require('telescope.themes')
+      builtin.symbols(themes.get_ivy({}))
+    end,
     desc = "symbols",
   },
 }
