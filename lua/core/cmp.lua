@@ -1,4 +1,5 @@
 -- Setup nvim-cmp.
+require("cmp-ignition")
 local cmp = require "cmp"
 
 
@@ -76,6 +77,7 @@ cmp.setup {
     { name = "buffer" },
     { name = "cmdline" },
     { name = "nvim_lsp_signature_help" },
+    { name = "ignition" },
     {
       name = "tmux",
       options = {
