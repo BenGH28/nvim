@@ -57,7 +57,7 @@ require("telescope").setup {
       "--smart-case",
     },
     path_display = {
-      "absolute",
+      truncate = 3
     },
     prompt_prefix = " ",
     selection_caret = " ",
@@ -83,4 +83,3 @@ require("telescope").setup {
 
 require("telescope").load_extension "file_browser"
 require("telescope").load_extension("ui-select")
-require('telescope').load_extension('fzf')
