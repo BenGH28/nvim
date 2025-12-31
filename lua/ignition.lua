@@ -434,10 +434,8 @@ local browse_ignition_symbols = function()
   telescope.live_grep({
     cwd = search_path,
     prompt_title = "Ignition Symbols",
-    default_text = "^(class|def) ",
-    additional_args = function()
-      return { "--glob", "*.py" }
-    end
+    default_text = "^\\s*(class|def)\\s",
+    glob_pattern = "*.py",
   })
 end
 
