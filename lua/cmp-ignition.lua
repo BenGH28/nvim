@@ -105,6 +105,46 @@ local function extract_docstring(lines, start_idx)
   return table.concat(docstring_lines, "\n"):gsub("^%s*", ""):gsub("%s*$", "")
 end
 
+-- Strip `self` or `cls` from parameter list for display
+local function strip_self_param(params)
+  if not params then return "" end
+  -- Remove leading self/cls with optional comma and whitespace
+  local stripped = params:gsub("^%s*self%s*,?%s*", ""):gsub("^%s*cls%s*,?%s*", "")
+  return stripped
+end
+
+-- Parse a function definition that may span multiple lines
+-- Returns: func_name, params, end_line_idx (or nil if not a function def)
+local function parse_function_def(lines, start_idx, indent_pattern)
+  local line = lines[start_idx]
+  local indent, func_name, rest = line:match("^(" .. indent_pattern .. ")def%s+([%w_]+)%(%s*(.*)$")
+  if not func_name then return nil end
+
+  -- Check if signature completes on this line
+  local params_end = rest:match("^(.-)%)%s*:")
+  if params_end then
+    return indent, func_name, params_end, start_idx
+  end
+
+  -- Multi-line signature: collect params until we find ):\s*$
+  local param_parts = { rest }
+  for i = start_idx + 1, math.min(start_idx + 20, #lines) do
+    local cont_line = lines[i]
+    local closing = cont_line:match("^%s*(.-)%)%s*:?%s*$")
+    if closing then
+      param_parts[#param_parts + 1] = closing
+      local full_params = table.concat(param_parts, " ")
+      -- Normalize whitespace
+      full_params = full_params:gsub("%s+", " "):gsub("^%s*", ""):gsub("%s*$", "")
+      return indent, func_name, full_params, i
+    else
+      param_parts[#param_parts + 1] = cont_line:gsub("^%s*", "")
+    end
+  end
+
+  return nil -- Never found closing
+end
+
 -- Extract symbols (def/class) from a code.py file
 local function get_symbols(filepath)
   local stat = vim.uv.fs_stat(filepath)
@@ -113,29 +153,127 @@ local function get_symbols(filepath)
   local symbols = {}
   local lines = vim.fn.readfile(filepath)
 
+  -- Track current class context for method parsing
+  local current_class = nil
+  local current_class_indent = nil
+
   for i, line in ipairs(lines) do
     -- Match top-level class definitions
     local class_name = line:match("^class%s+([%w_]+)")
     if class_name then
+      current_class = class_name
+      current_class_indent = 0
       local docstring = extract_docstring(lines, i + 1)
       table.insert(symbols, {
         name = class_name,
         kind = 7, -- Class
         docstring = docstring,
       })
+    elseif current_class then
+      -- Check if we've left the class (non-indented, non-empty, non-comment line)
+      if not line:match("^%s") and not line:match("^%s*$") and not line:match("^%s*#") then
+        current_class = nil
+        current_class_indent = nil
+      else
+        -- Match class-level attributes (single indent, not in a method)
+        local class_indent, attr_name, attr_value = line:match("^(%s+)([%w_]+)%s*=%s*(.+)$")
+        if class_indent and attr_name and not attr_name:match("^_") then
+          -- Verify it's at class level (single indent, not deeper)
+          local indent_len = #class_indent
+          -- Simple heuristic: class attributes typically have 2-4 spaces of indent
+          if indent_len > 0 and indent_len <= 4 then
+            -- Check if this is NOT inside a method (next non-empty line shouldn't be more indented unless it's the first line after class)
+            local is_class_attr = true
+            -- Look back to see if we just had a def line
+            if i > 1 then
+              local prev_line = lines[i - 1]
+              if prev_line:match("^%s+def%s+") then
+                is_class_attr = false
+              end
+            end
+
+            if is_class_attr then
+              -- Extract type from value if it looks like a typed constant
+              local inferred_type = nil
+              if attr_value:match("^%d+$") then
+                inferred_type = "int"
+              elseif attr_value:match("^%d+%.%d+$") then
+                inferred_type = "float"
+              elseif attr_value:match('^["\']') then
+                inferred_type = "str"
+              elseif attr_value:match("^%[") then
+                inferred_type = "list"
+              elseif attr_value:match("^{") then
+                inferred_type = "dict"
+              end
+
+              -- Check for inline type comment
+              local type_comment = attr_value:match("#%s*type:%s*(.+)%s*$")
+
+              table.insert(symbols, {
+                name = attr_name,
+                kind = 5, -- Field/Property
+                parent_class = current_class,
+                var_type = type_comment or inferred_type,
+                is_class_attribute = true,
+              })
+            end
+          end
+        end
+
+        -- Match method inside class (indented def) - supports multi-line signatures
+        local indent, method_name, params, end_idx = parse_function_def(lines, i, "%s+")
+        if indent and #indent > 0 and method_name then
+          -- Check line after signature for type comment
+          local type_comment = nil
+          local docstring_start = end_idx + 1
+          if end_idx + 1 <= #lines then
+            local next_line = lines[end_idx + 1]
+            type_comment = next_line:match("^%s*#%s*type:%s*(.+)%s*$")
+            if type_comment then
+              docstring_start = end_idx + 2
+            end
+          end
+
+          local docstring = extract_docstring(lines, docstring_start)
+
+          -- Determine if classmethod/staticmethod (check previous line for decorator)
+          local is_classmethod = i > 1 and lines[i - 1]:match("^%s*@classmethod")
+          local is_staticmethod = i > 1 and lines[i - 1]:match("^%s*@staticmethod")
+
+          -- Strip self/cls for display
+          local display_params = strip_self_param(params)
+          local signature = method_name .. "(" .. display_params .. ")"
+          if type_comment then
+            signature = signature .. "  # type: " .. type_comment
+          end
+
+          table.insert(symbols, {
+            name = method_name,
+            kind = 2, -- Method
+            parent_class = current_class,
+            signature = signature,
+            parameters = display_params,
+            type_comment = type_comment,
+            docstring = docstring,
+            is_classmethod = is_classmethod,
+            is_staticmethod = is_staticmethod,
+          })
+        end
+      end
     end
 
-    -- Match top-level function definitions with parameters
-    local func_name, params = line:match("^def%s+([%w_]+)%((.-)%)%s*:")
+    -- Match top-level function definitions with parameters - supports multi-line signatures
+    local _, func_name, params, end_idx = parse_function_def(lines, i, "")
     if func_name then
-      -- Check next line for type comment: `# type: (int, str) -> bool`
+      -- Check line after signature for type comment: `# type: (int, str) -> bool`
       local type_comment = nil
-      local docstring_start = i + 1
-      if i + 1 <= #lines then
-        local next_line = lines[i + 1]
+      local docstring_start = end_idx + 1
+      if end_idx + 1 <= #lines then
+        local next_line = lines[end_idx + 1]
         type_comment = next_line:match("^%s*#%s*type:%s*(.+)%s*$")
         if type_comment then
-          docstring_start = i + 2
+          docstring_start = end_idx + 2
         end
       end
 
@@ -228,30 +366,102 @@ function source:complete(params, callback)
       -- Complete with symbols from this module
       local symbols = get_symbols(mod.file)
       for _, sym in ipairs(symbols) do
-        -- Build detail line
-        local detail = sym.signature or (sym.var_type and (sym.name .. ": " .. sym.var_type)) or
-            (mod.path .. "." .. sym.name)
+        -- Skip methods - they're accessed via ClassName.method
+        if not sym.parent_class then
+          -- Build detail line
+          local detail = sym.signature or (sym.var_type and (sym.name .. ": " .. sym.var_type)) or
+              (mod.path .. "." .. sym.name)
 
-        -- Build documentation with docstring if available
-        local doc_parts = {}
-        if sym.docstring then
-          table.insert(doc_parts, sym.docstring)
-          table.insert(doc_parts, "")
+          -- Build documentation with docstring if available
+          local doc_parts = {}
+          if sym.docstring then
+            table.insert(doc_parts, sym.docstring)
+            table.insert(doc_parts, "")
+          end
+          table.insert(doc_parts, "From: " .. mod.path)
+
+          table.insert(items, {
+            label = sym.name,
+            kind = sym.kind,
+            detail = detail,
+            documentation = {
+              kind = "markdown",
+              value = table.concat(doc_parts, "\n"),
+            },
+          })
         end
-        table.insert(doc_parts, "From: " .. mod.path)
-
-        table.insert(items, {
-          label = sym.name,
-          kind = sym.kind,
-          detail = detail,
-          documentation = {
-            kind = "markdown",
-            value = table.concat(doc_parts, "\n"),
-          },
-        })
       end
       callback(items)
       return
+    end
+
+    -- Check if prefix matches module.ClassName. (for method completion)
+    if prefix:match("%.$") then
+      local symbols = get_symbols(mod.file)
+      for _, sym in ipairs(symbols) do
+        if sym.kind == 7 then -- Class
+          local class_path = mod.path .. "." .. sym.name
+          if class_path == prefix_no_dot then
+            -- Complete with methods and attributes of this class
+            for _, member_sym in ipairs(symbols) do
+              if member_sym.parent_class == sym.name then
+                local doc_parts = {}
+
+                -- Handle class attributes
+                if member_sym.is_class_attribute then
+                  if member_sym.var_type then
+                    table.insert(doc_parts, "Type: " .. member_sym.var_type)
+                    table.insert(doc_parts, "")
+                  end
+                  table.insert(doc_parts, "Class attribute")
+                  table.insert(doc_parts, "From: " .. class_path)
+
+                  local detail = member_sym.name
+                  if member_sym.var_type then
+                    detail = detail .. ": " .. member_sym.var_type
+                  end
+
+                  table.insert(items, {
+                    label = member_sym.name,
+                    kind = member_sym.kind,
+                    detail = detail,
+                    documentation = {
+                      kind = "markdown",
+                      value = table.concat(doc_parts, "\n"),
+                    },
+                  })
+                  -- Handle methods
+                else
+                  if member_sym.docstring then
+                    table.insert(doc_parts, member_sym.docstring)
+                    table.insert(doc_parts, "")
+                  end
+                  if member_sym.is_classmethod then
+                    table.insert(doc_parts, "@classmethod")
+                  elseif member_sym.is_staticmethod then
+                    table.insert(doc_parts, "@staticmethod")
+                  end
+                  table.insert(doc_parts, "From: " .. class_path)
+
+                  table.insert(items, {
+                    label = member_sym.name,
+                    kind = member_sym.kind,
+                    detail = member_sym.signature,
+                    documentation = {
+                      kind = "markdown",
+                      value = table.concat(doc_parts, "\n"),
+                    },
+                  })
+                end
+              end
+            end
+            if #items > 0 then
+              callback(items)
+              return
+            end
+          end
+        end
+      end
     end
   end
 
