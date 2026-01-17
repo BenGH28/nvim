@@ -1,12 +1,12 @@
 -- setting personal options
 require "core.options"
+require "core.autocmds"
 
 -- lazy.nvim
 require "mylazy"
 
 require "cmd"
 -- autocommands
-require "autocmds"
 
 local hl = vim.api.nvim_set_hl
 -- "need this for lsp diagnostic virtual text
@@ -22,4 +22,3 @@ hl(0, "VirtualTextInformation", { link = "DiagnosticVirtualTextInformation" })
 hl(0, "VirtualTextInfo", { link = "DiagnosticVirtualTextInformation" })
 
 require "quickfix"
-require "theme"

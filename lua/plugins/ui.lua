@@ -1,5 +1,16 @@
 return {
-  { "folke/which-key.nvim" },
+  {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    opts = {
+      preset = "helix",
+    },
+    config = function()
+      require "core.ui.whichkey"
+    end
+  },
+
+
   {
     "lukas-reineke/indent-blankline.nvim",
     event = "BufRead",
