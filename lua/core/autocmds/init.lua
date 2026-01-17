@@ -68,7 +68,7 @@ local ignition = augroup("ignition", opts)
 au("BufEnter", {
   pattern = "code.py",
   callback = function()
-    require("ignition")
+    require("core.ignition").setup()
   end,
   group = ignition,
 })

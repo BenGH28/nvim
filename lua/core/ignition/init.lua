@@ -92,10 +92,6 @@ local flame_find = function()
   telescope.find_files(opts)
 end
 
-vim.api.nvim_create_user_command("FlameFind", flame_find, { desc = "Find files in ignition directory" })
-
-vim.keymap.set("n", "<leader>fi", flame_find, { desc = "find ignition files" })
-
 
 local flame_scan = function()
   local url = "http://localhost:8088/data/api/v1/scan/projects"
@@ -116,8 +112,6 @@ local flame_scan = function()
   vim.notify(response, vim.log.levels.INFO, { title = "Ignition" })
 end
 
-vim.api.nvim_create_user_command("FlameScan", flame_scan, { desc = "Trigger scan of ignition files" })
-vim.keymap.set("n", "<leader>is", flame_scan, { desc = "scan ignition" })
 
 -- ============================================================================
 -- CROSS-MODULE NAVIGATION
@@ -439,23 +433,35 @@ local browse_ignition_symbols = function()
   })
 end
 
--- Keybindings for navigation
-vim.keymap.set("n", "<leader>ig", goto_ignition_module, { desc = "[ignition] go to module" })
-vim.keymap.set("n", "<leader>if", function()
-  search_ignition_symbol(vim.fn.expand("<cword>"))
-end, { desc = "[ignition] find symbol" })
-vim.keymap.set("n", "<leader>it", telescope_symbol_search, { desc = "[ignition] telescope symbol search" })
-vim.keymap.set("n", "<leader>ib", browse_ignition_symbols, { desc = "[ignition] browse symbols" })
 
--- Commands
-vim.api.nvim_create_user_command("IgnitionGoto", goto_ignition_module, { desc = "Go to Ignition module under cursor" })
-vim.api.nvim_create_user_command("IgnitionFind", function(opts)
-  if opts.args and opts.args ~= "" then
-    search_ignition_symbol(opts.args)
-  else
+local M = {}
+M.setup = function()
+  -- Keybindings for navigation
+  vim.keymap.set("n", "<leader>ig", goto_ignition_module, { desc = "[ignition] go to module" })
+  vim.keymap.set("n", "<leader>if", function()
     search_ignition_symbol(vim.fn.expand("<cword>"))
-  end
-end, { nargs = "?", desc = "Find Ignition symbol definition" })
-vim.api.nvim_create_user_command("IgnitionSearch", telescope_symbol_search,
-  { desc = "Search Ignition symbols with Telescope" })
-vim.api.nvim_create_user_command("IgnitionBrowse", browse_ignition_symbols, { desc = "Browse all Ignition symbols" })
+  end, { desc = "[ignition] find symbol" })
+  vim.keymap.set("n", "<leader>it", telescope_symbol_search, { desc = "[ignition] telescope symbol search" })
+  vim.keymap.set("n", "<leader>ib", browse_ignition_symbols, { desc = "[ignition] browse symbols" })
+
+  -- Commands
+  vim.api.nvim_create_user_command("IgnitionGoto", goto_ignition_module, { desc = "Go to Ignition module under cursor" })
+  vim.api.nvim_create_user_command("IgnitionFind", function(opts)
+    if opts.args and opts.args ~= "" then
+      search_ignition_symbol(opts.args)
+    else
+      search_ignition_symbol(vim.fn.expand("<cword>"))
+    end
+  end, { nargs = "?", desc = "Find Ignition symbol definition" })
+  vim.api.nvim_create_user_command("IgnitionSearch", telescope_symbol_search,
+    { desc = "Search Ignition symbols with Telescope" })
+  vim.api.nvim_create_user_command("IgnitionBrowse", browse_ignition_symbols, { desc = "Browse all Ignition symbols" })
+
+  vim.api.nvim_create_user_command("FlameFind", flame_find, { desc = "Find files in ignition directory" })
+
+  vim.keymap.set("n", "<leader>fi", flame_find, { desc = "find ignition files" })
+
+  vim.api.nvim_create_user_command("FlameScan", flame_scan, { desc = "Trigger scan of ignition files" })
+  vim.keymap.set("n", "<leader>is", flame_scan, { desc = "scan ignition" })
+end
+return M

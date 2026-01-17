@@ -1,5 +1,5 @@
 -- Setup nvim-cmp.
-require("cmp-ignition")
+require("core.ignition.cmp")
 local cmp = require "cmp"
 
 
