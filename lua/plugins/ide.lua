@@ -17,8 +17,6 @@ return {
     end,
 
     dependencies = {
-
-
       { 'folke/neoconf.nvim',           cmd = 'Neoconf', config = true },
       'rafi/neoconf-venom.nvim',
       {

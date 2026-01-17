@@ -47,24 +47,4 @@ return {
       require "core.ui.lualine"
     end,
   },
-
-  {
-    "JoosepAlviste/palenightfall.nvim",
-    lazy = false
-  },
-  {
-    "ellisonleao/gruvbox.nvim",
-    lazy = false,
-    priority = 1000,
-    config = function()
-      require "core.ui.gruv"
-    end
-  },
-  { "catppuccin/nvim",             lazy = false, },
-  { "dracula/vim",                 lazy = false, },
-  { "shaunsingh/nord.nvim",        lazy = false, },
-  { "folke/tokyonight.nvim",       lazy = false, },
-  { "marko-cerovac/material.nvim", lazy = false, },
-  { "Shatur/neovim-ayu",           lazy = false, },
-  { "olimorris/onedarkpro.nvim",   lazy = false, },
 }

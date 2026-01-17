@@ -15,7 +15,8 @@ vim.opt.rtp:prepend(lazypath)
 
 local opts = {
   change_detection = {
-    notify = false,
+    notify = true,
+    enabled = true,
   },
   install = {
     missing = true,

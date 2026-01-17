@@ -1,33 +1,31 @@
-require "core.ide.lsp.vsnip"
-require "core.ide.lsp.lspsaga"
+require("core.ide.lsp.vsnip")
+require("core.ide.lsp.lspsaga")
 
-
-vim.diagnostic.config {
+vim.diagnostic.config({
   update_in_insert = true,
   signs = true,
   underline = true,
   virtual_text = {
     prefix = "●",
   },
-}
+})
 
 local augroup = vim.api.nvim_create_augroup
 local au = vim.api.nvim_create_autocmd
 
-
 vim.api.nvim_create_autocmd("LspAttach", {
-  group = augroup('lsp_attach_disable_ruff_hover', { clear = true }),
+  group = augroup("lsp_attach_disable_ruff_hover", { clear = true }),
   callback = function(args)
     local client = vim.lsp.get_client_by_id(args.data.client_id)
     if client == nil then
       return
     end
-    if client.name == 'ruff' then
+    if client.name == "ruff" then
       -- Disable hover in favour of Pyright
       client.server_capabilities.hoverProvider = false
     end
   end,
-  desc = 'LSP: Disable hover capability from Ruff',
+  desc = "LSP: Disable hover capability from Ruff",
 })
 
 ---@param client vim.lsp.Client
@@ -43,10 +41,10 @@ local function documentHighlight(client, bufnr)
     local doc_highlight = augroup("lsp_document_highlight_" .. bufnr, {
       clear = true,
     })
-    vim.api.nvim_clear_autocmds {
+    vim.api.nvim_clear_autocmds({
       buffer = bufnr,
       group = doc_highlight,
-    }
+    })
 
     au({ "CursorHold", "CursorHoldI" }, {
       group = doc_highlight,
@@ -63,17 +61,17 @@ end
 
 local function format_on_save()
   local format = augroup("format", { clear = true })
-  vim.api.nvim_clear_autocmds {
+  vim.api.nvim_clear_autocmds({
     pattern = "*",
     group = format,
-  }
+  })
 
   -- aha now we have format on save
   au("BufWritePre", {
     pattern = "*",
     callback = function()
       if #vim.lsp.get_clients({ bufnr = 0 }) > 0 then
-        vim.lsp.buf.format { async = false }
+        vim.lsp.buf.format({ async = false })
       end
     end,
     group = format,
@@ -91,16 +89,16 @@ local function lua_settings()
       runtime = {
         -- Tell the language server which version of Lua you're using
         -- (most likely LuaJIT in the case of Neovim)
-        version = 'LuaJIT'
+        version = "LuaJIT",
       },
       -- Make the server aware of Neovim runtime files
       workspace = {
         checkThirdParty = false,
         library = {
-          vim.env.VIMRUNTIME
-        }
-      }
-    }
+          vim.env.VIMRUNTIME,
+        },
+      },
+    },
   }
 end
 
@@ -108,7 +106,12 @@ local function rust_opts()
   return {
     server = {
       on_attach = function(_, bufnr)
-        vim.keymap.set("n", "<leader-dk>", require("rust-tools").hover_actions.hover_actions, { buffer = bufnr })
+        vim.keymap.set(
+          "n",
+          "<leader-dk>",
+          require("rust-tools").hover_actions.hover_actions,
+          { buffer = bufnr }
+        )
       end,
     },
     tools = {
@@ -122,13 +125,14 @@ local function rust_opts()
   }
 end
 
-
-
 local function efm_settings()
   return {
     languages = {
       html = {
-        { formatCommand = "prettier ${--tab-width:tabWidth} ${--single-quote:singleQuote} --parser html", formatStdin = true }
+        {
+          formatCommand = "prettier ${--tab-width:tabWidth} ${--single-quote:singleQuote} --parser html",
+          formatStdin = true,
+        },
       },
       sh = {
         { formatCommand = "shfmt -i 4 -ci -s -bn", formatStdin = true },
@@ -154,8 +158,9 @@ local function setup_servers()
 
   require("neodev").setup()
   require("mason").setup()
-  require("mason-lspconfig").setup { ensure_installed = servers, automatic_installation = true, automatic_enable = false }
-  local installed = require("mason-lspconfig").get_installed_servers() or servers
+  -- require("mason-lspconfig").setup { ensure_installed = servers, automatic_installation = true, automatic_enable = false }
+  -- local installed = require("mason-lspconfig").get_installed_servers() or servers
+  local installed = servers
 
   local function server_config()
     local client_capabilites = vim.lsp.protocol.make_client_capabilities()
@@ -184,19 +189,15 @@ local function setup_servers()
         python = {
           analysis = {
             diagnosticSeverityOverrides = {
-              reportUndefinedVariable = 'none'
-            }
-          }
+              reportUndefinedVariable = "none",
+            },
+          },
         },
       }
     end
 
-    if server == "rust_analyzer" then
-      require("rust-tools").setup(rust_opts())
-    else
-      vim.lsp.config(server, config)
-      vim.lsp.enable(server)
-    end
+    vim.lsp.config(server, config)
+    vim.lsp.enable(server)
   end
 end
 
