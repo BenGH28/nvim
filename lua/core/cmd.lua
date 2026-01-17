@@ -53,3 +53,31 @@ cmd("Make", function(t)
 end, { nargs = "*", bang = true })
 
 cmd("TrimSpace", [[:%s/\s\+$//ge]], { nargs = 0 })
+
+
+
+local explore = {
+  left = "Lexplore",
+  right = "Lexplore!",
+  bottom = "Hexplore",
+  top = "Hexplore!",
+  tabbed = "Texplore",
+  full = "Explore",
+}
+
+cmd("Configs", function(args)
+  local direction = nil
+  if #args.args > 0 then
+    direction = args.args
+  else
+    direction = "bottom"
+  end
+  -- override defaults with user opts
+  local configs = vim.fn.stdpath "config"
+  vim.cmd(explore[direction] .. " " .. configs)
+end, {
+  nargs = '?',
+  complete = function(a, b)
+    return vim.tbl_keys(explore)
+  end
+})

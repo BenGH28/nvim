@@ -152,9 +152,7 @@ wk.add({
   },
   {
     "<leader>fvn",
-    function()
-      require("go_to_plugins").configs({})
-    end,
+    ":Configs",
     desc = "goto neovim config in Netrw",
   },
   {
@@ -165,6 +163,15 @@ wk.add({
       })
     end,
     desc = "grep a word in nvim config",
+  },
+  {
+    "<leader>fvp",
+    function()
+      require "telescope.builtin".find_files({
+        cwd = vim.fn.stdpath("data")
+      })
+    end,
+    desc = "goto any neovim plugin file using Telescope",
   },
   {
     "<leader>fvt",
