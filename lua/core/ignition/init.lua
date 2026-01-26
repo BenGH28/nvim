@@ -438,7 +438,7 @@ local M = {}
 M.setup = function()
   -- Keybindings for navigation
   vim.keymap.set("n", "<leader>ig", goto_ignition_module, { desc = "[ignition] go to module" })
-  vim.keymap.set("n", "<leader>if", function()
+  vim.keymap.set("n", "<leader>ifs", function()
     search_ignition_symbol(vim.fn.expand("<cword>"))
   end, { desc = "[ignition] find symbol" })
   vim.keymap.set("n", "<leader>it", telescope_symbol_search, { desc = "[ignition] telescope symbol search" })
@@ -459,7 +459,7 @@ M.setup = function()
 
   vim.api.nvim_create_user_command("FlameFind", flame_find, { desc = "Find files in ignition directory" })
 
-  vim.keymap.set("n", "<leader>fi", flame_find, { desc = "find ignition files" })
+  vim.keymap.set("n", "<leader>iff", flame_find, { desc = "find ignition files" })
 
   vim.api.nvim_create_user_command("FlameScan", flame_scan, { desc = "Trigger scan of ignition files" })
   vim.keymap.set("n", "<leader>is", flame_scan, { desc = "scan ignition" })
