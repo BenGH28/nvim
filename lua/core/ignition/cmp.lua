@@ -158,16 +158,30 @@ local function get_symbols(filepath)
   local current_class_indent = nil
 
   for i, line in ipairs(lines) do
-    -- Match top-level class definitions
-    local class_name = line:match("^class%s+([%w_]+)")
+    -- Match top-level class definitions with optional parent classes
+    local class_name, parents_str = line:match("^class%s+([%w_]+)%s*%(([^)]+)%)")
+    if not class_name then
+      class_name = line:match("^class%s+([%w_]+)")
+    end
+
     if class_name then
       current_class = class_name
       current_class_indent = 0
       local docstring = extract_docstring(lines, i + 1)
+
+      -- Parse parent classes
+      local parents = {}
+      if parents_str then
+        for parent in parents_str:gmatch("[%w_.]+") do
+          table.insert(parents, parent)
+        end
+      end
+
       table.insert(symbols, {
         name = class_name,
         kind = 7, -- Class
         docstring = docstring,
+        parents = parents,
       })
     elseif current_class then
       -- Check if we've left the class (non-indented, non-empty, non-comment line)
@@ -321,6 +335,84 @@ local function get_module_prefix(line, col)
   return prefix
 end
 
+-- Resolve inherited members for a class
+-- Returns a table of inherited members with source information
+local function resolve_inherited_members(class_name, current_module_path, modules)
+  local inherited = {}
+  local visited = {} -- Prevent infinite loops in case of circular inheritance
+
+  local function find_class_in_module(class_name_to_find, module_path, modules)
+    for _, mod in ipairs(modules) do
+      if mod.path == module_path then
+        local symbols = get_symbols(mod.file)
+        for _, sym in ipairs(symbols) do
+          if sym.kind == 7 and sym.name == class_name_to_find then
+            return sym, symbols, mod
+          end
+        end
+      end
+    end
+    return nil, nil, nil
+  end
+
+  local function collect_members(parent_class_ref, parent_module_path)
+    -- Parse parent class reference (could be "ClassName" or "module.ClassName")
+    local parent_module, parent_class
+    if parent_class_ref:match("%.") then
+      -- Cross-module reference like "other_module.ParentClass"
+      parent_module, parent_class = parent_class_ref:match("^(.+)%.([^.]+)$")
+    else
+      -- Same-module reference
+      parent_module = parent_module_path
+      parent_class = parent_class_ref
+    end
+
+    -- Check if we've already visited this class
+    local visit_key = parent_module .. "." .. parent_class
+    if visited[visit_key] then
+      return
+    end
+    visited[visit_key] = true
+
+    -- Find the parent class definition
+    local parent_sym, parent_symbols, parent_mod = find_class_in_module(parent_class, parent_module, modules)
+    if not parent_sym then
+      return
+    end
+
+    -- Collect members from this parent
+    for _, member in ipairs(parent_symbols) do
+      if member.parent_class == parent_class then
+        -- Clone the member and mark it as inherited
+        local inherited_member = {}
+        for k, v in pairs(member) do
+          inherited_member[k] = v
+        end
+        inherited_member.inherited_from = parent_module .. "." .. parent_class
+        inherited_member.is_inherited = true
+        table.insert(inherited, inherited_member)
+      end
+    end
+
+    -- Recursively process grandparents
+    if parent_sym.parents then
+      for _, grandparent in ipairs(parent_sym.parents) do
+        collect_members(grandparent, parent_module)
+      end
+    end
+  end
+
+  -- Find the current class and start collecting from its parents
+  local class_sym, class_symbols, class_mod = find_class_in_module(class_name, current_module_path, modules)
+  if class_sym and class_sym.parents then
+    for _, parent in ipairs(class_sym.parents) do
+      collect_members(parent, current_module_path)
+    end
+  end
+
+  return inherited
+end
+
 ---Return whether this source is available in the current context or not.
 ---@return boolean
 function source:is_available()
@@ -455,6 +547,60 @@ function source:complete(params, callback)
                 end
               end
             end
+
+            -- Add inherited members
+            local inherited_members = resolve_inherited_members(sym.name, mod.path, modules)
+            for _, inherited_sym in ipairs(inherited_members) do
+              local doc_parts = {}
+
+              -- Handle inherited class attributes
+              if inherited_sym.is_class_attribute then
+                if inherited_sym.var_type then
+                  table.insert(doc_parts, "Type: " .. inherited_sym.var_type)
+                  table.insert(doc_parts, "")
+                end
+                table.insert(doc_parts, "Class attribute (inherited)")
+                table.insert(doc_parts, "From: " .. inherited_sym.inherited_from)
+
+                local detail = inherited_sym.name
+                if inherited_sym.var_type then
+                  detail = detail .. ": " .. inherited_sym.var_type
+                end
+
+                table.insert(items, {
+                  label = inherited_sym.name,
+                  kind = inherited_sym.kind,
+                  detail = detail .. " (inherited)",
+                  documentation = {
+                    kind = "markdown",
+                    value = table.concat(doc_parts, "\n"),
+                  },
+                })
+                -- Handle inherited methods
+              else
+                if inherited_sym.docstring then
+                  table.insert(doc_parts, inherited_sym.docstring)
+                  table.insert(doc_parts, "")
+                end
+                if inherited_sym.is_classmethod then
+                  table.insert(doc_parts, "@classmethod")
+                elseif inherited_sym.is_staticmethod then
+                  table.insert(doc_parts, "@staticmethod")
+                end
+                table.insert(doc_parts, "Inherited from: " .. inherited_sym.inherited_from)
+
+                table.insert(items, {
+                  label = inherited_sym.name,
+                  kind = inherited_sym.kind,
+                  detail = inherited_sym.signature .. " (inherited)",
+                  documentation = {
+                    kind = "markdown",
+                    value = table.concat(doc_parts, "\n"),
+                  },
+                })
+              end
+            end
+
             if #items > 0 then
               callback(items)
               return
