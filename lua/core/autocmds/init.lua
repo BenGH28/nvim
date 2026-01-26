@@ -66,7 +66,7 @@ au("TextYankPost", {
 
 local ignition = augroup("ignition", opts)
 au("BufEnter", {
-  pattern = "code.py",
+  pattern = { "code.py", "view.json", "stylesheet.css" },
   callback = function()
     require("core.ignition").setup()
   end,
