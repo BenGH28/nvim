@@ -102,28 +102,6 @@ local function lua_settings()
   }
 end
 
-local function rust_opts()
-  return {
-    server = {
-      on_attach = function(_, bufnr)
-        vim.keymap.set(
-          "n",
-          "<leader-dk>",
-          require("rust-tools").hover_actions.hover_actions,
-          { buffer = bufnr }
-        )
-      end,
-    },
-    tools = {
-      -- rust-tools options
-      autoSetHints = true,
-      inlay_hints = {
-        only_current_line = false,
-        show_parameter_hints = true,
-      },
-    },
-  }
-end
 
 local function efm_settings()
   return {
@@ -158,9 +136,8 @@ local function setup_servers()
 
   require("neodev").setup()
   require("mason").setup()
-  -- require("mason-lspconfig").setup { ensure_installed = servers, automatic_installation = true, automatic_enable = false }
-  -- local installed = require("mason-lspconfig").get_installed_servers() or servers
-  local installed = servers
+  require("mason-lspconfig").setup { ensure_installed = servers, automatic_installation = true, automatic_enable = false }
+  local installed = require("mason-lspconfig").get_installed_servers() or servers
 
   local function server_config()
     local client_capabilites = vim.lsp.protocol.make_client_capabilities()
