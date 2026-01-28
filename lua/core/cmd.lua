@@ -7,14 +7,17 @@ local function remove_matching_files(directory, pattern)
   -- Open the directory
   local dir = uv.fs_opendir(directory, nil, 100)
   if not dir then
-    vim.print("Failed to open directory: " .. directory)
+    vim.notify("Failed to open directory: " .. directory, vim.log.levels.ERROR, { title = "CleanShada" })
     return
   end
 
   -- Read entries in the directory
   while true do
     local entries = uv.fs_readdir(dir)
-    if not entries then break end
+    if not entries then
+      vim.notify("nothing to clean...", vim.log.levels.INFO, { title = "CleanShada" })
+      break
+    end
     for _, entry in ipairs(entries) do
       if entry.type == "file" and entry.name:match(pattern) then
         local filepath = directory .. "/" .. entry.name
@@ -30,7 +33,12 @@ end
 cmd("CleanShada", function()
   -- E138: All C:\Users\bhunt\AppData\Local\nvim-data\shada\main.shada.tmp.X
   -- Specify the directory and pattern
-  local directory = vim.fn.stdpath("state") .. "/" .. "shada/" -- Typically where shada files are stored
+
+  local sep = "/"
+  if vim.fn.has("win32") == 1 then
+    sep = "\\"
+  end
+  local directory = vim.fn.stdpath("state") .. sep .. "shada" -- Typically where shada files are stored
   local pattern = "^main%.shada%.tmp%..+$"
 
   -- Remove matching files
