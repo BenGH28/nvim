@@ -72,9 +72,15 @@ if vim.g.neovide then
 end
 
 if vim.fn.has("win32") == 1 then
-  vim.opt.shell = "pwsh.exe"
-  vim.opt.shellcmdflag = "-noprofile"
-  vim.opt.shellxquote = ''
+  vim.cmd([[
+	   set noshelltemp
+	   let &shell = 'powershell'
+	   let &shellcmdflag = '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command '
+	   let &shellcmdflag .= '[Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.UTF8Encoding]::new();'
+	   let &shellcmdflag .= '$PSDefaultParameterValues[''Out-File:Encoding'']=''utf8'';'
+	   let &shellpipe  = '> %s 2>&1'
+	   set shellquote= shellxquote=
+  ]])
   vim.g.python3_host_prog = "C:\\Users\\bhunt\\scoop\\shims\\python3.exe"
 else
   vim.opt.shell = "zsh"
