@@ -32,12 +32,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
 ---@param bufnr integer
 local function documentHighlight(client, bufnr)
   if client.server_capabilities.documentHighlightProvider then
-    local hl = vim.api.nvim_set_hl
-    hl(0, "LspDiagnosticsVirtualTextInformation", { bold = true, fg = "#51afef", bg = "#202328" })
-    hl(0, "LspDiagnosticsVirtualTextWarning", { bold = true, fg = "#ecbe7b", bg = "#202328" })
-    hl(0, "LspDiagnosticsVirtualTextHint", { bold = true, fg = "#98c379", bg = "#202328" })
-    hl(0, "LspDiagnosticsVirtualTextError", { bold = true, fg = "#ec5f67", bg = "#202328" })
-
     local doc_highlight = augroup("lsp_document_highlight_" .. bufnr, {
       clear = true,
     })
