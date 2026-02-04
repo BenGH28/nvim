@@ -61,7 +61,7 @@ return {
     end,
   },
 
-  { "lambdalisue/suda.vim",                 cmd = { "SudaRead", "SudaWrite" } },
+  { "lambdalisue/suda.vim", cmd = { "SudaRead", "SudaWrite" } },
   {
     "ibhagwan/fzf-lua",
     -- optional for icon support
@@ -75,39 +75,36 @@ return {
     ---@diagnostic enable: missing-fields
   },
 
-
+  {
+    "nvim-telescope/telescope.nvim",
+    cmd = "Telescope",
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      -- optional but recommended
+      { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+    },
+    config = function()
+      require "core.telescoper"
+    end,
+  },
   {
     "nvim-telescope/telescope-file-browser.nvim",
-
-    config = function()
-      require("telescope").load_extension "file_browser"
-    end,
+    dependencies = { "nvim-telescope/telescope.nvim", },
 
   },
-  { "nvim-telescope/telescope-symbols.nvim" },
+  {
+    "nvim-telescope/telescope-symbols.nvim",
+    lazy = false,
+  },
   {
     "nvim-telescope/telescope-ui-select.nvim",
-
-    config = function()
-      require("telescope").load_extension "frecency"
-      require("telescope").load_extension "file_browser"
-      require("telescope").load_extension("ui-select")
-    end,
+    dependencies = { "nvim-telescope/telescope.nvim", },
   },
   {
     "nvim-telescope/telescope-frecency.nvim",
     -- install the latest stable version
     version = "*",
-    config = function()
-      require("telescope").load_extension "frecency"
-    end,
-  },
-  {
-    "nvim-telescope/telescope.nvim",
-    cmd = "Telescope",
-    config = function()
-      require "core.telescope"
-    end,
+    dependencies = { "nvim-telescope/telescope.nvim", }
   },
 
   -- tpope
