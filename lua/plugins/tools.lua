@@ -61,22 +61,53 @@ return {
     end,
   },
 
-  { "lambdalisue/suda.vim", cmd = { "SudaRead", "SudaWrite" } },
+  { "lambdalisue/suda.vim",                 cmd = { "SudaRead", "SudaWrite" } },
+  {
+    "ibhagwan/fzf-lua",
+    -- optional for icon support
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    -- or if using mini.icons/mini.nvim
+    -- dependencies = { "nvim-mini/mini.icons" },
+    ---@module "fzf-lua"
+    ---@type fzf-lua.Config|{}
+    ---@diagnostic disable: missing-fields
+    opts = {}
+    ---@diagnostic enable: missing-fields
+  },
 
+
+  {
+    "nvim-telescope/telescope-file-browser.nvim",
+
+    config = function()
+      require("telescope").load_extension "file_browser"
+    end,
+
+  },
+  { "nvim-telescope/telescope-symbols.nvim" },
+  {
+    "nvim-telescope/telescope-ui-select.nvim",
+
+    config = function()
+      require("telescope").load_extension "frecency"
+      require("telescope").load_extension "file_browser"
+      require("telescope").load_extension("ui-select")
+    end,
+  },
+  {
+    "nvim-telescope/telescope-frecency.nvim",
+    -- install the latest stable version
+    version = "*",
+    config = function()
+      require("telescope").load_extension "frecency"
+    end,
+  },
   {
     "nvim-telescope/telescope.nvim",
     cmd = "Telescope",
     config = function()
       require "core.telescope"
     end,
-    dependencies = {
-      { "nvim-telescope/telescope-file-browser.nvim" },
-      { "nvim-telescope/telescope-symbols.nvim" },
-      { "nvim-telescope/telescope-ui-select.nvim" },
-      -- { 'nvim-telescope/telescope-fzf-native.nvim',  build = 'make' }
-      -- { 'nvim-telescope/telescope-fzf-native.nvim',  build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release --target install' }
-
-    },
   },
 
   -- tpope

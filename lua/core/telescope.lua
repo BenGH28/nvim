@@ -80,6 +80,3 @@ require("telescope").setup {
     qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
   },
 }
-
-require("telescope").load_extension "file_browser"
-require("telescope").load_extension("ui-select")
