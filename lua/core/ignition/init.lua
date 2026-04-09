@@ -1,3 +1,5 @@
+local telescope = require("telescope.builtin")
+
 local show = function(lines)
   local default_size = 0.85
   local win_height = math.floor(#lines + 3)
@@ -19,11 +21,12 @@ local show = function(lines)
   vim.api.nvim_set_current_win(win_id)
 
   vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, lines)
-
   vim.api.nvim_set_option_value("ft", "python", { buf = bufnr })
-  vim.api.nvim_set_option_value("number", true, { buf = bufnr })
-  vim.api.nvim_set_option_value("relativenumber", true, { buf = bufnr })
+  vim.api.nvim_set_option_value("number", true, { win = win_id })
+  vim.api.nvim_set_option_value("relativenumber", true, { win = win_id })
   vim.api.nvim_set_option_value("modifiable", false, { buf = bufnr })
+  vim.api.nvim_set_option_value("shiftwidth", 2, { buf = bufnr })
+  vim.api.nvim_set_option_value("tabstop", 2, { buf = bufnr })
 
   vim.keymap.set("n", "qq", function()
     vim.api.nvim_buf_delete(bufnr, {})
@@ -69,21 +72,10 @@ local del_keys = function()
   vim.keymap.del("n", "<leader>sq")
 end
 
-vim.api.nvim_create_autocmd("BufEnter", {
-  pattern = { "view.json", "props.json", "tags.json", "tag-groups.json" },
-  callback = function()
-    vim.bo.shiftwidth = 2
-    vim.bo.tabstop = 2
-    set_keys()
-    vim.api.nvim_buf_create_user_command(0, "FlameOn", set_keys, {})
-    vim.api.nvim_buf_create_user_command(0, "FlameOff", del_keys, {})
-  end
-})
 
 local data_path = function() return "C:\\Program Files\\Inductive Automation\\Ignition\\data" end
 
-local flame_find = function()
-  local telescope = require("telescope.builtin")
+local ignition_find_files = function()
   local path = data_path() .. "\\projects"
   local opts = {
     cwd = path,
@@ -93,7 +85,7 @@ local flame_find = function()
 end
 
 
-local flame_scan = function()
+local scan_ignition = function()
   local url = "http://localhost:8088/data/api/v1/scan/projects"
   local secret_path = data_path() .. "\\secrets.json"
   local contents = vim.fn.readfile(secret_path)
@@ -339,90 +331,21 @@ search_ignition_symbol = function(symbol)
 end
 
 -- Telescope picker for searching symbols
-local telescope_symbol_search = function()
-  local pickers = require("telescope.pickers")
-  local finders = require("telescope.finders")
-  local conf = require("telescope.config").values
-  local actions = require("telescope.actions")
-  local action_state = require("telescope.actions.state")
+local telescope_reference_search = function()
+  local search_path = data_path() .. "\\projects"
 
-  vim.ui.input({ prompt = "Search symbol (class/function/variable): " }, function(input)
-    if not input or input == "" then
-      return
+  telescope.live_grep({
+    cwd = search_path,
+    prompt_title = "Ignition Reference Search",
+    glob_pattern = "*.py",
+    additional_args = function()
+      return { "--pcre2" } -- Enable more advanced regex features
     end
-
-    local search_path = data_path() .. "\\projects"
-    local patterns = {
-      "^class " .. input,
-      "^def " .. input .. "\\(",
-      "^" .. input .. " =",
-      "    def " .. input .. "\\(",
-    }
-
-    local rg_pattern = "(" .. table.concat(patterns, "|") .. ")"
-
-    pickers.new({}, {
-      prompt_title = "Symbol: " .. input,
-      finder = finders.new_oneshot_job({
-        "rg",
-        "--line-number",
-        "--column",
-        "--no-heading",
-        "--color=never",
-        "--absolute-path",
-        "-e", rg_pattern,
-        "--glob", "*.py",
-        search_path
-      }, {
-        entry_maker = function(line)
-          local file, lnum, text = parse_rg_result(line)
-          if not file or not lnum then
-            return nil
-          end
-
-          -- Extract column number from text if present (format is "col:content")
-          local col = 1
-          local display_text = text
-          if text then
-            local col_match = text:match("^(%d+):")
-            if col_match then
-              col = tonumber(col_match)
-              display_text = text:sub(#col_match + 2)
-            end
-          end
-
-          local filename_only = file:match("[^\\]+$")
-
-          return {
-            value = line,
-            display = filename_only .. ":" .. lnum .. " " .. (display_text or ""),
-            ordinal = line,
-            filename = file,
-            lnum = lnum,
-            col = col,
-          }
-        end,
-      }),
-      sorter = conf.generic_sorter({}),
-      previewer = conf.grep_previewer({}),
-      attach_mappings = function(prompt_bufnr, map)
-        actions.select_default:replace(function()
-          actions.close(prompt_bufnr)
-          local selection = action_state.get_selected_entry()
-          if selection and selection.filename then
-            vim.cmd("edit " .. vim.fn.fnameescape(selection.filename))
-            vim.api.nvim_win_set_cursor(0, { selection.lnum, selection.col - 1 })
-          end
-        end)
-        return true
-      end,
-    }):find()
-  end)
+  })
 end
 
 -- Browse all classes and functions in Ignition
 local browse_ignition_symbols = function()
-  local telescope = require("telescope.builtin")
   local search_path = data_path() .. "\\projects"
 
   telescope.live_grep({
@@ -441,7 +364,7 @@ M.setup = function()
   vim.keymap.set("n", "<leader>ifs", function()
     search_ignition_symbol(vim.fn.expand("<cword>"))
   end, { desc = "[ignition] find symbol" })
-  vim.keymap.set("n", "<leader>it", telescope_symbol_search, { desc = "[ignition] telescope symbol search" })
+  vim.keymap.set("n", "<leader>it", telescope_reference_search, { desc = "[ignition] telescope symbol search" })
   vim.keymap.set("n", "<leader>ib", browse_ignition_symbols, { desc = "[ignition] browse symbols" })
 
   -- Commands
@@ -453,15 +376,31 @@ M.setup = function()
       search_ignition_symbol(vim.fn.expand("<cword>"))
     end
   end, { nargs = "?", desc = "Find Ignition symbol definition" })
-  vim.api.nvim_create_user_command("IgnitionSearch", telescope_symbol_search,
+  vim.api.nvim_create_user_command("IgnitionSearch", telescope_reference_search,
     { desc = "Search Ignition symbols with Telescope" })
+
+  vim.api.nvim_create_user_command("IgnitionReferences", function()
+    telescope.grep_string({ cwd = data_path() .. "\\projects", additional_args = { "-g", "*.py" } })
+  end, { desc = "get references under cursor" })
+  vim.keymap.set("n", "<leader>ir", "<cmd>IgnitionReferences<cr>", { desc = "[ignition] show references under cursor" })
+
   vim.api.nvim_create_user_command("IgnitionBrowse", browse_ignition_symbols, { desc = "Browse all Ignition symbols" })
 
-  vim.api.nvim_create_user_command("FlameFind", flame_find, { desc = "Find files in ignition directory" })
+  vim.api.nvim_create_user_command("IgnitionFiles", ignition_find_files, { desc = "Find files in ignition directory" })
 
-  vim.keymap.set("n", "<leader>iff", flame_find, { desc = "find ignition files" })
+  vim.keymap.set("n", "<leader>iff", ignition_find_files, { desc = "find ignition files" })
+  vim.keymap.set("n", "<leader>ifr", function()
+    require("telescope").extensions.frecency.frecency({
+      theme = "ivy"
+    })
+  end, { desc = "find ignition files frecency" })
 
-  vim.api.nvim_create_user_command("FlameScan", flame_scan, { desc = "Trigger scan of ignition files" })
-  vim.keymap.set("n", "<leader>is", flame_scan, { desc = "scan ignition" })
+  vim.api.nvim_create_user_command("IgnitionScan", scan_ignition, { desc = "Trigger scan of ignition files" })
+  vim.keymap.set("n", "<leader>is", scan_ignition, { desc = "scan ignition" })
+
+  set_keys()
+  vim.api.nvim_buf_create_user_command(0, "FlameOn", set_keys, {})
+  vim.api.nvim_buf_create_user_command(0, "FlameOff", del_keys, {})
 end
+
 return M
