@@ -15,6 +15,7 @@ return {
   { "davidgranstrom/nvim-markdown-preview", ft = "markdown" },
   {
     'MeanderingProgrammer/render-markdown.nvim',
+    enabled = false,
     ft = "markdown",
     dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
     config = function()
