@@ -1,3 +1,4 @@
+require('vim._core.ui2').enable()
 -- setting personal options
 require "core.options"
 require "core.ui.quickfix"
