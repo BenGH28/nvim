@@ -3,7 +3,6 @@
 -- Basics
 -- =======================
 vim.g.mapleader = " "
-vim.o.background = "dark"
 vim.o.termguicolors = true -- for accurate colors
 vim.o.number = true
 vim.o.relativenumber = true
