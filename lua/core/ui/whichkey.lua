@@ -56,12 +56,13 @@ wk.add(
 
 
 wk.add({
-  mode = 'n',
-  { '<leader>.', ":tabn<cr>", desc = "next tab" },
-  { '<leader>,', ":tabp<cr>", desc = "previous tab" }
-}
-)
-
+  mode = "n",
+  { "<leader>bt",  group = "+tabs" },
+  { "<leader>btc", ":tabnew<cr>",      desc = "create tab" },
+  { "<leader>btn", ":tabnext<cr>",     desc = "next tab" },
+  { "<leader>btp", ":tabprevious<cr>", desc = "previous tab" },
+  { "<leader>btq", ":tabclose<cr>",    desc = "close/quit tab" },
+})
 wk.add({
   mode = 'n',
   { "<leader>b",  group = "+buffers" },
