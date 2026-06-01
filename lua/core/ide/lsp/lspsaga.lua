@@ -27,7 +27,7 @@ saga.setup {
     quit = "<C-c>",
     exec = "<CR>", -- quit can be a table
   },
-  definition_preview_icon = "  ",
+  definition_preview_icon = "  ",
   --singele, double, round, plus
   border_style = "round",
   rename_prompt_prefix = "➤",

@@ -8,17 +8,17 @@ return {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
     config = function()
-      local venom, err = pcall(require, 'venom')
-      if not err then
-        venom.setup()
-      end
-
       require "core.ide.lsp"
     end,
 
     dependencies = {
       { 'folke/neoconf.nvim',           cmd = 'Neoconf', config = true },
-      'rafi/neoconf-venom.nvim',
+      {
+        'rafi/neoconf-venom.nvim',
+        config = function()
+          require('venom').setup()
+        end
+      },
       {
         "williamboman/mason-lspconfig.nvim",
       },
@@ -66,8 +66,7 @@ return {
       {
         "j-hui/fidget.nvim",
         version = "*",
-        opts = {
-        },
+        opts = {},
       },
       {
         "mfussenegger/nvim-dap",
@@ -88,11 +87,5 @@ return {
     "folke/persistence.nvim",
     event = "BufReadPre", -- this will only start session saving when an actual file was opened
     opts = {},
-  },
-
-
-  {
-    'rafi/neoconf-venom.nvim',
-    dependencies = { 'nvim-lua/plenary.nvim', 'folke/neoconf.nvim' },
   },
 }

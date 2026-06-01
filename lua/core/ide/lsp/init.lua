@@ -75,6 +75,9 @@ end
 local function on_attach(client, bufnr)
   documentHighlight(client, bufnr)
   format_on_save()
+  if client.server_capabilities.inlayHintProvider then
+    vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+  end
 end
 
 local function lua_settings()
@@ -91,6 +94,13 @@ local function lua_settings()
         library = {
           vim.env.VIMRUNTIME,
         },
+      },
+      hint = {
+        enable = true,
+        setType = true,
+        paramType = true,
+        paramName = "All",
+        arrayIndex = "Enable",
       },
     },
   }
@@ -126,6 +136,7 @@ local function setup_servers()
     "bashls",
     "lua_ls",
     "efm",
+    "basedpyright",
   }
 
   require("neodev").setup()
@@ -151,16 +162,31 @@ local function setup_servers()
       config.init_options = { documentFormatting = true }
       config.settings = efm_settings()
       config.filetypes = vim.tbl_keys(efm_settings().languages)
-    elseif server == "pyright" then
+    elseif server == "basedpyright" then
       config.settings = {
-        pyright = {
-          -- Using Ruff's import organizer
+        basedpyright = {
           disableOrganizeImports = true,
-        },
-        python = {
           analysis = {
             diagnosticSeverityOverrides = {
-              reportUndefinedVariable = "none",
+              reportMissingModuleSource       = "none",
+              reportUnknownMemberType         = "none", -- Jython dynamic types
+              reportUnknownVariableType       = "none",
+              reportUnknownArgumentType       = "none",
+              reportTypeCommentUsage          = "none", -- Python 2 type comments used in Ignition/Jython
+              reportUnannotatedClassAttribute = "none",
+              reportImplicitOverride          = "none",
+              reportMissingTypeStubs          = "none",
+              reportUnknownParameterType      = "none",
+              reportUnusedCallResult          = "none",
+              reportInvalidAbstractMethod     = "none",
+              reportUnknownLambdaType         = "none",
+              reportUndefinedVariable         = "none", -- Jython/Ignition runtime-injected names (replaces # noqa: F821)
+            },
+            inlayHints = {
+              variableTypes = true,
+              functionReturnTypes = true,
+              callArgumentNames = true,
+              genericTypes = false,
             },
           },
         },
@@ -172,5 +198,8 @@ local function setup_servers()
   end
 end
 
+vim.keymap.set("n", "<leader>lyo", function()
+  require("symbol_outline").toggle()
+end, { desc = "symbol outline" })
 vim.keymap.set("n", "<leader>ldq", vim.diagnostic.setqflist, { desc = "diagnostics in quickfix list" })
 setup_servers()
