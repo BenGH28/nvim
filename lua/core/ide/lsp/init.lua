@@ -21,7 +21,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
       return
     end
     if client.name == "ruff" then
-      -- Disable hover in favour of Pyright
       client.server_capabilities.hoverProvider = false
     end
   end,
@@ -32,14 +31,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 ---@param bufnr integer
 local function documentHighlight(client, bufnr)
   if client.server_capabilities.documentHighlightProvider then
-    local doc_highlight = augroup("lsp_document_highlight_" .. bufnr, {
-      clear = true,
-    })
-    vim.api.nvim_clear_autocmds({
-      buffer = bufnr,
-      group = doc_highlight,
-    })
-
+    local doc_highlight = augroup("lsp_document_highlight_" .. bufnr, { clear = true })
     au({ "CursorHold", "CursorHoldI" }, {
       group = doc_highlight,
       buffer = bufnr,
@@ -53,28 +45,18 @@ local function documentHighlight(client, bufnr)
   end
 end
 
-local function format_on_save()
-  local format = augroup("format", { clear = true })
-  vim.api.nvim_clear_autocmds({
-    pattern = "*",
-    group = format,
-  })
-
-  -- aha now we have format on save
-  au("BufWritePre", {
-    pattern = "*",
-    callback = function()
-      if #vim.lsp.get_clients({ bufnr = 0 }) > 0 then
-        vim.lsp.buf.format({ async = false })
-      end
-    end,
-    group = format,
-  })
-end
+au("BufWritePre", {
+  pattern = "*",
+  group = augroup("format", { clear = true }),
+  callback = function()
+    if #vim.lsp.get_clients({ bufnr = 0 }) > 0 then
+      vim.lsp.buf.format({ async = false })
+    end
+  end,
+})
 
 local function on_attach(client, bufnr)
   documentHighlight(client, bufnr)
-  format_on_save()
   if client.server_capabilities.inlayHintProvider then
     vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
   end
@@ -84,11 +66,8 @@ local function lua_settings()
   return {
     Lua = {
       runtime = {
-        -- Tell the language server which version of Lua you're using
-        -- (most likely LuaJIT in the case of Neovim)
         version = "LuaJIT",
       },
-      -- Make the server aware of Neovim runtime files
       workspace = {
         checkThirdParty = false,
         library = {
@@ -105,7 +84,6 @@ local function lua_settings()
     },
   }
 end
-
 
 local function efm_settings()
   return {
@@ -124,7 +102,6 @@ local function efm_settings()
         { formatCommand = "mdformat -", formatStdin = true },
       },
       lua = {
-        -- { formatCommand = "stylua -", formatStdin = true },
         { lintCommand = "selene -", lintStdin = true },
       },
     },
@@ -144,24 +121,22 @@ local function setup_servers()
   require("mason-lspconfig").setup { ensure_installed = servers, automatic_installation = true, automatic_enable = false }
   local installed = require("mason-lspconfig").get_installed_servers() or servers
 
-  local function server_config()
-    local client_capabilites = vim.lsp.protocol.make_client_capabilities()
-    local capabilities = require("cmp_nvim_lsp").default_capabilities(client_capabilites)
-    capabilities.textDocument.completion.completionItem.snippetSupport = true
-    return {
+  local client_capabilities = vim.lsp.protocol.make_client_capabilities()
+  local capabilities = require("cmp_nvim_lsp").default_capabilities(client_capabilities)
+  capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+  for _, server in pairs(installed) do
+    local config = {
       capabilities = capabilities,
       on_attach = on_attach,
     }
-  end
-
-  for _, server in pairs(installed) do
-    local config = server_config()
     if server == "lua_ls" then
       config.settings = lua_settings()
     elseif server == "efm" then
+      local efm = efm_settings()
       config.init_options = { documentFormatting = true }
-      config.settings = efm_settings()
-      config.filetypes = vim.tbl_keys(efm_settings().languages)
+      config.settings = efm
+      config.filetypes = vim.tbl_keys(efm.languages)
     elseif server == "basedpyright" then
       config.settings = {
         basedpyright = {
