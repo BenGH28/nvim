@@ -6,6 +6,11 @@ return {
     opts = {}
   },
   {
+    "BenGH28/ignition-docs-nvim",
+    lazy = false,
+  },
+
+  {
     "BenGH28/koin.nvim",
     cmd = { "Koin", "KoinLast", "KoinClear" },
     config = function()
@@ -166,8 +171,8 @@ return {
       -- Server Configuration
       port_range = { min = 10000, max = 65535 },
       auto_start = true,
-      log_level = "info",                                         -- "trace", "debug", "info", "warn", "error"
-      terminal_cmd = "C:\\Users\\bhunt\\.local\\bin\\claude.exe", -- Custom terminal command (default: "claude")
+      log_level = "info", -- "trace", "debug", "info", "warn", "error"
+      terminal_cmd = nil, -- Custom terminal command (default: "claude")
       -- For local installations: "~/.claude/local/claude"
       -- For native binary: use output from 'which claude'
 

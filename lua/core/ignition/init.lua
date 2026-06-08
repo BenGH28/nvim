@@ -398,6 +398,35 @@ M.setup = function()
   vim.api.nvim_create_user_command("IgnitionScan", scan_ignition, { desc = "Trigger scan of ignition files" })
   vim.keymap.set("n", "<leader>is", scan_ignition, { desc = "scan ignition" })
 
+  vim.keymap.set("n", "<leader>idr", function()
+    local ahk = [[
+SetTitleMatchMode(3) ; exact match mode
+DetectHiddenWindows(true)
+designerTitle := "ASRS - Development - Ignition Designer"
+if WinExist(designerTitle) {
+	WinActivate(designerTitle)
+	Sleep(100)
+	x := 52
+	y := 43
+	click x, y
+}
+
+consoleTitle := "Script Console"
+if WinExist(consoleTitle) {
+	WinActivate(consoleTitle)
+	; click the reset button
+	click 931, 76
+	Sleep(100)
+	; run whatever is in the multiline buffer
+	Send "^{Enter}"
+}
+      ]]
+    local tempname = vim.fn.tempname() .. ".ahk"
+    vim.fn.writefile(vim.split(ahk, "\n"), tempname)
+    vim.fn.jobstart({ "autohotkey", tempname }, {
+      on_exit = function() vim.fn.delete(tempname) end,
+    })
+  end, { desc = "designer refresh" })
   set_keys()
   vim.api.nvim_buf_create_user_command(0, "FlameOn", set_keys, {})
   vim.api.nvim_buf_create_user_command(0, "FlameOff", del_keys, {})

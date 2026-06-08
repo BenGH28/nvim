@@ -16,6 +16,7 @@
   "fzf-lua": { "branch": "main", "commit": "988416cc782dfe28bff3f0da9b8c943b236cd86a" },
   "gitsigns.nvim": { "branch": "main", "commit": "a462f416e2ce4744531c6256252dee99a7d34a83" },
   "hardtime.nvim": { "branch": "main", "commit": "b4e431934af1fe224a3a801f632c008278cb7628" },
+  "ignition-docs-nvim": { "branch": "main", "commit": "0e51ee9aef3459e2a510ee5220d22fc40d1e4932" },
   "indent-blankline.nvim": { "branch": "master", "commit": "d28a3f70721c79e3c5f6693057ae929f3d9c0a03" },
   "koin.nvim": { "branch": "main", "commit": "bcbd83979c8951f7df3a9ec20b2b30ca962363c5" },
   "lazy.nvim": { "branch": "main", "commit": "306a05526ada86a7b30af95c5cc81ffba93fef97" },

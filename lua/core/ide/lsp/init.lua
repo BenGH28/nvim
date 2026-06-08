@@ -156,6 +156,7 @@ local function setup_servers()
               reportInvalidAbstractMethod     = "none",
               reportUnknownLambdaType         = "none",
               reportUndefinedVariable         = "none", -- Jython/Ignition runtime-injected names (replaces # noqa: F821)
+              reportAny                       = "none",
             },
             inlayHints = {
               variableTypes = true,
