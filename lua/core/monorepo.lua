@@ -34,36 +34,42 @@ function M.clear()
   vim.notify("[monorepo] scope cleared", vim.log.levels.INFO)
 end
 
-local function scan_subdirs(path)
-  local dirs = {}
-  local handle = vim.loop.fs_scandir(path)
-  if handle then
-    while true do
-      local name, type = vim.loop.fs_scandir_next(handle)
-      if not name then break end
-      if type == "directory" and not M._exclude[name]
-          and (not M._ignore_hidden or string.sub(name, 1, 1) ~= ".") then
-        table.insert(dirs, name)
-      end
+local function scan_all(base, rel, results)
+  local abs = rel == "" and base or (base .. "\\" .. rel)
+  local handle = vim.loop.fs_scandir(abs)
+  if not handle then return end
+  local children = {}
+  while true do
+    local name, type = vim.loop.fs_scandir_next(handle)
+    if not name then break end
+    if type == "directory" and not M._exclude[name]
+        and (not M._ignore_hidden or string.sub(name, 1, 1) ~= ".") then
+      table.insert(children, name)
     end
   end
-  table.sort(dirs)
-  return dirs
+  table.sort(children)
+  for _, name in ipairs(children) do
+    local child_rel = rel == "" and name or (rel .. "\\" .. name)
+    table.insert(results, child_rel)
+    scan_all(base, child_rel, results)
+  end
 end
 
-local function pick(subpath)
-  local abs_path = subpath == "" and M._root or (M._root .. "\\" .. subpath)
-  local subdirs = scan_subdirs(abs_path)
+local function pick()
+  local all = {}
+  scan_all(M._root, "", all)
 
-  local entries = {}
-  if subpath == "" then
-    table.insert(entries, { label = "[all projects]", action = "clear" })
-  else
-    table.insert(entries, { label = "[select: " .. subpath .. "]", action = "select", value = subpath })
-  end
-  for _, name in ipairs(subdirs) do
-    local rel = subpath == "" and name or (subpath .. "\\" .. name)
-    table.insert(entries, { label = name, action = "drill", value = rel })
+  -- sort by parent dir, then by name within that parent
+  table.sort(all, function(a, b)
+    local pa = a:match("^(.+)\\[^\\]+$") or ""
+    local pb = b:match("^(.+)\\[^\\]+$") or ""
+    if pa ~= pb then return pa < pb end
+    return a < b
+  end)
+
+  local entries = { { label = "[all projects]", value = nil } }
+  for _, rel in ipairs(all) do
+    table.insert(entries, { label = rel, value = rel })
   end
 
   local pickers = require("telescope.pickers")
@@ -73,10 +79,8 @@ local function pick(subpath)
   local action_state = require("telescope.actions.state")
   local themes = require("telescope.themes")
 
-  local title = subpath == "" and "Select Project" or ("Project: " .. subpath)
-
   pickers.new(themes.get_ivy({}), {
-    prompt_title = title,
+    prompt_title = "Select Project",
     finder = finders.new_table({
       results = entries,
       entry_maker = function(e)
@@ -84,28 +88,19 @@ local function pick(subpath)
       end,
     }),
     sorter = conf.generic_sorter({}),
-    attach_mappings = function(prompt_bufnr, map)
+    attach_mappings = function(prompt_bufnr)
       actions.select_default:replace(function()
         local selection = action_state.get_selected_entry()
         actions.close(prompt_bufnr)
         if not selection then return end
         local e = selection.value
-        if e.action == "clear" then
+        if e.value == nil then
           M.clear()
-        elseif e.action == "select" then
+        else
           M._active = e.value
           vim.notify("[monorepo] project: " .. e.value, vim.log.levels.INFO)
-        elseif e.action == "drill" then
-          vim.schedule(function() pick(e.value) end)
         end
       end)
-      if subpath ~= "" then
-        map({ "i", "n" }, "<BS>", function()
-          local parent = subpath:match("^(.+)\\[^\\]+$") or ""
-          actions.close(prompt_bufnr)
-          vim.schedule(function() pick(parent) end)
-        end)
-      end
       return true
     end,
   }):find()
@@ -116,7 +111,7 @@ function M.select_project()
     vim.notify("[monorepo] no root configured", vim.log.levels.WARN)
     return
   end
-  pick("")
+  pick()
 end
 
 local function file_exclude_args()
