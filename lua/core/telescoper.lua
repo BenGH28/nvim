@@ -16,6 +16,9 @@ require("telescope").setup {
     file_browser = {},
     frecency = {
       db_safe_mode = false,
+      workspaces = {
+        IGN = "C:\\Program Files\\Inductive Automation\\Ignition\\data\\projects",
+      }
     }
   },
   pickers = {

@@ -1,24 +1,19 @@
 local telescope = require("telescope.builtin")
 
-local show = function(lines)
-  local default_size = 0.85
-  local win_height = math.floor(#lines + 3)
-  local win_width = math.floor(vim.api.nvim_win_get_width(0) * default_size)
+local DATA_PATH = "C:\\Program Files\\Inductive Automation\\Ignition\\data"
 
-  local config = {
+local show = function(lines)
+  local win_width = math.floor(vim.api.nvim_win_get_width(0) * 0.85)
+  local bufnr = vim.api.nvim_create_buf(true, true)
+  local win_id = vim.api.nvim_open_win(bufnr, true, {
     relative = "cursor",
     row = 1,
     col = 0,
     width = win_width,
-    height = win_height,
+    height = math.floor(#lines + 3),
     border = "rounded",
     style = "minimal",
-  }
-
-
-  local bufnr = vim.api.nvim_create_buf(true, true)
-  local win_id = vim.api.nvim_open_win(bufnr, true, config)
-  vim.api.nvim_set_current_win(win_id)
+  })
 
   vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, lines)
   vim.api.nvim_set_option_value("ft", "python", { buf = bufnr })
@@ -30,15 +25,12 @@ local show = function(lines)
 
   vim.keymap.set("n", "qq", function()
     vim.api.nvim_buf_delete(bufnr, {})
-  end, { buffer = true, desc = "close script window" })
+  end, { buffer = bufnr, desc = "close script window" })
 end
 
 local decode = function(str)
   str = str:gsub("\\t", "\t")
-
-  -- Replace \" with "
   str = str:gsub('\\"', '"')
-
   return str:gsub("\\u(%x%x%x%x)", function(hex)
     return vim.fn.nr2char(tonumber(hex, 16))
   end)
@@ -48,17 +40,13 @@ local show_script = function()
   local line = vim.api.nvim_get_current_line()
   local decoded = decode(line)
   local splits = vim.split(decoded, ":")
-
   table.remove(splits, 1)
-  local subbed = table.concat(splits, ":")
-  subbed = subbed:sub(3, -2):gsub('"$', ""):gsub("%s+$", "")
-
-  local lines = vim.split(subbed, "\\n")
-  show(lines)
+  local subbed = table.concat(splits, ":"):sub(3, -2):gsub('"$', ""):gsub("%s+$", "")
+  show(vim.split(subbed, "\\n"))
 end
 
 local script_qfx = function()
-  vim.cmd [[ :vim /"\(code\|script\)":/g % ]]
+  vim.cmd([[ :vim /"\(code\|script\)":/g % ]])
   vim.cmd(":copen")
 end
 
@@ -68,40 +56,8 @@ local set_keys = function()
 end
 
 local del_keys = function()
-  vim.keymap.del("n", "<leader>ss")
-  vim.keymap.del("n", "<leader>sq")
-end
-
-
-local data_path = function() return "C:\\Program Files\\Inductive Automation\\Ignition\\data" end
-
-local ignition_find_files = function()
-  local path = data_path() .. "\\projects"
-  local opts = {
-    cwd = path,
-    find_command = { "rg", "--files", "--color", "never", "-g", "*.py", "-g", "*.json" }
-  }
-  telescope.find_files(opts)
-end
-
-
-local scan_ignition = function()
-  local url = "http://localhost:8088/data/api/v1/scan/projects"
-  local secret_path = data_path() .. "\\secrets.json"
-  local contents = vim.fn.readfile(secret_path)
-
-  local json_str = table.concat(contents, '\n')
-  local results = vim.json.decode(json_str)
-  local header = "X-Ignition-API-Token: " .. results.ignition
-  local response = vim.fn.system {
-    "curl",
-    "-XPOST",
-    "-s",
-    "-H",
-    header,
-    url,
-  }
-  vim.notify(response, vim.log.levels.INFO, { title = "Ignition" })
+  vim.keymap.del("n", "<leader>ss", { buffer = true })
+  vim.keymap.del("n", "<leader>sq", { buffer = true })
 end
 
 
@@ -109,78 +65,57 @@ end
 -- CROSS-MODULE NAVIGATION
 -- ============================================================================
 
--- Convert Ignition module path to filesystem path
--- e.g., "shared.finishing.asrs.flow.station" -> "...\shared\finishing\asrs\flow\station\code.py"
+local file_exists = function(path)
+  local stat = vim.uv.fs_stat(path)
+  return stat and stat.type == "file"
+end
+
+-- Convert Ignition module path (e.g. "shared.finishing.asrs.flow.station") to
+-- a list of filesystem path candidates to try in order.
 local resolve_ignition_path = function(module_path)
-  -- Remove any "shared." prefix if present
-  local path = module_path
-
-  -- Split by dots
-  local parts = vim.split(path, "%.", { plain = false })
-
-  -- Base paths to check
+  local parts = vim.split(module_path, "%.", { plain = false })
   local base_paths = {
-    data_path() .. "\\projects\\global\\ignition\\script-python",
-    data_path() .. "\\projects\\global\\ignition\\script-project",
+    DATA_PATH .. "\\projects\\global\\ignition\\script-python",
+    DATA_PATH .. "\\projects\\global\\ignition\\script-project",
   }
 
   local candidates = {}
-
   for _, base in ipairs(base_paths) do
-    -- Try as a directory with code.py
-    local dir_path = base .. "\\" .. table.concat(parts, "\\") .. "\\code.py"
-    table.insert(candidates, dir_path)
+    local joined = table.concat(parts, "\\")
+    table.insert(candidates, base .. "\\" .. joined .. "\\code.py")
+    table.insert(candidates, base .. "\\" .. joined .. ".py")
 
-    -- Try as a direct .py file
-    local file_path = base .. "\\" .. table.concat(parts, "\\") .. ".py"
-    table.insert(candidates, file_path)
-
-    -- Try with the last part as a definition inside code.py
     if #parts > 1 then
-      local parent_parts = vim.list_slice(parts, 1, #parts - 1)
-      local parent_path = base .. "\\" .. table.concat(parent_parts, "\\") .. "\\code.py"
-      table.insert(candidates, { path = parent_path, symbol = parts[#parts] })
+      local parent = table.concat(vim.list_slice(parts, 1, #parts - 1), "\\")
+      table.insert(candidates, { path = base .. "\\" .. parent .. "\\code.py", symbol = parts[#parts] })
     end
   end
 
   return candidates
 end
 
--- Check if file exists
-local file_exists = function(path)
-  local stat = vim.loop.fs_stat(path)
-  return stat and stat.type == "file"
-end
-
--- Search for a symbol definition in a file
 local find_symbol_in_file = function(filepath, symbol)
-  if not file_exists(filepath) then
-    return nil
-  end
+  if not file_exists(filepath) then return nil end
 
-  local lines = vim.fn.readfile(filepath)
   local patterns = {
     "^class " .. symbol,
     "^def " .. symbol,
     "^" .. symbol .. " =",
-    "^    def " .. symbol, -- indented method
+    "^    def " .. symbol,
   }
 
-  for lnum, line in ipairs(lines) do
+  for lnum, line in ipairs(vim.fn.readfile(filepath)) do
     for _, pattern in ipairs(patterns) do
       if line:match(pattern) then
         return { file = filepath, line = lnum }
       end
     end
   end
-
-  return nil
 end
 
--- Parse ripgrep result line handling Windows paths
--- e.g., "C:\path\to\file.py:123:content" -> "C:\path\to\file.py", 123, "content"
+-- Parse a ripgrep result line that may contain a Windows path.
+-- e.g. "C:\path\to\file.py:123:content" -> file, lnum, text
 local parse_rg_result = function(line)
-  -- Find positions of colons
   local colon_positions = {}
   for i = 1, #line do
     if line:sub(i, i) == ":" then
@@ -188,58 +123,31 @@ local parse_rg_result = function(line)
     end
   end
 
-  -- Need at least 2 colons (one after filename, one after line number)
-  if #colon_positions < 2 then
-    return nil, nil, nil
-  end
+  if #colon_positions < 2 then return nil, nil, nil end
 
-  -- Try to find which colon is after the line number
-  -- Work backwards from the end
   for i = #colon_positions, 2, -1 do
-    local potential_lnum_start = colon_positions[i - 1] + 1
-    local potential_lnum_end = colon_positions[i] - 1
-    local potential_lnum_str = line:sub(potential_lnum_start, potential_lnum_end)
-    local lnum = tonumber(potential_lnum_str)
-
+    local lnum_str = line:sub(colon_positions[i - 1] + 1, colon_positions[i] - 1)
+    local lnum = tonumber(lnum_str)
     if lnum then
-      -- Found a valid line number
-      local file = line:sub(1, colon_positions[i - 1] - 1)
-      local text = line:sub(colon_positions[i] + 1)
-      return file, lnum, text
+      return line:sub(1, colon_positions[i - 1] - 1), lnum, line:sub(colon_positions[i] + 1)
     end
   end
 
   return nil, nil, nil
 end
 
--- Go to Ignition module definition
-local goto_ignition_module = function()
-  -- Get word under cursor or visual selection
-  local word = vim.fn.expand("<cword>")
+local search_ignition_symbol
 
-  -- Try to get a fuller path if cursor is on a dotted path
+local goto_ignition_module = function()
   local line = vim.api.nvim_get_current_line()
   local col = vim.fn.col(".")
+  local before = line:sub(1, col):reverse():match("^[%w_%.]*") or ""
+  local after = line:sub(col + 1):match("^[%w_%.]*") or ""
+  local full_path = (before:reverse() .. after):gsub("^%.", ""):gsub("%.$", "")
 
-  -- Extract the full dotted path around cursor
-  local before = line:sub(1, col):reverse()
-  local after = line:sub(col + 1)
+  if full_path == "" then full_path = vim.fn.expand("<cword>") end
 
-  local before_match = before:match("^[%w_%.]*") or ""
-  local after_match = after:match("^[%w_%.]*") or ""
-
-  local full_path = before_match:reverse() .. after_match
-  full_path = full_path:gsub("^%.", ""):gsub("%.$", "")
-
-  if full_path == "" then
-    full_path = word
-  end
-
-  -- Try to resolve the path
-  local candidates = resolve_ignition_path(full_path)
-
-  -- Try each candidate
-  for _, candidate in ipairs(candidates) do
+  for _, candidate in ipairs(resolve_ignition_path(full_path)) do
     if type(candidate) == "string" then
       if file_exists(candidate) then
         vim.cmd("edit " .. vim.fn.fnameescape(candidate))
@@ -247,7 +155,6 @@ local goto_ignition_module = function()
         return
       end
     else
-      -- Candidate with symbol
       local result = find_symbol_in_file(candidate.path, candidate.symbol)
       if result then
         vim.cmd("edit " .. vim.fn.fnameescape(result.file))
@@ -258,42 +165,33 @@ local goto_ignition_module = function()
     end
   end
 
-  -- If nothing found, try a broader search
+  local word = vim.fn.expand("<cword>")
   vim.notify("Direct path not found, trying symbol search for: " .. word, vim.log.levels.WARN)
   search_ignition_symbol(word)
 end
 
--- Search for symbol definitions across all Ignition files
 search_ignition_symbol = function(symbol)
-  local search_path = data_path() .. "\\projects"
+  local search_path = DATA_PATH .. "\\projects"
 
   if not symbol then
     vim.ui.input({ prompt = "Search for symbol: " }, function(input)
-      if input then
-        search_ignition_symbol(input)
-      end
+      if input then search_ignition_symbol(input) end
     end)
     return
   end
 
-  -- Build ripgrep patterns for common definition styles
   local patterns = {
     "^class " .. symbol,
     "^def " .. symbol .. "\\(",
     "^" .. symbol .. " =",
-    "    def " .. symbol .. "\\(", -- indented methods
+    "    def " .. symbol .. "\\(",
   }
 
-  local rg_pattern = "(" .. table.concat(patterns, "|") .. ")"
-
   local results = vim.fn.systemlist({
-    "rg",
-    "--line-number",
-    "--no-heading",
-    "--color=never",
-    "-e", rg_pattern,
+    "rg", "--line-number", "--no-heading", "--color=never",
+    "-e", "(" .. table.concat(patterns, "|") .. ")",
     "--glob", "*.py",
-    search_path
+    search_path,
   })
 
   if #results == 0 then
@@ -302,7 +200,6 @@ search_ignition_symbol = function(symbol)
   end
 
   if #results == 1 then
-    -- Single result, go directly
     local file, lnum = parse_rg_result(results[1])
     if file and lnum then
       vim.cmd("edit " .. vim.fn.fnameescape(file))
@@ -311,95 +208,59 @@ search_ignition_symbol = function(symbol)
     else
       vim.notify("Failed to parse result: " .. results[1], vim.log.levels.ERROR)
     end
-  else
-    -- Multiple results, use quickfix
-    local qf_list = {}
-    for _, line in ipairs(results) do
-      local file, lnum, text = parse_rg_result(line)
-      if file and lnum then
-        table.insert(qf_list, {
-          filename = file,
-          lnum = lnum,
-          text = text or ""
-        })
-      end
-    end
-    vim.fn.setqflist(qf_list)
-    vim.cmd("copen")
-    vim.notify("Found " .. #results .. " definitions for: " .. symbol, vim.log.levels.INFO)
+    return
   end
+
+  local qf_list = {}
+  for _, result_line in ipairs(results) do
+    local file, lnum, text = parse_rg_result(result_line)
+    if file and lnum then
+      table.insert(qf_list, { filename = file, lnum = lnum, text = text or "" })
+    end
+  end
+  vim.fn.setqflist(qf_list)
+  vim.cmd("copen")
+  vim.notify("Found " .. #results .. " definitions for: " .. symbol, vim.log.levels.INFO)
 end
 
--- Telescope picker for searching symbols
 local telescope_reference_search = function()
-  local search_path = data_path() .. "\\projects"
-
   telescope.live_grep({
-    cwd = search_path,
+    cwd = DATA_PATH .. "\\projects",
     prompt_title = "Ignition Reference Search",
     glob_pattern = "*.py",
-    additional_args = function()
-      return { "--pcre2" } -- Enable more advanced regex features
-    end
+    additional_args = function() return { "--pcre2" } end,
   })
 end
 
--- Browse all classes and functions in Ignition
 local browse_ignition_symbols = function()
-  local search_path = data_path() .. "\\projects"
-
   telescope.live_grep({
-    cwd = search_path,
+    cwd = DATA_PATH .. "\\projects",
     prompt_title = "Ignition Symbols",
     default_text = "^\\s*(class|def)\\s",
     glob_pattern = "*.py",
   })
 end
 
+local ignition_find_files = function()
+  telescope.find_files({
+    cwd = DATA_PATH .. "\\projects",
+    find_command = { "rg", "--files", "--color", "never", "-g", "*.py", "-g", "*.json" },
+  })
+end
 
-local M = {}
-M.setup = function()
-  -- Keybindings for navigation
-  vim.keymap.set("n", "<leader>ig", goto_ignition_module, { desc = "[ignition] go to module" })
-  vim.keymap.set("n", "<leader>ifs", function()
-    search_ignition_symbol(vim.fn.expand("<cword>"))
-  end, { desc = "[ignition] find symbol" })
-  vim.keymap.set("n", "<leader>it", telescope_reference_search, { desc = "[ignition] telescope symbol search" })
-  vim.keymap.set("n", "<leader>ib", browse_ignition_symbols, { desc = "[ignition] browse symbols" })
+local scan_ignition = function()
+  local secret_path = DATA_PATH .. "\\secrets.json"
+  local json_str = table.concat(vim.fn.readfile(secret_path), "\n")
+  local header = "X-Ignition-API-Token: " .. vim.json.decode(json_str).ignition
+  local response = vim.fn.system({
+    "curl", "-XPOST", "-s", "-H", header,
+    "http://localhost:8088/data/api/v1/scan/projects",
+  })
+  vim.notify(response, vim.log.levels.INFO, { title = "Ignition" })
+end
 
-  -- Commands
-  vim.api.nvim_create_user_command("IgnitionGoto", goto_ignition_module, { desc = "Go to Ignition module under cursor" })
-  vim.api.nvim_create_user_command("IgnitionFind", function(opts)
-    if opts.args and opts.args ~= "" then
-      search_ignition_symbol(opts.args)
-    else
-      search_ignition_symbol(vim.fn.expand("<cword>"))
-    end
-  end, { nargs = "?", desc = "Find Ignition symbol definition" })
-  vim.api.nvim_create_user_command("IgnitionSearch", telescope_reference_search,
-    { desc = "Search Ignition symbols with Telescope" })
-
-  vim.api.nvim_create_user_command("IgnitionReferences", function()
-    telescope.grep_string({ cwd = data_path() .. "\\projects", additional_args = { "-g", "*.py" } })
-  end, { desc = "get references under cursor" })
-  vim.keymap.set("n", "<leader>ir", "<cmd>IgnitionReferences<cr>", { desc = "[ignition] show references under cursor" })
-
-  vim.api.nvim_create_user_command("IgnitionBrowse", browse_ignition_symbols, { desc = "Browse all Ignition symbols" })
-
-  vim.api.nvim_create_user_command("IgnitionFiles", ignition_find_files, { desc = "Find files in ignition directory" })
-
-  vim.keymap.set("n", "<leader>iff", ignition_find_files, { desc = "find ignition files" })
-  vim.keymap.set("n", "<leader>ifr", function()
-    require("telescope").extensions.frecency.frecency({
-      theme = "ivy"
-    })
-  end, { desc = "find ignition files frecency" })
-
-  vim.api.nvim_create_user_command("IgnitionScan", scan_ignition, { desc = "Trigger scan of ignition files" })
-  vim.keymap.set("n", "<leader>is", scan_ignition, { desc = "scan ignition" })
-
-  vim.keymap.set("n", "<leader>idr", function()
-    local ahk = [[
+local designer_refresh = function()
+  local ahk = [[
 SetTitleMatchMode(3) ; exact match mode
 DetectHiddenWindows(true)
 designerTitle := "ASRS - Development - Ignition Designer"
@@ -410,23 +271,67 @@ if WinExist(designerTitle) {
 	y := 43
 	click x, y
 }
-
 consoleTitle := "Script Console"
 if WinExist(consoleTitle) {
 	WinActivate(consoleTitle)
+  Sleep(500)
 	; click the reset button
 	click 931, 76
 	Sleep(100)
 	; run whatever is in the multiline buffer
 	Send "^{Enter}"
 }
-      ]]
-    local tempname = vim.fn.tempname() .. ".ahk"
-    vim.fn.writefile(vim.split(ahk, "\n"), tempname)
-    vim.fn.jobstart({ "autohotkey", tempname }, {
-      on_exit = function() vim.fn.delete(tempname) end,
-    })
-  end, { desc = "designer refresh" })
+  ]]
+  local tempname = vim.fn.tempname() .. ".ahk"
+  vim.fn.writefile(vim.split(ahk, "\n"), tempname)
+  vim.fn.jobstart({ "autohotkey", tempname }, {
+    on_exit = function() vim.fn.delete(tempname) end,
+  })
+end
+
+
+local M = {}
+M.setup = function()
+  local keymaps = {
+    { "<leader>ig",  goto_ignition_module,                                            "[ignition] go to module" },
+    { "<leader>ifs", function() search_ignition_symbol(vim.fn.expand("<cword>")) end, "[ignition] find symbol" },
+    { "<leader>it",  telescope_reference_search,                                      "[ignition] telescope symbol search" },
+    { "<leader>ib",  browse_ignition_symbols,                                         "[ignition] browse symbols" },
+    { "<leader>ir",  "<cmd>IgnitionReferences<cr>",                                   "[ignition] show references under cursor" },
+    { "<leader>iff", ignition_find_files,                                             "find ignition files" },
+    { "<leader>ifr", function()
+      require("telescope").extensions.frecency.frecency({
+        workspace = "IGN",
+        path_display = function(_, path)
+          return string.sub(path, string.len(DATA_PATH .. "\\projects"))
+        end,
+      })
+    end, "find ignition files frecency" },
+    { "<leader>is",  scan_ignition,    "scan ignition" },
+    { "<leader>idr", designer_refresh, "designer refresh" },
+  }
+
+  for _, km in ipairs(keymaps) do
+    vim.keymap.set("n", km[1], km[2], { desc = km[3] })
+  end
+
+  vim.api.nvim_create_user_command("IgnitionGoto", goto_ignition_module,
+    { desc = "Go to Ignition module under cursor" })
+  vim.api.nvim_create_user_command("IgnitionFind", function(opts)
+    search_ignition_symbol(opts.args ~= "" and opts.args or vim.fn.expand("<cword>"))
+  end, { nargs = "?", desc = "Find Ignition symbol definition" })
+  vim.api.nvim_create_user_command("IgnitionSearch", telescope_reference_search,
+    { desc = "Search Ignition symbols with Telescope" })
+  vim.api.nvim_create_user_command("IgnitionReferences", function()
+    telescope.grep_string({ cwd = DATA_PATH .. "\\projects", additional_args = { "-g", "*.py" } })
+  end, { desc = "get references under cursor" })
+  vim.api.nvim_create_user_command("IgnitionBrowse", browse_ignition_symbols,
+    { desc = "Browse all Ignition symbols" })
+  vim.api.nvim_create_user_command("IgnitionFiles", ignition_find_files,
+    { desc = "Find files in ignition directory" })
+  vim.api.nvim_create_user_command("IgnitionScan", scan_ignition,
+    { desc = "Trigger scan of ignition files" })
+
   set_keys()
   vim.api.nvim_buf_create_user_command(0, "FlameOn", set_keys, {})
   vim.api.nvim_buf_create_user_command(0, "FlameOff", del_keys, {})
