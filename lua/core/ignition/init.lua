@@ -295,7 +295,7 @@ M.setup = function()
   require("core.monorepo").setup({
     root = DATA_PATH .. "\\projects",
     ignore_hidden = true,
-    exclude = { "resource.json" }
+    file_exclude = { "resource.json" },
   })
   local keymaps = {
     { "<leader>ig",  goto_ignition_module,                                            "[ignition] go to module" },

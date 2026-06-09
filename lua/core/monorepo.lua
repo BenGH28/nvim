@@ -4,6 +4,7 @@ M._root = nil
 M._active = nil
 M._exclude = {}
 M._ignore_hidden = true
+M._file_exclude = {}
 
 function M.setup(opts)
   M._root = opts and opts.root or M._root
@@ -15,6 +16,9 @@ function M.setup(opts)
   end
   if opts and opts.ignore_hidden ~= nil then
     M._ignore_hidden = opts.ignore_hidden
+  end
+  if opts and opts.file_exclude then
+    M._file_exclude = opts.file_exclude
   end
 end
 
@@ -80,7 +84,7 @@ local function pick(subpath)
       end,
     }),
     sorter = conf.generic_sorter({}),
-    attach_mappings = function(prompt_bufnr)
+    attach_mappings = function(prompt_bufnr, map)
       actions.select_default:replace(function()
         local selection = action_state.get_selected_entry()
         actions.close(prompt_bufnr)
@@ -95,6 +99,13 @@ local function pick(subpath)
           vim.schedule(function() pick(e.value) end)
         end
       end)
+      if subpath ~= "" then
+        map({ "i", "n" }, "<BS>", function()
+          local parent = subpath:match("^(.+)\\[^\\]+$") or ""
+          actions.close(prompt_bufnr)
+          vim.schedule(function() pick(parent) end)
+        end)
+      end
       return true
     end,
   }):find()
@@ -108,17 +119,32 @@ function M.select_project()
   pick("")
 end
 
+local function file_exclude_args()
+  local args = {}
+  for _, pattern in ipairs(M._file_exclude) do
+    table.insert(args, "--glob")
+    table.insert(args, "!" .. pattern)
+  end
+  return args
+end
+
 function M.find_files()
+  local extra = file_exclude_args()
+  local cmd = { "rg", "--files", "--color", "never" }
+  vim.list_extend(cmd, extra)
   require("telescope.builtin").find_files({
     cwd = M.get_cwd(),
     prompt_title = "Files [" .. (M._active or "all") .. "]",
+    find_command = #extra > 0 and cmd or nil,
   })
 end
 
 function M.live_grep()
+  local extra = file_exclude_args()
   require("telescope.builtin").live_grep({
     cwd = M.get_cwd(),
     prompt_title = "Grep [" .. (M._active or "all") .. "]",
+    additional_args = #extra > 0 and extra or nil,
   })
 end
 
