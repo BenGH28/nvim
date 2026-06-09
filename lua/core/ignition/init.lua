@@ -225,7 +225,7 @@ end
 
 local telescope_reference_search = function()
   telescope.live_grep({
-    cwd = DATA_PATH .. "\\projects",
+    cwd = require("core.monorepo").get_cwd(),
     prompt_title = "Ignition Reference Search",
     glob_pattern = "*.py",
     additional_args = function() return { "--pcre2" } end,
@@ -234,7 +234,7 @@ end
 
 local browse_ignition_symbols = function()
   telescope.live_grep({
-    cwd = DATA_PATH .. "\\projects",
+    cwd = require("core.monorepo").get_cwd(),
     prompt_title = "Ignition Symbols",
     default_text = "^\\s*(class|def)\\s",
     glob_pattern = "*.py",
@@ -243,7 +243,7 @@ end
 
 local ignition_find_files = function()
   telescope.find_files({
-    cwd = DATA_PATH .. "\\projects",
+    cwd = require("core.monorepo").get_cwd(),
     find_command = { "rg", "--files", "--color", "never", "-g", "*.py", "-g", "*.json" },
   })
 end
@@ -292,6 +292,7 @@ end
 
 local M = {}
 M.setup = function()
+  require("core.monorepo").setup({ root = DATA_PATH .. "\\projects" })
   local keymaps = {
     { "<leader>ig",  goto_ignition_module,                                            "[ignition] go to module" },
     { "<leader>ifs", function() search_ignition_symbol(vim.fn.expand("<cword>")) end, "[ignition] find symbol" },

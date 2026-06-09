@@ -195,6 +195,15 @@ wk.add({
 
 wk.add({
   mode = "n",
+  { "<leader>m",  group = "+monorepo" },
+  { "<leader>mp", function() require("core.monorepo").select_project() end, desc = "pick project" },
+  { "<leader>mx", function() require("core.monorepo").clear() end,          desc = "clear scope (all)" },
+  { "<leader>mf", function() require("core.monorepo").find_files() end,     desc = "find files in project" },
+  { "<leader>mg", function() require("core.monorepo").live_grep() end,      desc = "grep in project" },
+})
+
+wk.add({
+  mode = "n",
   { "<leader>g", group = "+git" },
   {
     "<leader>gs",
