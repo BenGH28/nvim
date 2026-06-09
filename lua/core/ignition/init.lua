@@ -292,7 +292,11 @@ end
 
 local M = {}
 M.setup = function()
-  require("core.monorepo").setup({ root = DATA_PATH .. "\\projects" })
+  require("core.monorepo").setup({
+    root = DATA_PATH .. "\\projects",
+    ignore_hidden = true,
+    exclude = { "resource.json" }
+  })
   local keymaps = {
     { "<leader>ig",  goto_ignition_module,                                            "[ignition] go to module" },
     { "<leader>ifs", function() search_ignition_symbol(vim.fn.expand("<cword>")) end, "[ignition] find symbol" },
