@@ -295,6 +295,7 @@ M.setup = function()
   require("core.monorepo").setup({
     root = DATA_PATH .. "\\projects",
     ignore_hidden = true,
+    exclude = { "node_modules" },
     file_exclude = { "resource.json" },
   })
   local keymaps = {
