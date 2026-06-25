@@ -226,7 +226,7 @@ wk.add({
     desc = "reset buffer",
   },
   {
-    "<leader>gp",
+    "<leader>gv",
     require("gitsigns").preview_hunk,
     desc = "preview hunk",
   },
@@ -239,6 +239,20 @@ wk.add({
     "<leader>gS",
     require("gitsigns").stage_buffer,
     desc = "stage buffer",
+  },
+  {
+    "<leader>gn",
+    function()
+      require("gitsigns").nav_hunk("next")
+    end,
+    desc = "next hunk",
+  },
+  {
+    "<leader>gp",
+    function()
+      require("gitsigns").nav_hunk("prev")
+    end,
+    desc = "prev hunk",
   },
   {
     "<leader>gU",
