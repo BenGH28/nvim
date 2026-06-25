@@ -46,12 +46,12 @@ lualine.setup {
   sections = {
     lualine_a = { 'mode' },
     lualine_b = { { 'branch', icon = '󰊢' }, 'diff', 'diagnostics', {
-    function()
-      local ok, mono = pcall(require, "core.monorepo")
-      if not ok or not mono._active then return "" end
-      return "󰉋 " .. mono._active
-    end,
-  } },
+      function()
+        local ok, mono = pcall(require, "core.monorepo")
+        if not ok or not mono._active then return "" end
+        return "󰉋 " .. vim.fn.fnamemodify(mono._active, ":t")
+      end,
+    } },
     lualine_c = { { 'filename', path = 1 } },
     lualine_x = { lsp_component, {
       'fileformat',
