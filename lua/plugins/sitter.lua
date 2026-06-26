@@ -32,10 +32,12 @@ return {
       vim.api.nvim_create_autocmd("FileType", {
         pattern = langs,
         callback = function()
-          vim.treesitter.start() -- highlighting
+          vim.treesitter.start()                              -- highlighting
           vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()" -- folds
-          vim.wo.foldmethod = "expr"
-          vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()" -- indentation
+          vim.schedule(function()
+            vim.wo.foldmethod = "expr"
+            vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()" -- indentation
+          end)
         end,
       })
     end,
@@ -78,7 +80,7 @@ return {
           -- mapping query_strings to modes.
           selection_modes = {
             ["@parameter.outer"] = "v", -- charwise
-            ["@function.outer"] = "V", -- linewise
+            ["@function.outer"] = "V",  -- linewise
             -- ['@class.outer'] = '<c-v>', -- blockwise
           },
           -- If you set this to `true` (default is `false`) then any textobject is

@@ -299,6 +299,7 @@ M.setup = function()
     file_exclude = { "resource.json" },
   })
   local keymaps = {
+    { "K",           function() require("core.ignition.cmp").hover() end,             "[ignition] hover docs" },
     { "<leader>ig",  goto_ignition_module,                                            "[ignition] go to module" },
     { "<leader>ifs", function() search_ignition_symbol(vim.fn.expand("<cword>")) end, "[ignition] find symbol" },
     { "<leader>it",  telescope_reference_search,                                      "[ignition] telescope symbol search" },

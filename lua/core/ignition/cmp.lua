@@ -413,6 +413,61 @@ local function resolve_inherited_members(class_name, current_module_path, module
   return inherited
 end
 
+-- Resolve a full dotted path to its symbol record (signature, docstring, from)
+local function lookup_symbol(path, modules)
+  for _, mod in ipairs(modules) do
+    if mod.path == path then
+      return { kind = "module", from = mod.path }
+    end
+
+    if path:sub(1, #mod.path) == mod.path and path:sub(#mod.path + 1, #mod.path + 1) == "." then
+      local rest = path:sub(#mod.path + 2)
+      local symbols = get_symbols(mod.file)
+      local dot_pos = rest:find("%.")
+
+      if not dot_pos then
+        for _, sym in ipairs(symbols) do
+          if sym.name == rest and not sym.parent_class then
+            local sig = sym.signature
+            if not sig and sym.kind == 7 then
+              sig = "class " .. sym.name
+              if sym.parents and #sym.parents > 0 then
+                sig = sig .. "(" .. table.concat(sym.parents, ", ") .. ")"
+              end
+            end
+            return { kind = sym.kind == 7 and "class" or "function", name = sym.name,
+              signature = sig, docstring = sym.docstring, from = mod.path }
+          end
+        end
+      else
+        local class_name = rest:sub(1, dot_pos - 1)
+        local member_name = rest:sub(dot_pos + 1)
+        for _, sym in ipairs(symbols) do
+          if sym.parent_class == class_name and sym.name == member_name then
+            return {
+              kind = "method", name = member_name,
+              signature = class_name .. "." .. (sym.signature or member_name .. "()"),
+              docstring = sym.docstring, from = mod.path .. "." .. class_name,
+              is_classmethod = sym.is_classmethod, is_staticmethod = sym.is_staticmethod,
+            }
+          end
+        end
+        for _, sym in ipairs(symbols) do
+          if sym.name == class_name and sym.kind == 7 then
+            local sig = "class " .. class_name
+            if sym.parents and #sym.parents > 0 then
+              sig = sig .. "(" .. table.concat(sym.parents, ", ") .. ")"
+            end
+            return { kind = "class", name = class_name, signature = sig,
+              docstring = sym.docstring, from = mod.path }
+          end
+        end
+      end
+    end
+  end
+  return nil
+end
+
 ---Return whether this source is available in the current context or not.
 ---@return boolean
 function source:is_available()
@@ -643,3 +698,69 @@ end
 
 ---Register your source to nvim-cmp.
 require("cmp").register_source("ignition", source)
+
+local M = {}
+
+M.hover = function()
+  local line = vim.api.nvim_get_current_line()
+  local col = vim.fn.col(".")
+  local before = line:sub(1, col):reverse():match("^[%w_%.]*") or ""
+  local after = line:sub(col + 1):match("^[%w_%.]*") or ""
+  local full_path = (before:reverse() .. after):gsub("^%.", ""):gsub("%.$", "")
+
+  if full_path == "" then
+    vim.lsp.buf.hover()
+    return
+  end
+
+  local modules = scan_modules()
+  local result = lookup_symbol(full_path, modules)
+
+  if not result then
+    vim.lsp.buf.hover()
+    return
+  end
+
+  local content = {}
+
+  if result.signature then
+    table.insert(content, "```python")
+    table.insert(content, result.signature)
+    table.insert(content, "```")
+  elseif result.kind == "module" then
+    table.insert(content, "```")
+    table.insert(content, "module " .. result.from)
+    table.insert(content, "```")
+  end
+
+  if result.docstring and result.docstring ~= "" then
+    table.insert(content, "")
+    table.insert(content, result.docstring)
+  end
+
+  if result.is_classmethod then
+    table.insert(content, "")
+    table.insert(content, "*@classmethod*")
+  elseif result.is_staticmethod then
+    table.insert(content, "")
+    table.insert(content, "*@staticmethod*")
+  end
+
+  if result.from then
+    table.insert(content, "")
+    table.insert(content, "---")
+    table.insert(content, "*" .. result.from .. "*")
+  end
+
+  if #content == 0 then
+    vim.lsp.buf.hover()
+    return
+  end
+
+  vim.lsp.util.open_floating_preview(content, "markdown", {
+    border = "rounded",
+    focus_id = "ignition_hover",
+  })
+end
+
+return M
